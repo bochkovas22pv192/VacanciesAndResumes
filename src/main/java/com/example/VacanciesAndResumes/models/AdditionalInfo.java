@@ -10,28 +10,22 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table
-public class Specialization {
+public class AdditionalInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long specializationId ;
+    private Long additionalInfoId    ;
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
     private Candidate candidate;
 
-    @Column(nullable = false)
-    private String desiredPosition;
+    @Column
+    private boolean willingToRelocate ;
 
     @Column
-    private String grade;
+    private String employmentType ;
 
     @Column
-    private String keySkills;
-
-    @Column
-    private double salary;
-
-    @Column
-    private String currency;
+    private boolean willingToTravel  ;
 }

@@ -9,38 +9,38 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Contacts")
+@Table
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ContactID", nullable = false)
-    private Long id;
+    @Column(nullable = false)
+    private Long contactId ;
 
     @ManyToOne
-    @JoinColumn(name="Personal_InfoID")
+    @JoinColumn(name="personal_info_id")
     private Candidate candidate;
 
-    @Column(name = "MobilePhone", nullable = false)
+    @Column(nullable = false)
     private String mobilePhone ;
 
-    @Column(name = "Email", nullable = false)
+    @Column(nullable = false)
     private String email ;
 
-    @Column(name = "Telegram", nullable = false)
+    @Column(nullable = false)
     private String telegram ;
 
-    @Column(name = "WhatsApp")
+    @Column
     private String whatsApp;
 
-    @Column(name = "VK")
+    @Column
     private String vk;
 
-    @Column(name = "Habr")
+    @Column
     private String habr;
 
-    @Column(name = "LinkedIn")
+    @Column
     private String linkedIn;
 
-    @Column(name = "GitHub")
+    @Column
     private String gitHub;
 }

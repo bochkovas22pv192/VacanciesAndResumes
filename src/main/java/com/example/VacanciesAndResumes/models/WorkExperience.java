@@ -5,33 +5,47 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table
-public class Specialization {
+public class WorkExperience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long specializationId ;
+    private Long workExperienceId  ;
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
     private Candidate candidate;
 
-    @Column(nullable = false)
-    private String desiredPosition;
+    @Column
+    private String organizationName;
 
     @Column
-    private String grade;
+    private String industry;
 
     @Column
-    private String keySkills;
+    private String organizationWebsite ;
 
     @Column
-    private double salary;
+    private String companyCity ;
 
     @Column
-    private String currency;
+    private String position;
+
+    @Column
+    private LocalDate startData;
+
+    @Column
+    private LocalDate endData;
+
+    @Column
+    private boolean isCurrentJob ;
+
+    @Column
+    private String additionalInfo ;
 }

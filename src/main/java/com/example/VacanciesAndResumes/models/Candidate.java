@@ -13,47 +13,47 @@ import java.util.Collection;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Personal_Info")
+@Table(name = "personal_info")
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Personal_InfoID", nullable = false)
-    private Long id;
+    @Column(nullable = false)
+    private Long personalInfoId ;
 
-    @Column(name = "LastName", nullable = false)
+    @Column(nullable = false)
     private String lastName;
 
-    @Column(name = "FirstName", nullable = false)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(name = "MiddleName", nullable = false)
+    @Column(nullable = false)
     private String middleName;
 
-    @Column(name = "GenderName", nullable = false)
+    @Column(nullable = false)
     private String genderName;
 
-    @Column(name = "DateOfBirth", nullable = false)
+    @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(name = "Age", nullable = false)
+    @Column(nullable = false)
     private Long age;
 
-    @Column(name = "CountryName", nullable = false)
+    @Column(nullable = false)
     private Long countryName;
 
-    @Column(name = "RegionName", nullable = false)
+    @Column(nullable = false)
     private Long regionName;
 
-    @Column(name = "CityName", nullable = false)
+    @Column(nullable = false)
     private Long cityName;
 
-    @Column(name = "Citizenship", nullable = false)
+    @Column(nullable = false)
     private Long citizenship;
 
-    @Column(name = "WorkPermit", nullable = false)
+    @Column(nullable = false)
     private boolean workPermit;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Candidate")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personal_info")
     @ToString.Exclude
     private Collection<Contact> contacts;
 

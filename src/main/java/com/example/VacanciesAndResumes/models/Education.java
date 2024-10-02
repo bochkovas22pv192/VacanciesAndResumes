@@ -10,28 +10,28 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table
-public class Specialization {
+public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long specializationId ;
+    private Long educationId;
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
     private Candidate candidate;
 
-    @Column(nullable = false)
-    private String desiredPosition;
+    @Column
+    private boolean educationLevel;
 
     @Column
-    private String grade;
+    private boolean institution;
 
     @Column
-    private String keySkills;
+    private boolean faculty;
 
     @Column
-    private double salary;
+    private boolean specialization;
 
     @Column
-    private String currency;
+    private Long graduationYear;
 }
