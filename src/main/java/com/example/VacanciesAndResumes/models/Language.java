@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table
-public class Languages {
+public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -18,7 +18,7 @@ public class Languages {
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
-    private Candidate candidate;
+    private PersonalInfo personalInfo;
 
     @Column
     private String language;

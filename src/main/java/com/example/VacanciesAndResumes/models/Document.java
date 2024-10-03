@@ -18,7 +18,7 @@ public class Document {
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
-    private Candidate candidate;
+    private PersonalInfo personalInfo;
 
     @Lob
     @Column

@@ -14,7 +14,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "personal_info")
-public class Candidate {
+public class PersonalInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -53,8 +53,36 @@ public class Candidate {
     @Column(nullable = false)
     private boolean workPermit;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personal_info")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude
     private Collection<Contact> contacts;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<Specialization> specializations;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<WorkExperience> workExperiences;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<Language> languages;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<AdditionalInfo> additionalInfos;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<Education> educations;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<CertificatesQualification> certificatesQualifications;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @ToString.Exclude
+    private Collection<Document> documents;
 
 }

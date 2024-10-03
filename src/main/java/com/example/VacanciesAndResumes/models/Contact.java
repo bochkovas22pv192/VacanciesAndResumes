@@ -18,7 +18,7 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
-    private Candidate candidate;
+    private PersonalInfo personalInfo;
 
     @Column(nullable = false)
     private String mobilePhone ;
@@ -30,7 +30,7 @@ public class Contact {
     private String telegram ;
 
     @Column
-    private String whatsApp;
+    private String whatsapp;
 
     @Column
     private String vk;

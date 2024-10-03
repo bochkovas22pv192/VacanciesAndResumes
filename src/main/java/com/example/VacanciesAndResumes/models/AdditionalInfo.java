@@ -18,7 +18,7 @@ public class AdditionalInfo {
 
     @ManyToOne
     @JoinColumn(name="personal_info_id")
-    private Candidate candidate;
+    private PersonalInfo personalInfo;
 
     @Column
     private boolean willingToRelocate ;
