@@ -11,6 +11,7 @@ public class PersonalInfoDTO {
     private  String lastName;
     private  String firstName;
     private  String middleName;
+    private String genderName;
     private  String dateOfBirth;
     private  Long age;
     private  String countryName;

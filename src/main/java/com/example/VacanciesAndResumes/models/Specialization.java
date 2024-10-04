@@ -16,7 +16,7 @@ public class Specialization {
     @Column(nullable = false)
     private Long specializationId ;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="personal_info_id")
     private PersonalInfo personalInfo;
 

@@ -39,27 +39,27 @@ public class PersonalInfo {
     private Long age;
 
     @Column(nullable = false)
-    private Long countryName;
+    private String countryName;
 
     @Column(nullable = false)
-    private Long regionName;
+    private String regionName;
 
     @Column(nullable = false)
-    private Long cityName;
+    private String cityName;
 
     @Column(nullable = false)
-    private Long citizenship;
+    private String citizenship;
 
     @Column(nullable = false)
     private boolean workPermit;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude
-    private Collection<Contact> contacts;
+    private Contact contact;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude
-    private Collection<Specialization> specializations;
+    private Specialization specialization;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude
@@ -69,9 +69,9 @@ public class PersonalInfo {
     @ToString.Exclude
     private Collection<Language> languages;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude
-    private Collection<AdditionalInfo> additionalInfos;
+    private AdditionalInfo additionalInfos;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
     @ToString.Exclude

@@ -7,25 +7,29 @@ import com.example.VacanciesAndResumes.models.Document;
 import com.example.VacanciesAndResumes.models.Language;
 import com.example.VacanciesAndResumes.models.Resume;
 import com.example.VacanciesAndResumes.repositories.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class ResumeService {
 
-    AdditionalInfoRepository additionalInfoRepository;
-    CertificatesQualificationRepository certificatesQualificationRepository;
-    ContactRepository contactRepository;
-    DocumentRepository documentRepository;
-    EducationRepository educationRepository;
-    LanguageRepository languageRepository;
-    PersonalInfoRepository personalInfoRepository;
-    SpecializationRepository specializationRepository;
-    WorkExperienceRepository workExperienceRepository;
+    private  final AdditionalInfoRepository additionalInfoRepository;
+    private  final CertificatesQualificationRepository certificatesQualificationRepository;
+    private  final ContactRepository contactRepository;
+    private  final DocumentRepository documentRepository;
+    private  final EducationRepository educationRepository;
+    private  final LanguageRepository languageRepository;
+    private  final PersonalInfoRepository personalInfoRepository;
+    private  final SpecializationRepository specializationRepository;
+    private  final WorkExperienceRepository workExperienceRepository;
 
+    @Autowired
     ResumeMapper resumeMapper;
 
     public List<ResumeDTO> getResumeAll(){
@@ -37,6 +41,8 @@ public class ResumeService {
 
     public ResumePostAnswerDTO createResume(ResumeDTO resumeDTO){
         Resume resume = resumeMapper.resumeDTOToResume(resumeDTO);
+
+        System.out.println(resume + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         resume.getAdditionalInfo().setPersonalInfo(resume.getPersonalInfo());
         resume.getContact().setPersonalInfo(resume.getPersonalInfo());
@@ -54,6 +60,7 @@ public class ResumeService {
             documentRepository.save(document);
         }
 
+        personalInfoRepository.save(resume.getPersonalInfo());
         additionalInfoRepository.save(resume.getAdditionalInfo());
         contactRepository.save(resume.getContact());
         educationRepository.save(resume.getEducation());

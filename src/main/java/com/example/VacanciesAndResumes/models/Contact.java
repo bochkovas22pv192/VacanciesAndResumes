@@ -16,7 +16,7 @@ public class Contact {
     @Column(nullable = false)
     private Long contactId ;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="personal_info_id")
     private PersonalInfo personalInfo;
 

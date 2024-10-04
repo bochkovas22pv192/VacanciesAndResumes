@@ -16,7 +16,7 @@ public class AdditionalInfo {
     @Column(nullable = false)
     private Long additionalInfoId    ;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="personal_info_id")
     private PersonalInfo personalInfo;
 

@@ -21,6 +21,5 @@ public class Document {
     private PersonalInfo personalInfo;
 
     @Lob
-    @Column
     private byte[] document ;
 }
