@@ -36,13 +36,14 @@ public class ResumeService {
         List<ResumeDTO> result = new java.util.ArrayList<>(List.of());
         List<Resume> temp = new java.util.ArrayList<>(List.of());
 
+
+
         return result;
     }
 
     public ResumePostAnswerDTO createResume(ResumeDTO resumeDTO){
         Resume resume = resumeMapper.resumeDTOToResume(resumeDTO);
 
-        System.out.println(resume + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         resume.getAdditionalInfo().setPersonalInfo(resume.getPersonalInfo());
         resume.getContact().setPersonalInfo(resume.getPersonalInfo());
@@ -68,6 +69,7 @@ public class ResumeService {
         certificatesQualificationRepository.save(resume.getCertificatesQualification());
         workExperienceRepository.save(resume.getWorkExperience());
 
+        personalInfoRepository.deleteAll();
         return new ResumePostAnswerDTO("success", "Успешно сохранено");
     }
 }
