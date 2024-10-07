@@ -6,9 +6,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class ResumeDTO {
     private PersonalInfoDTO personalInfo;
     private ContactDTO contact;

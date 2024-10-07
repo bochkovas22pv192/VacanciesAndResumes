@@ -1,11 +1,11 @@
 package com.example.VacanciesAndResumes;
 
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.repositories.*;
+import com.example.VacanciesAndResumes.services.ResumeService;
 import io.restassured.RestAssured;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ResumeControllerTest {
 
     @LocalServerPort
     private Integer port;
+
+    @Autowired
+    ResumeMapper resumeMapper;
+    @Autowired
+    ResumeService resumeService;
+
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
     AdditionalInfoRepository additionalInfoRepository;
@@ -69,8 +79,8 @@ class ResumeControllerTest {
             "\"whatsapp\":\"+79999999999\",\n" +
             "\"vk\":\"vk.com/ivanov\",\n" +
             "\"habr\":\"habr.com/ivanov\",\n" +
-            "\"linkedin\":\"linkedin.com/in/ivanov\",\n" +
-            "\"github\":\"github.com/ivanov\"\n" +
+            "\"linkedIn\":\"linkedin.com/in/ivanov\",\n" +
+            "\"gitHub\":\"github.com/ivanov\"\n" +
             "},\n" +
             "\"specialization\":{\n" +
             "\"desiredPosition\":\"Разработчик\",\n" +
@@ -85,9 +95,9 @@ class ResumeControllerTest {
             "\"organizationWebsite\":\"techcorp.com\",\n" +
             "\"companyCity\":\"Москва\",\n" +
             "\"position\":\"Программист\",\n" +
-            "\"startData\":\"2015.01.01\",\n" +
+            "\"startDate\":\"12.07.2015\",\n" +
             "\"isCurrentCob\":false,\n" +
-            "\"eneData\":\"2020.01.01\",\n" +
+            "\"endDate\":\"23.08.2020\",\n" +
             "\"workDuration\":5,\n" +
             "\"additionalInfo\":\"Работа в крупной компании\",\n" +
             "\"totalExperience\":5\n" +
@@ -104,7 +114,7 @@ class ResumeControllerTest {
             "],\n" +
             "\"additionalInfo\":{\n" +
             "\"willingToRelocate\":true,\n" +
-            "\"employmentType\":\"Частичная занятость\",\n" +
+            "\"employmentType\":\"Полная занятость\",\n" +
             "\"willingToTravel\":true\n" +
             "},\n" +
             "\"documents\":[{\n" +
@@ -125,7 +135,7 @@ class ResumeControllerTest {
             "\"educationalInstitution\":\"Skillbox\",\n" +
             "\"organization\":\"ООО Skillbox\",\n" +
             "\"specialization\":\"Python разработка\",\n" +
-            "\"graduationYearn\":2023\n" +
+            "\"graduationYear\":2023\n" +
             "}\n" +
             "}";
 
@@ -139,6 +149,41 @@ class ResumeControllerTest {
                 .then().statusCode(200)
                 .extract().body().as(ResumePostAnswerDTO.class);
         MatcherAssert.assertThat(result, equalTo(new ResumePostAnswerDTO("success", "Успешно сохранено")));
+        ResumeDTO resume = resumeService.getResumeAll().getLast();
+        MatcherAssert.assertThat(resume.getPersonalInfo(),
+                equalTo(new PersonalInfoDTO("Иванов", "Иван", "Иванович", "М", "1990.01.01", 34,
+                        "Россия", "Москва", "Москва", "РФ", true)));
 
+        MatcherAssert.assertThat(resume.getContact(),
+                equalTo(new ContactDTO("+79999999999", "ivanov@mail.ru", "@ivanov", "+79999999999", "vk.com/ivanov",
+                        "habr.com/ivanov", "linkedin.com/in/ivanov", "github.com/ivanov")));
+
+        MatcherAssert.assertThat(resume.getSpecialization(),
+                equalTo(new SpecializationDTO("Разработчик", "Middle", "Python, SQL, Docker",
+                        100000, "RUB")));
+
+        MatcherAssert.assertThat(resume.getWorkExperience(),
+                equalTo(new WorkExperienceDTO("Tech Corp", "IT", "techcorp.com", "Москва", "Программист",
+                        "12.07.2015", false, "23.08.2020", 5, "Работа в крупной компании", 5)));
+
+        MatcherAssert.assertThat(resume.getLanguages(),
+                equalTo(List.of(new LanguageDTO("Английский", "Advanced"), new LanguageDTO("Немецкий", "Intermediate"))));
+
+        MatcherAssert.assertThat(resume.getAdditionalInfo(),
+                equalTo(new AdditionalInfoDTO(true, "Полная занятость", true)));
+
+        MatcherAssert.assertThat(resume.getDocuments(),
+                equalTo(List.of(new DocumentDTO("aaaaaaaa"), new DocumentDTO("bbbbbbb"))));
+
+        MatcherAssert.assertThat(resume.getAdditionalInfo(),
+                equalTo(new AdditionalInfoDTO(true, "Полная занятость", true)));
+
+        MatcherAssert.assertThat(resume.getEducation(),
+                equalTo(new EducationDTO("Высшее", "МГУ", "Факультет ВМиК",
+                        "Программная инженерия", 2019)));
+
+        MatcherAssert.assertThat(resume.getCertificatesQualification(),
+                equalTo(new CertificatesQualificationDTO("Skillbox", "ООО Skillbox",
+                        "Python разработка", 2023)));
     }
 }

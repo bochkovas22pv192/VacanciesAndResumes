@@ -1,14 +1,10 @@
 package com.example.VacanciesAndResumes.DTOs;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class ResumePostAnswerDTO {
     private String status;
     private  String message;

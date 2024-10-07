@@ -49,17 +49,20 @@ public interface ResumeMapper {
     SpecializationDTO specializationToSpecializationDTO(Specialization specialization);
     Specialization specializationDTOToSpecialization(SpecializationDTO specializationDTO);
 
-    @Mapping(target="startDate", source="workExperience.startData", dateFormat = "yyyy.MM.dd")
-    @Mapping(target="endDate", source="workExperience.endData", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="startDate", source="workExperience.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="workExperience.endDate", dateFormat = "dd.MM.yyyy")
     WorkExperienceDTO workExperienceToWorkExperienceDTO(WorkExperience workExperience);
-    @Mapping(target="startData", source="workExperienceDTO.startDate", dateFormat = "yyyy.MM.dd")
-    @Mapping(target="endData", source="workExperienceDTO.startDate", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="startDate", source="workExperienceDTO.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="workExperienceDTO.endDate", dateFormat = "dd.MM.yyyy")
     WorkExperience workExperienceDTOToWorkExperience(WorkExperienceDTO workExperienceDTO);
 
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;
     }
     default String bytesToString(byte[] bytes) {
-        return bytes != null ? new String(bytes, StandardCharsets.UTF_8) : null;
+        if (bytes != null){
+            return new String(bytes, StandardCharsets.UTF_8);
+        }
+        return null;
     }
 }

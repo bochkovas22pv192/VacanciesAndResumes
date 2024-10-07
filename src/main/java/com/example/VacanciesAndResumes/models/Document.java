@@ -20,6 +20,7 @@ public class Document {
     @JoinColumn(name="personal_info_id")
     private PersonalInfo personalInfo;
 
-    @Lob
+
+    @Column
     private byte[] document ;
 }

@@ -38,14 +38,20 @@ public class WorkExperience {
     private String position;
 
     @Column
-    private LocalDate startData;
-
-    @Column
-    private LocalDate endData;
+    private LocalDate startDate;
 
     @Column
     private boolean isCurrentJob ;
 
     @Column
-    private String additionalInfo ;
+    private LocalDate endDate;
+
+    @Column
+    private int workDuration;
+
+    @Column
+    private String additionalInfo;
+
+    @Column
+    private int totalExperience;
 }

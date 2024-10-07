@@ -4,14 +4,12 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class EducationDTO {
     private  String educationLevel;
     private  String institution;
     private  String faculty;
     private  String specialization;
-    private  Long graduationYear;
+    private  int graduationYear;
 
 }

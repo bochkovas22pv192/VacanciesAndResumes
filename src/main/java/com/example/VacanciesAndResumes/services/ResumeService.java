@@ -5,6 +5,7 @@ import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.models.Document;
 import com.example.VacanciesAndResumes.models.Language;
+import com.example.VacanciesAndResumes.models.PersonalInfo;
 import com.example.VacanciesAndResumes.models.Resume;
 import com.example.VacanciesAndResumes.repositories.*;
 import jakarta.transaction.Transactional;
@@ -33,12 +34,23 @@ public class ResumeService {
     ResumeMapper resumeMapper;
 
     public List<ResumeDTO> getResumeAll(){
-        List<ResumeDTO> result = new java.util.ArrayList<>(List.of());
-        List<Resume> temp = new java.util.ArrayList<>(List.of());
+        List<Resume> resumes = new java.util.ArrayList<>(List.of());
+        List<PersonalInfo> personalInfos = personalInfoRepository.findAll();
+        for (int i = 0; i < personalInfos.size(); i++) {
+            Resume creatingResume = new Resume();
+            creatingResume.setPersonalInfo(personalInfos.get(i));
+            creatingResume.setAdditionalInfo(additionalInfoRepository.findAll().get(i));
+            creatingResume.setCertificatesQualification(certificatesQualificationRepository.findAll().get(i));
+            creatingResume.setContact(contactRepository.findAll().get(i));
+            creatingResume.setEducation(educationRepository.findAll().get(i));
+            creatingResume.setSpecialization(specializationRepository.findAll().get(i));
+            creatingResume.setWorkExperience(workExperienceRepository.findAll().get(i));
+            creatingResume.setLanguages((List<Language>) personalInfos.get(i).getLanguages());
+            creatingResume.setDocuments((List<Document>) personalInfos.get(i).getDocuments());
+            resumes.add(creatingResume);
+        }
 
-
-
-        return result;
+        return resumeMapper.resumeToResumeDTO(resumes);
     }
 
     public ResumePostAnswerDTO createResume(ResumeDTO resumeDTO){
@@ -69,7 +81,6 @@ public class ResumeService {
         certificatesQualificationRepository.save(resume.getCertificatesQualification());
         workExperienceRepository.save(resume.getWorkExperience());
 
-        personalInfoRepository.deleteAll();
         return new ResumePostAnswerDTO("success", "Успешно сохранено");
     }
 }

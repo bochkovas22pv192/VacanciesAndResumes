@@ -21,13 +21,13 @@ public class CertificatesQualification {
     private PersonalInfo personalInfo;
 
     @Column
-    private boolean educationalInstitution ;
+    private String educationalInstitution ;
 
     @Column
-    private boolean organization;
+    private String organization;
 
     @Column
-    private boolean specialization;
+    private String specialization;
 
     @Column
     private int graduationYear ;

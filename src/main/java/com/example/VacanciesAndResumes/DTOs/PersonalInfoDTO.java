@@ -4,16 +4,14 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class PersonalInfoDTO {
     private  String lastName;
     private  String firstName;
     private  String middleName;
     private String genderName;
     private  String dateOfBirth;
-    private  Long age;
+    private  int age;
     private  String countryName;
     private  String regionName;
     private  String cityName;

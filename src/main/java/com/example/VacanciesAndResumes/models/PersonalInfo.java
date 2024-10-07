@@ -36,7 +36,7 @@ public class PersonalInfo {
     private LocalDate dateOfBirth;
 
     @Column(nullable = false)
-    private Long age;
+    private int age;
 
     @Column(nullable = false)
     private String countryName;

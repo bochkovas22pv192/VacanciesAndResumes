@@ -4,9 +4,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class AdditionalInfoDTO {
     private  boolean willingToRelocate;
     private  String employmentType;

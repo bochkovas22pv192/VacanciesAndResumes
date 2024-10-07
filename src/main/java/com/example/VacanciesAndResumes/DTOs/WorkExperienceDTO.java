@@ -4,9 +4,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class WorkExperienceDTO {
     private  String organizationName;
     private  String industry;
@@ -16,7 +14,7 @@ public class WorkExperienceDTO {
     private  String startDate;
     private  boolean isCurrentJob;
     private  String endDate;
-    private  Long workDuration;
+    private  int workDuration;
     private  String additionalInfo;
-    private  String totalExperience;
+    private  int totalExperience;
 }

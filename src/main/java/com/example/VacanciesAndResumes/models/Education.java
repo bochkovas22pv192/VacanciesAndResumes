@@ -21,17 +21,17 @@ public class Education {
     private PersonalInfo personalInfo;
 
     @Column
-    private boolean educationLevel;
+    private String educationLevel;
 
     @Column
-    private boolean institution;
+    private String institution;
 
     @Column
-    private boolean faculty;
+    private String faculty;
 
     @Column
-    private boolean specialization;
+    private String specialization;
 
     @Column
-    private Long graduationYear;
+    private int graduationYear;
 }

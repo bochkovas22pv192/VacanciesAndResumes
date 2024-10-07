@@ -4,13 +4,11 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class SpecializationDTO {
     private  String desiredPosition;
     private  String grade;
     private  String keySkills;
-    private  Long salary;
+    private  double salary;
     private  String currency;
 }

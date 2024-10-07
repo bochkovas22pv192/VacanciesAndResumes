@@ -4,9 +4,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class ContactDTO {
     private  String mobilePhone;
     private  String email;
@@ -14,6 +12,6 @@ public class ContactDTO {
     private  String whatsapp;
     private  String vk;
     private  String habr;
-    private  String linkedin;
-    private  String github;
+    private  String linkedIn;
+    private  String gitHub;
 }
