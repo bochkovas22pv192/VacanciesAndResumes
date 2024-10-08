@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.services;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
 import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.Exceptions.Resume.*;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.models.Document;
 import com.example.VacanciesAndResumes.models.Language;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,6 +34,10 @@ public class ResumeService {
 
     @Autowired
     ResumeMapper resumeMapper;
+
+    private boolean checkForLetters(String s){
+        return s.matches(".*[a-zA-Z]+.*");
+    }
 
     public List<ResumeDTO> getResumeAll(){
         List<Resume> resumes = new java.util.ArrayList<>(List.of());
@@ -54,7 +60,54 @@ public class ResumeService {
     }
 
     public ResumePostAnswerDTO createResume(ResumeDTO resumeDTO){
+        if(resumeDTO.getPersonalInfo().getLastName().isBlank()){
+            throw new LastNameWhitespaceException();
+        }
+        if(resumeDTO.getPersonalInfo().getFirstName().isBlank()){
+            throw new FirstNameWhitespaceException();
+        }
+        if(resumeDTO.getPersonalInfo().getMiddleName().isBlank()){
+            throw new MiddleNameWhitespaceException();
+        }
+        if(resumeDTO.getPersonalInfo().getCountryName().isEmpty()){
+            throw new TaskCountryEmptyException();
+        }
+        if(resumeDTO.getPersonalInfo().getRegionName().isEmpty()){
+            throw new TaskRegionEmptyException();
+        }
+        if(resumeDTO.getPersonalInfo().getCityName().isEmpty()){
+            throw new TaskCityEmptyException();
+        }
+
+        if(resumeDTO.getContact().getMobilePhone().isBlank()){
+            throw new MobilePhoneWhitespaceException();
+        }
+        if(resumeDTO.getContact().getEmail().isEmpty()){
+            throw new TaskEmailEmptyException();
+        }
+        if(resumeDTO.getContact().getTelegram().isEmpty()){
+            throw new TaskTelegramEmptyException();
+        }
+        if(checkForLetters(resumeDTO.getContact().getWhatsapp())){
+            throw new WhatsAppFormatException();
+        }
+        if(resumeDTO.getSpecialization().getDesiredPosition().isEmpty()){
+            throw new TaskDesiredPositionEmptyException();
+        }
+        if(checkForLetters(resumeDTO.getWorkExperience().getStartDate())){
+            throw new StartDateFormatException();
+        }
+        if(checkForLetters(resumeDTO.getWorkExperience().getEndDate())){
+            throw new EndDateFormatException();
+        }
+
+
         Resume resume = resumeMapper.resumeDTOToResume(resumeDTO);
+
+        if (resume.getPersonalInfo().getDateOfBirth().isAfter(LocalDate.now())){
+            throw new DateOfBirthMinDateException();
+        }
+
 
 
         resume.getAdditionalInfo().setPersonalInfo(resume.getPersonalInfo());
