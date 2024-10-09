@@ -29,30 +29,9 @@ class ResumeControllerTest {
     private Integer port;
 
     @Autowired
-    ResumeMapper resumeMapper;
-    @Autowired
     ResumeService resumeService;
 
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    @Autowired
-    AdditionalInfoRepository additionalInfoRepository;
-    @Autowired
-    CertificatesQualificationRepository certificatesQualificationRepository;
-    @Autowired
-    ContactRepository contactRepository;
-    @Autowired
-    DocumentRepository documentRepository;
-    @Autowired
-    EducationRepository educationRepository;
-    @Autowired
-    LanguageRepository languageRepository;
-    @Autowired
-    PersonalInfoRepository personalInfoRepository;
-    @Autowired
-    SpecializationRepository specializationRepository;
-    @Autowired
-    WorkExperienceRepository workExperienceRepository;
 
     @BeforeEach
     void setUp() {
