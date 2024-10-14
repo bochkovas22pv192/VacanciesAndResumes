@@ -17,10 +17,10 @@ public class Document {
     private Long documentId     ;
 
     @ManyToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-
+    @Lob
     @Column
     private byte[] document ;
 }

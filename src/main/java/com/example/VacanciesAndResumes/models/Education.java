@@ -17,19 +17,19 @@ public class Education {
     private Long educationId;
 
     @ManyToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column
+    @Column(length = 50)
     private String educationLevel;
 
-    @Column
+    @Column(length = 100)
     private String institution;
 
-    @Column
+    @Column(length = 100)
     private String faculty;
 
-    @Column
+    @Column(length = 100)
     private String specialization;
 
     @Column

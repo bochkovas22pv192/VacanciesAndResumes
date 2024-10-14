@@ -13,75 +13,72 @@ import java.util.Collection;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "personal_info")
-public class PersonalInfo {
+@Table(name = "candidate")
+public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long personalInfoId ;
+    private Long candidateId ;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=100)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=100)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(length=100)
     private String middleName;
 
     @Column(nullable = false)
-    private String genderName;
+    private int gender;
 
     @Column(nullable = false)
-    private LocalDate dateOfBirth;
+    private LocalDate birthDate;
+
+    @Column(nullable = false, length=20)
+    private String country;
 
     @Column(nullable = false)
-    private int age;
+    private String region;
 
-    @Column(nullable = false)
-    private String countryName;
+    @Column(nullable = false, length=100)
+    private String city;
 
-    @Column(nullable = false)
-    private String regionName;
-
-    @Column(nullable = false)
-    private String cityName;
-
-    @Column(nullable = false)
+    @Column(nullable = false, length=100)
     private String citizenship;
 
     @Column(nullable = false)
-    private boolean workPermit;
+    private boolean hasWorkPermit;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Contact contact;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Specialization specialization;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<WorkExperience> workExperiences;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Language> languages;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private AdditionalInfo additionalInfos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Education> educations;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<CertificatesQualification> certificatesQualifications;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Document> documents;
 

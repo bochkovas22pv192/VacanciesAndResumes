@@ -5,16 +5,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PersonalInfoDTO {
+public class CandidateDTO {
     private  String lastName;
     private  String firstName;
     private  String middleName;
-    private String genderName;
-    private  String dateOfBirth;
-    private  int age;
-    private  String countryName;
-    private  String regionName;
-    private  String cityName;
+    private int gender;
+    private  String birthDate;
+    private  String country;
+    private  String region;
+    private  String city;
     private  String citizenship;
     private  boolean workPermit;
 }

@@ -17,16 +17,16 @@ public class CertificatesQualification {
     private Long certificatesQualificationId;
 
     @ManyToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column
+    @Column(length = 100)
     private String educationalInstitution ;
 
-    @Column
+    @Column(length = 100)
     private String organization;
 
-    @Column
+    @Column(length = 100)
     private String specialization;
 
     @Column

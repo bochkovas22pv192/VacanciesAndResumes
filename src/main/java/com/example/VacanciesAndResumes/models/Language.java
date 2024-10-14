@@ -17,12 +17,12 @@ public class Language {
     private Long languagesId   ;
 
     @ManyToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column
+    @Column(length = 50)
     private String language;
 
-    @Column
+    @Column(length = 21)
     private String level;
 }

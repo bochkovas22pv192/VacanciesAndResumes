@@ -11,50 +11,61 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResumeMapper {
-    ResumeDTO resumeToResumeDTO(Resume resume);
-    Resume resumeDTOToResume(ResumeDTO resumeDTO);
+    ResumeDTO resumeToResumeDTO(Resume entity);
+    Resume resumeDTOToResume(ResumeDTO entity);
 
-    List<ResumeDTO> resumeToResumeDTO(List<Resume> resume);
-    List<Resume> resumeDTOToResume(List<ResumeDTO> resumeDTO);
+    List<ResumeDTO> resumeToResumeDTO(List<Resume> entity);
+    List<Resume> resumeDTOToResume(List<ResumeDTO> entity);
 
-    AdditionalInfoDTO additionalInfoToAdditionalInfoDTO(AdditionalInfo additionalInfo);
-    AdditionalInfo additionalInfoDTOToAdditionalInfo(AdditionalInfoDTO additionalInfoDTO);
+    AdditionalInfoDTO additionalInfoToAdditionalInfoDTO(AdditionalInfo entity);
+    AdditionalInfo additionalInfoDTOToAdditionalInfo(AdditionalInfoDTO entity);
 
-    @Mapping(target="dateOfBirth", source="personalInfo.dateOfBirth", dateFormat = "yyyy.MM.dd")
-    PersonalInfoDTO personalInfoToPersonalInfoDTO(PersonalInfo personalInfo);
-    @Mapping(target="dateOfBirth", source="personalInfoDTO.dateOfBirth", dateFormat = "yyyy.MM.dd")
-    PersonalInfo personalInfoDTOToPersonalInfo(PersonalInfoDTO personalInfoDTO);
+    @Mapping(target="birthDate", source="entity.birthDate", dateFormat = "yyyy.MM.dd")
+    CandidateDTO candidateToCandidateDTO(Candidate entity);
+    @Mapping(target="birthDate", source="entity.birthDate", dateFormat = "yyyy.MM.dd")
+    Candidate candidateDTOToCandidate(CandidateDTO entity);
 
-    CertificatesQualificationDTO certificatesQualificationToCertificatesQualificationDTO(CertificatesQualification certificatesQualification);
-    CertificatesQualification certificatesQualificationDTOToCertificatesQualification(CertificatesQualificationDTO certificatesQualificationDTO);
+    CertificatesQualificationDTO certificatesQualificationToCertificatesQualificationDTO(CertificatesQualification entity);
+    CertificatesQualification certificatesQualificationDTOToCertificatesQualification(CertificatesQualificationDTO entity);
+    List<CertificatesQualificationDTO> certificatesQualificationToCertificatesQualificationDTO(List<CertificatesQualification> entity);
+    List<CertificatesQualification> certificatesQualificationDTOToCertificatesQualification(List<CertificatesQualificationDTO> entity);
 
-    ContactDTO contactToContactDTO(Contact contact);
-    Contact contactDTOToContact(ContactDTO contactDTO);
+    ContactDTO contactToContactDTO(Contact entity);
+    Contact contactDTOToContact(ContactDTO entity);
 
-    DocumentDTO documentToDocumentDTO(Document document);
-    Document documentDTOToDocument(DocumentDTO documentDTO);
+    DocumentDTO documentToDocumentDTO(Document entity);
+    Document documentDTOToDocument(DocumentDTO entity);
 
-    List<DocumentDTO> documentToDocumentDTO(List<Document> document);
-    List<Document> documentDTOToDocument(List<DocumentDTO> documentDTO);
+    List<DocumentDTO> documentToDocumentDTO(List<Document> entity);
+    List<Document> documentDTOToDocument(List<DocumentDTO> entity);
 
-    EducationDTO educationToEducationDTO(Education education);
-    Education educationDTOToEducation(EducationDTO educationDTO);
+    EducationDTO educationToEducationDTO(Education entity);
+    Education educationDTOToEducation(EducationDTO entity);
+    List<EducationDTO> educationToEducationDTO(List<Education> entity);
+    List<Education> educationDTOToEducation(List<EducationDTO> entity);
 
-    LanguageDTO languageToLanguageDTO(Language language);
-    Language languageDTOToLanguage(LanguageDTO languageDTO);
+    LanguageDTO languageToLanguageDTO(Language entity);
+    Language languageDTOToLanguage(LanguageDTO entity);
 
-    List<LanguageDTO> languageToLanguageDTO(List<Language>  language);
-    List<Language> languageDTOToLanguage(List<LanguageDTO> languageDTO);
+    List<LanguageDTO> languageToLanguageDTO(List<Language>  entity);
+    List<Language> languageDTOToLanguage(List<LanguageDTO> entity);
 
-    SpecializationDTO specializationToSpecializationDTO(Specialization specialization);
-    Specialization specializationDTOToSpecialization(SpecializationDTO specializationDTO);
+    SpecializationDTO specializationToSpecializationDTO(Specialization entity);
+    Specialization specializationDTOToSpecialization(SpecializationDTO entity);
 
-    @Mapping(target="startDate", source="workExperience.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="workExperience.endDate", dateFormat = "dd.MM.yyyy")
-    WorkExperienceDTO workExperienceToWorkExperienceDTO(WorkExperience workExperience);
-    @Mapping(target="startDate", source="workExperienceDTO.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="workExperienceDTO.endDate", dateFormat = "dd.MM.yyyy")
-    WorkExperience workExperienceDTOToWorkExperience(WorkExperienceDTO workExperienceDTO);
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    WorkExperienceDTO workExperienceToWorkExperienceDTO(WorkExperience entity);
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    WorkExperience workExperienceDTOToWorkExperience(WorkExperienceDTO entity);
+
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    List<WorkExperienceDTO> workExperienceToWorkExperienceDTO(List<WorkExperience> entity);
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
 
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;

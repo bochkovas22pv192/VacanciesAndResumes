@@ -19,19 +19,19 @@ public class WorkExperience {
     private Long workExperienceId  ;
 
     @ManyToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column
+    @Column(length = 100)
     private String organizationName;
 
-    @Column
+    @Column(length = 100)
     private String industry;
 
-    @Column
+    @Column(length = 100)
     private String organizationWebsite ;
 
-    @Column
+    @Column(length = 100)
     private String companyCity ;
 
     @Column
@@ -46,12 +46,7 @@ public class WorkExperience {
     @Column
     private LocalDate endDate;
 
-    @Column
-    private int workDuration;
-
+    @Lob
     @Column
     private String additionalInfo;
-
-    @Column
-    private int totalExperience;
 }

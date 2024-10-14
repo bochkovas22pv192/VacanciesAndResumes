@@ -17,21 +17,22 @@ public class Specialization {
     private Long specializationId ;
 
     @OneToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String desiredPosition;
 
-    @Column
+    @Column(length = 6)
     private String grade;
 
-    @Column
+    @Lob
+    @Column(length = 500)
     private String keySkills;
 
     @Column
-    private double salary;
+    private int salary;
 
-    @Column
+    @Column(length = 3)
     private String currency;
 }

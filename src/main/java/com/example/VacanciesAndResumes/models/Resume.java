@@ -8,14 +8,14 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Resume {
-    private PersonalInfo personalInfo;
+    private Candidate candidate;
     private Contact contact;
     private Specialization specialization;
-    private WorkExperience workExperience;
+    private List<WorkExperience> workExperience;
     private List<Language> languages;
     private AdditionalInfo additionalInfo;
     private List<Document> documents;
-    private Education education;
-    private CertificatesQualification certificatesQualification;
+    private List<Education> education;
+    private List<CertificatesQualification> certificatesQualification;
 
 }

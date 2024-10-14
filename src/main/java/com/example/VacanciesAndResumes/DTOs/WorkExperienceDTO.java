@@ -14,7 +14,5 @@ public class WorkExperienceDTO {
     private  String startDate;
     private  boolean isCurrentJob;
     private  String endDate;
-    private  int workDuration;
     private  String additionalInfo;
-    private  int totalExperience;
 }

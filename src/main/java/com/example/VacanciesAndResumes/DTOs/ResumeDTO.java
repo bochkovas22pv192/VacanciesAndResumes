@@ -8,14 +8,14 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ResumeDTO {
-    private PersonalInfoDTO personalInfo;
+    private CandidateDTO personalInfo;
     private ContactDTO contact;
     private SpecializationDTO specialization;
-    private WorkExperienceDTO workExperience;
+    private List<WorkExperienceDTO> workExperience;
     private List<LanguageDTO> languages;
     private AdditionalInfoDTO additionalInfo;
     private List<DocumentDTO> documents;
-    private EducationDTO education;
-    private CertificatesQualificationDTO certificatesQualification;
+    private List<EducationDTO> education;
+    private List<CertificatesQualificationDTO> certificatesQualification;
 
 }

@@ -9,6 +9,6 @@ public class SpecializationDTO {
     private  String desiredPosition;
     private  String grade;
     private  String keySkills;
-    private  double salary;
+    private  int salary;
     private  String currency;
 }

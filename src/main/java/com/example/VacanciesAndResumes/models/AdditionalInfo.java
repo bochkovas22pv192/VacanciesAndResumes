@@ -17,13 +17,13 @@ public class AdditionalInfo {
     private Long additionalInfoId    ;
 
     @OneToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
     @Column
     private boolean willingToRelocate ;
 
-    @Column
+    @Column(length = 100)
     private String employmentType ;
 
     @Column

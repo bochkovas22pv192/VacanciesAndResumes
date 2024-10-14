@@ -17,30 +17,30 @@ public class Contact {
     private Long contactId ;
 
     @OneToOne
-    @JoinColumn(name="personal_info_id")
-    private PersonalInfo personalInfo;
+    @JoinColumn(name="candidate_id")
+    private Candidate candidate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String mobilePhone ;
 
     @Column(nullable = false)
     private String email ;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 33)
     private String telegram ;
 
-    @Column
+    @Column(length = 15)
     private String whatsapp;
 
-    @Column
+    @Column(length = 100)
     private String vk;
 
-    @Column
+    @Column(length = 100)
     private String habr;
 
-    @Column
+    @Column(length = 100)
     private String linkedIn;
 
-    @Column
+    @Column(length = 100)
     private String gitHub;
 }
