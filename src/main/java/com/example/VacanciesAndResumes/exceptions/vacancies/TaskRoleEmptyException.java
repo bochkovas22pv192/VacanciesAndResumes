@@ -1,4 +1,4 @@
-package com.example.VacanciesAndResumes.Exceptions.Vacancies;
+package com.example.VacanciesAndResumes.exceptions.vacancies;
 
 public class TaskRoleEmptyException extends RuntimeException {
     public TaskRoleEmptyException() {

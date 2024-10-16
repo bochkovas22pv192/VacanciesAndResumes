@@ -3,9 +3,9 @@ package com.example.VacanciesAndResumes.services;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
-import com.example.VacanciesAndResumes.Exceptions.Vacancies.SalaryFormatException;
-import com.example.VacanciesAndResumes.Exceptions.Vacancies.TaskGradeEmptyException;
-import com.example.VacanciesAndResumes.Exceptions.Vacancies.TaskRoleEmptyException;
+import com.example.VacanciesAndResumes.exceptions.vacancies.SalaryFormatException;
+import com.example.VacanciesAndResumes.exceptions.vacancies.TaskGradeEmptyException;
+import com.example.VacanciesAndResumes.exceptions.vacancies.TaskRoleEmptyException;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import com.example.VacanciesAndResumes.repositories.VacancyRepository;

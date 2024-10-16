@@ -39,8 +39,8 @@ public class Contact {
     private String habr;
 
     @Column(length = 100)
-    private String linkedIn;
+    private String linkedin;
 
     @Column(length = 100)
-    private String gitHub;
+    private String github;
 }

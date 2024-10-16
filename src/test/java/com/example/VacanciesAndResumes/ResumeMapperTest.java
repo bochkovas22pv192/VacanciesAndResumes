@@ -72,7 +72,7 @@ public class ResumeMapperTest {
         candidate.setHasWorkPermit(true);
 
         assertEquals(resumeMapper.candidateToCandidateDTO(candidate),
-                new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992.10.30", "Россия",
+                new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true)
                 );
     }
@@ -93,7 +93,7 @@ public class ResumeMapperTest {
 
         assertEquals(candidate,
                 resumeMapper.candidateDTOToCandidate(new CandidateDTO("Иванов", "Иван",
-                        "Иванович", 1, "1992.10.30", "Россия",
+                        "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true))
         );
     }
@@ -136,8 +136,8 @@ public class ResumeMapperTest {
         contact.setWhatsapp("7(920)999-99-99");
         contact.setVk("vk.com/ivanov");
         contact.setHabr("habr.com/ivanov");
-        contact.setLinkedIn("linkedin.com/in/ivanov");
-        contact.setGitHub("github.com/ivanov");
+        contact.setLinkedin("linkedin.com/in/ivanov");
+        contact.setGithub("github.com/ivanov");
 
         assertEquals(resumeMapper.contactToContactDTO(contact),
                 new ContactDTO("7(920)999-99-99", "ivanov@mail.ru", "@ivanov", "7(920)999-99-99",
@@ -154,8 +154,8 @@ public class ResumeMapperTest {
         contact.setWhatsapp("7(920)999-99-99");
         contact.setVk("vk.com/ivanov");
         contact.setHabr("habr.com/ivanov");
-        contact.setLinkedIn("linkedin.com/in/ivanov");
-        contact.setGitHub("github.com/ivanov");
+        contact.setLinkedin("linkedin.com/in/ivanov");
+        contact.setGithub("github.com/ivanov");
 
         assertEquals(contact,
                 resumeMapper.contactDTOToContact(new ContactDTO("7(920)999-99-99", "ivanov@mail.ru", "@ivanov",
@@ -325,7 +325,7 @@ public class ResumeMapperTest {
 
         assertEquals(resumeMapper.workExperienceToWorkExperienceDTO(workExperience),
                 new WorkExperienceDTO("Tech Corp", "IT", "techcorp.com", "Москва",
-                        "Программист", "2015.07.15", false, "2020.08.28", "Работа в крупной компании")
+                        "Программист", "2015-07-15", false, "2020-08-28", "Работа в крупной компании")
         );
     }
 
@@ -346,8 +346,8 @@ public class ResumeMapperTest {
 
         assertEquals(workExperience,
                 resumeMapper.workExperienceDTOToWorkExperience(new WorkExperienceDTO("Tech Corp", "IT",
-                        "techcorp.com", "Москва", "Программист", "2015.07.15",
-                        false, "2020.08.28", "Работа в крупной компании"))
+                        "techcorp.com", "Москва", "Программист", "2015-07-15",
+                        false, "2020-08-28", "Работа в крупной компании"))
         );
     }
 }

@@ -5,44 +5,49 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "vacancies")
+@Table
 public class Vacancy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long vacancyId;
 
-    @Column(nullable = false)
-    private String grade;
+    @Column(nullable = false, length = 100)
+    private String title;
 
-    @Column
-    private String countryName;
+    @Column(nullable = false, length = 100)
+    private String roleName;
 
+    @Lob
     @Column
-    private String regionName;
-
-    @Column
-    private String cityName;
-
-    @Column
-    private String vacanciesName;
+    private String description;
 
     @Column(nullable = false)
-    private String role;
+    private int salary;
+
+    @Column(nullable = false, length = 20)
+    private String country;
+
+    @Column(nullable = false, length = 100)
+    private String region;
+
+    @Column(nullable = false, length = 100)
+    private String city;
 
     @Column(nullable = false)
     private String customerProject;
 
-    @Column
-    private String salary;
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
-    @Column
-    private String currency;
+    @Column(nullable = false)
+    private boolean isActive;
 
-    @Column
-    private String description;
+
 }

@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class VacancyDTO {
-    private  String grade;
-    private  String countryName;
-    private  String regionName;
-    private  String cityName;
-    private  String vacanciesName;
-    private  String role;
-    private  String customerProject;
-    private  String salary;
-    private  String currency;
+    private  String title;
+    private  String roleName;
     private  String description;
+    private  int salary;
+    private  String country;
+    private  String region;
+    private  String city;
+    private String createdAt;
+    private boolean isActive;
 }

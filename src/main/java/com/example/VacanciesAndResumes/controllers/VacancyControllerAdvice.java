@@ -1,7 +1,7 @@
 package com.example.VacanciesAndResumes.controllers;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
-import com.example.VacanciesAndResumes.Exceptions.Vacancies.*;
+import com.example.VacanciesAndResumes.exceptions.vacancies.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
