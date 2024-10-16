@@ -11,11 +11,11 @@ public class Resume {
     private Candidate candidate;
     private Contact contact;
     private Specialization specialization;
-    private List<WorkExperience> workExperience;
+    private List<WorkExperience> workExperiences;
     private List<Language> languages;
     private AdditionalInfo additionalInfo;
     private List<Document> documents;
-    private List<Education> education;
-    private List<CertificatesQualification> certificatesQualification;
+    private List<Education> educations;
+    private List<CertificatesQualification> certificatesQualifications;
 
 }

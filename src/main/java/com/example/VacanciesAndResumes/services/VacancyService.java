@@ -1,7 +1,7 @@
 package com.example.VacanciesAndResumes.services;
 
 
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
 import com.example.VacanciesAndResumes.Exceptions.Vacancies.SalaryFormatException;
 import com.example.VacanciesAndResumes.Exceptions.Vacancies.TaskGradeEmptyException;
@@ -30,7 +30,7 @@ public class VacancyService {
         return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll());
     }
 
-    public ResumePostAnswerDTO createVacancy(VacancyDTO vacancyDTO){
+    public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){
         if(vacancyDTO.getGrade().isEmpty()){
             throw  new TaskGradeEmptyException();
         }
@@ -44,6 +44,6 @@ public class VacancyService {
 
         vacancyRepository.save(vacancy);
 
-        return new ResumePostAnswerDTO("success", "Успешно сохранено");
+        return new ResumeAnswerDTO("success", "Успешно сохранено");
     }
 }

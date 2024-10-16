@@ -5,7 +5,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResumePostAnswerDTO {
+public class ResumeAnswerDTO {
     private String status;
     private  String message;
 }

@@ -1,7 +1,7 @@
 package com.example.VacanciesAndResumes.services;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.WorkExperienceDTO;
 import com.example.VacanciesAndResumes.Exceptions.Resume.*;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
@@ -44,11 +44,11 @@ public class ResumeService {
             Resume creatingResume = new Resume();
             creatingResume.setCandidate(candidates.get(i));
             creatingResume.setAdditionalInfo(additionalInfoRepository.findAll().get(i));
-            creatingResume.setCertificatesQualification(List.of(certificatesQualificationRepository.findAll().get(i)));
+            creatingResume.setCertificatesQualifications(List.of(certificatesQualificationRepository.findAll().get(i)));
             creatingResume.setContact(contactRepository.findAll().get(i));
-            creatingResume.setEducation(List.of(educationRepository.findAll().get(i)));
+            creatingResume.setEducations(List.of(educationRepository.findAll().get(i)));
             creatingResume.setSpecialization(specializationRepository.findAll().get(i));
-            creatingResume.setWorkExperience(List.of(workExperienceRepository.findAll().get(i)));
+            creatingResume.setWorkExperiences(List.of(workExperienceRepository.findAll().get(i)));
             creatingResume.setLanguages((List<Language>) candidates.get(i).getLanguages());
             creatingResume.setDocuments((List<Document>) candidates.get(i).getDocuments());
             resumes.add(creatingResume);
@@ -57,23 +57,23 @@ public class ResumeService {
         return resumeMapper.resumeToResumeDTO(resumes);
     }
 
-    public ResumePostAnswerDTO createResume(ResumeDTO resumeDTO){
-        if(resumeDTO.getPersonalInfo().getLastName().isBlank()){
+    public ResumeAnswerDTO createResume(ResumeDTO resumeDTO){
+        if(resumeDTO.getCandidate().getLastName().isBlank()){
             throw new LastNameWhitespaceException();
         }
-        if(resumeDTO.getPersonalInfo().getFirstName().isBlank()){
+        if(resumeDTO.getCandidate().getFirstName().isBlank()){
             throw new FirstNameWhitespaceException();
         }
-        if(resumeDTO.getPersonalInfo().getMiddleName().isBlank()){
+        if(resumeDTO.getCandidate().getMiddleName().isBlank()){
             throw new MiddleNameWhitespaceException();
         }
-        if(resumeDTO.getPersonalInfo().getCountry().isEmpty()){
+        if(resumeDTO.getCandidate().getCountry().isEmpty()){
             throw new TaskCountryEmptyException();
         }
-        if(resumeDTO.getPersonalInfo().getRegion().isEmpty()){
+        if(resumeDTO.getCandidate().getRegion().isEmpty()){
             throw new TaskRegionEmptyException();
         }
-        if(resumeDTO.getPersonalInfo().getCity().isEmpty()){
+        if(resumeDTO.getCandidate().getCity().isEmpty()){
             throw new TaskCityEmptyException();
         }
 
@@ -92,7 +92,7 @@ public class ResumeService {
         if(resumeDTO.getSpecialization().getDesiredPosition().isEmpty()){
             throw new TaskDesiredPositionEmptyException();
         }
-        for(WorkExperienceDTO workExperienceDTO : resumeDTO.getWorkExperience()){
+        for(WorkExperienceDTO workExperienceDTO : resumeDTO.getWorkExperiences()){
             if(checkForLetters(workExperienceDTO.getStartDate())){
                 throw new StartDateFormatException();
             }
@@ -112,13 +112,13 @@ public class ResumeService {
         resume.getContact().setCandidate(resume.getCandidate());
         resume.getSpecialization().setCandidate(resume.getCandidate());
 
-        for(Education education : resume.getEducation()){
+        for(Education education : resume.getEducations()){
             education.setCandidate(resume.getCandidate());
         }
-        for(CertificatesQualification certificatesQualification : resume.getCertificatesQualification()){
+        for(CertificatesQualification certificatesQualification : resume.getCertificatesQualifications()){
             certificatesQualification.setCandidate(resume.getCandidate());
         }
-        for(WorkExperience workExperience : resume.getWorkExperience()){
+        for(WorkExperience workExperience : resume.getWorkExperiences()){
             workExperience.setCandidate(resume.getCandidate());
         }
 
@@ -134,11 +134,11 @@ public class ResumeService {
         candidateRepository.save(resume.getCandidate());
         additionalInfoRepository.save(resume.getAdditionalInfo());
         contactRepository.save(resume.getContact());
-        educationRepository.saveAll(resume.getEducation());
+        educationRepository.saveAll(resume.getEducations());
         specializationRepository.save(resume.getSpecialization());
-        certificatesQualificationRepository.saveAll(resume.getCertificatesQualification());
-        workExperienceRepository.saveAll(resume.getWorkExperience());
+        certificatesQualificationRepository.saveAll(resume.getCertificatesQualifications());
+        workExperienceRepository.saveAll(resume.getWorkExperiences());
 
-        return new ResumePostAnswerDTO("success", "Успешно сохранено");
+        return new ResumeAnswerDTO("success", "Успешно сохранено");
     }
 }

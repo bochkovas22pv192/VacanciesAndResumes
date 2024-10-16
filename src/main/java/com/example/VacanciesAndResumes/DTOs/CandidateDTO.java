@@ -15,5 +15,5 @@ public class CandidateDTO {
     private  String region;
     private  String city;
     private  String citizenship;
-    private  boolean workPermit;
+    private  boolean hasWorkPermit;
 }

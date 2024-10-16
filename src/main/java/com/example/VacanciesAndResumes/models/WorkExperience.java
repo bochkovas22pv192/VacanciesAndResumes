@@ -41,7 +41,7 @@ public class WorkExperience {
     private LocalDate startDate;
 
     @Column
-    private boolean isCurrentJob ;
+    private boolean isCurrentJob;
 
     @Column
     private LocalDate endDate;

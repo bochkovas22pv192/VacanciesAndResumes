@@ -1,7 +1,7 @@
 package com.example.VacanciesAndResumes.controllers;
 
 
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class VacancyController {
     }
 
     @PostMapping("/")
-    ResumePostAnswerDTO createResume(@RequestBody VacancyDTO vacancyDTO) {
+    ResumeAnswerDTO createResume(@RequestBody VacancyDTO vacancyDTO) {
         return service.createVacancy(vacancyDTO);
     }
 }

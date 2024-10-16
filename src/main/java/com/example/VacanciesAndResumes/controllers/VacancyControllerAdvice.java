@@ -1,6 +1,6 @@
 package com.example.VacanciesAndResumes.controllers;
 
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.Exceptions.Vacancies.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class VacancyControllerAdvice {
     @ExceptionHandler(TaskGradeEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskGradeEmptyHandler(TaskGradeEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskGradeEmptyHandler(TaskGradeEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -20,8 +20,8 @@ public class VacancyControllerAdvice {
 
     @ExceptionHandler(TaskRoleEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskRoleEmptyHandler(TaskRoleEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskRoleEmptyHandler(TaskRoleEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -29,8 +29,8 @@ public class VacancyControllerAdvice {
 
     @ExceptionHandler(SalaryFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO salaryFormatHandler(SalaryFormatException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO salaryFormatHandler(SalaryFormatException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );

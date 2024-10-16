@@ -1,6 +1,6 @@
 package com.example.VacanciesAndResumes.controllers;
 
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.Exceptions.Resume.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ResumeControllerAdvice {
     @ExceptionHandler(LastNameWhitespaceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO employeeNotFoundHandler(LastNameWhitespaceException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO employeeNotFoundHandler(LastNameWhitespaceException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -20,8 +20,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(FirstNameWhitespaceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO firstNameWhitespaceHandler(FirstNameWhitespaceException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO firstNameWhitespaceHandler(FirstNameWhitespaceException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -29,8 +29,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(MiddleNameWhitespaceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO middleNameWhitespaceHandler(MiddleNameWhitespaceException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO middleNameWhitespaceHandler(MiddleNameWhitespaceException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -38,8 +38,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(DateOfBirthMinDateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO dateOfBirthMinDateHandler(DateOfBirthMinDateException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO dateOfBirthMinDateHandler(DateOfBirthMinDateException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -47,8 +47,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskCountryEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskCountryEmptyHandler(TaskCountryEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskCountryEmptyHandler(TaskCountryEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -56,8 +56,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskRegionEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskRegionEmptyHandler(TaskRegionEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskRegionEmptyHandler(TaskRegionEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -65,8 +65,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskCityEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskCityEmptyHandler(TaskCityEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskCityEmptyHandler(TaskCityEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -74,8 +74,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(MobilePhoneWhitespaceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO mobilePhoneWhitespaceHandler(MobilePhoneWhitespaceException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO mobilePhoneWhitespaceHandler(MobilePhoneWhitespaceException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -83,8 +83,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskEmailEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskEmailEmptyHandler(TaskEmailEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskEmailEmptyHandler(TaskEmailEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -92,8 +92,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskTelegramEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskTelegramEmptyHandler(TaskTelegramEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskTelegramEmptyHandler(TaskTelegramEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -101,8 +101,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(WhatsAppFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO whatsAppFormatHandler(WhatsAppFormatException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO whatsAppFormatHandler(WhatsAppFormatException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -110,8 +110,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(TaskDesiredPositionEmptyException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO taskDesiredPositionEmptyHandler(TaskDesiredPositionEmptyException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO taskDesiredPositionEmptyHandler(TaskDesiredPositionEmptyException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -119,8 +119,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(StartDateFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO startDateFormatHandler(StartDateFormatException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO startDateFormatHandler(StartDateFormatException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );
@@ -128,8 +128,8 @@ public class ResumeControllerAdvice {
 
     @ExceptionHandler(EndDateFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ResumePostAnswerDTO endDateFormatHandler(EndDateFormatException ex) {
-        return new ResumePostAnswerDTO(
+    ResumeAnswerDTO endDateFormatHandler(EndDateFormatException ex) {
+        return new ResumeAnswerDTO(
                 HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage()
         );

@@ -1,7 +1,7 @@
 package com.example.VacanciesAndResumes.controllers;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumePostAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.services.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class ResumeController {
     }
 
     @PostMapping("/")
-    ResumePostAnswerDTO createResume(@RequestBody ResumeDTO resumeDTO) {
+    ResumeAnswerDTO createResume(@RequestBody ResumeDTO resumeDTO) {
         return service.createResume(resumeDTO);
     }
 }

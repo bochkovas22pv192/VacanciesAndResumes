@@ -53,18 +53,18 @@ public interface ResumeMapper {
     SpecializationDTO specializationToSpecializationDTO(Specialization entity);
     Specialization specializationDTOToSpecialization(SpecializationDTO entity);
 
-    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy.MM.dd")
     WorkExperienceDTO workExperienceToWorkExperienceDTO(WorkExperience entity);
-    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy.MM.dd")
     WorkExperience workExperienceDTOToWorkExperience(WorkExperienceDTO entity);
 
-    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy.MM.dd")
     List<WorkExperienceDTO> workExperienceToWorkExperienceDTO(List<WorkExperience> entity);
-    @Mapping(target="startDate", source="entity.startDate", dateFormat = "dd.MM.yyyy")
-    @Mapping(target="endDate", source="entity.endDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy.MM.dd")
+    @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy.MM.dd")
     List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
 
     default byte[] stringToBytes(String string) {
