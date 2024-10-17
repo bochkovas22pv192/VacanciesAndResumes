@@ -8,19 +8,18 @@ import lombok.*;
 @Data
 public class WorkExperienceDTO {
     @JsonProperty(value = "organization_name")
-    private  String organizationName;
-    private  String industry;
-    @JsonProperty(value = "organization_website")
-    private  String organizationWebsite;
-    @JsonProperty(value = "company_city")
-    private  String companyCity;
-    private  String position;
+    private String organizationName;
+    private String industry;
+    private String website;
+    private String city;
+    @JsonProperty(value = "role_name")
+    private String roleName;
     @JsonProperty(value = "start_data")
-    private  String startDate;
+    private String startDate;
     @JsonProperty(value = "is_current_job")
-    private  boolean isCurrentJob;
+    private boolean isCurrentJob;
     @JsonProperty(value = "end_data")
-    private  String endDate;
+    private String endDate;
     @JsonProperty(value = "additional_info")
-    private  String additionalInfo;
+    private String additionalInfo;
 }

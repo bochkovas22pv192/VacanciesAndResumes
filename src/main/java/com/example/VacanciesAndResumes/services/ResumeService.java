@@ -43,7 +43,6 @@ public class ResumeService {
         for (int i = 0; i < candidates.size(); i++) {
             Resume creatingResume = new Resume();
             creatingResume.setCandidate(candidates.get(i));
-            creatingResume.setAdditionalInfo(additionalInfoRepository.findAll().get(i));
             creatingResume.setCertificatesQualifications(List.of(certificatesQualificationRepository.findAll().get(i)));
             creatingResume.setContact(contactRepository.findAll().get(i));
             creatingResume.setEducations(List.of(educationRepository.findAll().get(i)));
@@ -108,7 +107,6 @@ public class ResumeService {
             throw new BadRequestException("Неверно заполнено поле \"Дата рождения\"");
         }
 
-        resume.getAdditionalInfo().setCandidate(resume.getCandidate());
         resume.getContact().setCandidate(resume.getCandidate());
         resume.getSpecialization().setCandidate(resume.getCandidate());
 
@@ -132,7 +130,6 @@ public class ResumeService {
         }
 
         candidateRepository.save(resume.getCandidate());
-        additionalInfoRepository.save(resume.getAdditionalInfo());
         contactRepository.save(resume.getContact());
         educationRepository.saveAll(resume.getEducations());
         specializationRepository.save(resume.getSpecialization());

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table
+@Table(name = "tb_documents")
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table
+@Table(name = "tb_language")
 public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,9 @@ public class Language {
     @JoinColumn(name="candidate_id")
     private Candidate candidate;
 
-    @Column(length = 50)
+    @Column(length = 3)
     private String language;
 
-    @Column(length = 21)
+    @Column(length = 2)
     private String level;
 }

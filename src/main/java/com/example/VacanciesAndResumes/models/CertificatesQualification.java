@@ -20,15 +20,15 @@ public class CertificatesQualification {
     @JoinColumn(name="candidate_id")
     private Candidate candidate;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String educationalInstitution ;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String organization;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String specialization;
 
-    @Column
-    private int graduationYear ;
+    @Column(nullable = false)
+    private int graduationYear;
 }

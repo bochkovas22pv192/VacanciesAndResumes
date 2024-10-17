@@ -21,14 +21,10 @@ public class Specialization {
     private Candidate candidate;
 
     @Column(nullable = false, length = 100)
-    private String desiredPosition;
+    private String roleName;
 
-    @Column(length = 6)
+    @Column(length = 20, nullable = false)
     private String grade;
-
-    @Lob
-    @Column(length = 500)
-    private String keySkills;
 
     @Column
     private int salary;

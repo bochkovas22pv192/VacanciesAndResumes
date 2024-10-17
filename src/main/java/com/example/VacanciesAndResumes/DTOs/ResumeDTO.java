@@ -16,8 +16,6 @@ public class ResumeDTO {
     private List<WorkExperienceDTO> workExperiences;
     @JsonProperty(value = "language")
     private List<LanguageDTO> languages;
-    @JsonProperty(value = "additional_info")
-    private AdditionalInfoDTO additionalInfo;
     @JsonProperty(value = "document")
     private List<DocumentDTO> documents;
     @JsonProperty(value = "education")

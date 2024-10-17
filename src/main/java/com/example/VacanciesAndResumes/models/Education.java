@@ -20,10 +20,10 @@ public class Education {
     @JoinColumn(name="candidate_id")
     private Candidate candidate;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String educationLevel;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String institution;
 
     @Column(length = 100)
@@ -32,6 +32,6 @@ public class Education {
     @Column(length = 100)
     private String specialization;
 
-    @Column
+    @Column(nullable = false)
     private int graduationYear;
 }

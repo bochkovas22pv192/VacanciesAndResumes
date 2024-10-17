@@ -24,40 +24,6 @@ public class ResumeMapperTest {
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Test
-    void additionalInfoToAdditionalInfoDTO(){
-        AdditionalInfo additionalInfo = new AdditionalInfo();
-        additionalInfo.setEmploymentType("Полная занятость");
-        additionalInfo.setWillingToTravel(true);
-        additionalInfo.setWillingToRelocate(true);
-
-        assertEquals(resumeMapper.additionalInfoToAdditionalInfoDTO(additionalInfo),
-                new AdditionalInfoDTO(true, "Полная занятость", true));
-        assertNotEquals(resumeMapper.additionalInfoToAdditionalInfoDTO(additionalInfo),
-                new AdditionalInfoDTO(false, "Полная занятость", true));
-        assertNotEquals(resumeMapper.additionalInfoToAdditionalInfoDTO(additionalInfo),
-                new AdditionalInfoDTO(false, "Частичная занятость", true));
-    }
-
-    @Test
-    void additionalInfoDTOToAdditionalInfo(){
-        AdditionalInfo additionalInfo = new AdditionalInfo();
-        additionalInfo.setEmploymentType("Полная занятость");
-        additionalInfo.setWillingToTravel(true);
-        additionalInfo.setWillingToRelocate(true);
-
-        assertEquals(resumeMapper.additionalInfoDTOToAdditionalInfo(
-                new AdditionalInfoDTO(true, "Полная занятость", true)),
-                additionalInfo);
-
-        assertNotEquals(resumeMapper.additionalInfoDTOToAdditionalInfo(
-                new AdditionalInfoDTO(false, "Полная занятость", true)),
-                additionalInfo);
-        assertNotEquals(resumeMapper.additionalInfoDTOToAdditionalInfo(
-                new AdditionalInfoDTO(true, "Частичная занятость", true)),
-                additionalInfo);
-    }
-
-    @Test
     void candidateToCandidateDTO(){
         Candidate candidate = new Candidate();
         candidate.setLastName("Иванов");
@@ -73,7 +39,7 @@ public class ResumeMapperTest {
 
         assertEquals(resumeMapper.candidateToCandidateDTO(candidate),
                 new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992-10-30", "Россия",
-                        "Белгородская область", "Белгород", "Россия", true)
+                        "Белгородская область", "Белгород", "Россия", true, 1, 1)
                 );
     }
 
@@ -94,7 +60,7 @@ public class ResumeMapperTest {
         assertEquals(candidate,
                 resumeMapper.candidateDTOToCandidate(new CandidateDTO("Иванов", "Иван",
                         "Иванович", 1, "1992-10-30", "Россия",
-                        "Белгородская область", "Белгород", "Россия", true))
+                        "Белгородская область", "Белгород", "Россия", true, 1, 1))
         );
     }
 
@@ -244,14 +210,13 @@ public class ResumeMapperTest {
         resume.setSpecialization(new Specialization());
         resume.setWorkExperiences(List.of(new WorkExperience(), new WorkExperience()));
         resume.setLanguages(List.of(new Language(), new Language()));
-        resume.setAdditionalInfo(new AdditionalInfo());
         resume.setDocuments(List.of(new Document(), new Document()));
         resume.setEducations(List.of(new Education(), new Education()));
         resume.setCertificatesQualifications(List.of(new CertificatesQualification(), new CertificatesQualification()));
 
         assertEquals(resumeMapper.resumeToResumeDTO(resume),
                 new ResumeDTO(new CandidateDTO(), new ContactDTO(), new SpecializationDTO(), List.of(new WorkExperienceDTO(), new WorkExperienceDTO()),
-                List.of(new LanguageDTO(), new LanguageDTO()), new AdditionalInfoDTO(), List.of(new DocumentDTO(), new DocumentDTO()),
+                List.of(new LanguageDTO(), new LanguageDTO()), List.of(new DocumentDTO(), new DocumentDTO()),
                         List.of(new EducationDTO(), new EducationDTO()),
                         List.of(new CertificatesQualificationDTO(), new CertificatesQualificationDTO()))
         );
@@ -265,7 +230,6 @@ public class ResumeMapperTest {
         resume.setSpecialization(new Specialization());
         resume.setWorkExperiences(List.of(new WorkExperience(), new WorkExperience()));
         resume.setLanguages(List.of(new Language(), new Language()));
-        resume.setAdditionalInfo(new AdditionalInfo());
         resume.setDocuments(List.of(new Document(), new Document()));
         resume.setEducations(List.of(new Education(), new Education()));
         resume.setCertificatesQualifications(List.of(new CertificatesQualification(), new CertificatesQualification()));
@@ -273,7 +237,7 @@ public class ResumeMapperTest {
         assertEquals(resume,
                 resumeMapper.resumeDTOToResume(new ResumeDTO(new CandidateDTO(), new ContactDTO(), new SpecializationDTO(), List.of(new WorkExperienceDTO(),
                         new WorkExperienceDTO()),
-                        List.of(new LanguageDTO(), new LanguageDTO()), new AdditionalInfoDTO(), List.of(new DocumentDTO(), new DocumentDTO()),
+                        List.of(new LanguageDTO(), new LanguageDTO()), List.of(new DocumentDTO(), new DocumentDTO()),
                         List.of(new EducationDTO(), new EducationDTO()),
                         List.of(new CertificatesQualificationDTO(), new CertificatesQualificationDTO())))
         );

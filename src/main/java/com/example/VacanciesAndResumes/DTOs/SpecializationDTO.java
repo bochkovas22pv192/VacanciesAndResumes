@@ -7,11 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class SpecializationDTO {
-    @JsonProperty(value = "desired_position")
-    private  String desiredPosition;
+    @JsonProperty(value = "role_name")
+    private  String roleName;
     private  String grade;
-    @JsonProperty(value = "key_skills")
-    private  String keySkills;
     private  int salary;
     private  String currency;
 }

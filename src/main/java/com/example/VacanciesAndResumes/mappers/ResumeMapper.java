@@ -17,9 +17,6 @@ public interface ResumeMapper {
     List<ResumeDTO> resumeToResumeDTO(List<Resume> entity);
     List<Resume> resumeDTOToResume(List<ResumeDTO> entity);
 
-    AdditionalInfoDTO additionalInfoToAdditionalInfoDTO(AdditionalInfo entity);
-    AdditionalInfo additionalInfoDTOToAdditionalInfo(AdditionalInfoDTO entity);
-
     @Mapping(target="birthDate", source="entity.birthDate", dateFormat = "yyyy-MM-dd")
     CandidateDTO candidateToCandidateDTO(Candidate entity);
     @Mapping(target="birthDate", source="entity.birthDate", dateFormat = "yyyy-MM-dd")

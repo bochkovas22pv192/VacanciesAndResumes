@@ -157,7 +157,7 @@ class ResumeControllerTest {
         ResumeDTO resume = resumeService.getResumeAll().getLast();
         MatcherAssert.assertThat(resume.getCandidate(),
                 equalTo(new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1990-01-01",
-                        "Россия", "Москва", "Москва", "РФ", true)));
+                        "Россия", "Москва", "Москва", "РФ", true, 1, 1)));
 
         MatcherAssert.assertThat(resume.getContact(),
                 equalTo(new ContactDTO("+79999999999", "ivanov@mail.ru", "@ivanov", "+79999999999", "vk.com/ivanov",
@@ -175,14 +175,9 @@ class ResumeControllerTest {
         MatcherAssert.assertThat(resume.getLanguages(),
                 equalTo(List.of(new LanguageDTO("Английский", "Advanced"), new LanguageDTO("Немецкий", "Intermediate"))));
 
-        MatcherAssert.assertThat(resume.getAdditionalInfo(),
-                equalTo(new AdditionalInfoDTO(true, "Полная занятость", true)));
 
         MatcherAssert.assertThat(resume.getDocuments(),
                 equalTo(List.of(new DocumentDTO("aaaaaaaa"), new DocumentDTO("bbbbbbb"))));
-
-        MatcherAssert.assertThat(resume.getAdditionalInfo(),
-                equalTo(new AdditionalInfoDTO(true, "Полная занятость", true)));
 
         MatcherAssert.assertThat(resume.getEducations().getLast(),
                 equalTo(new EducationDTO("Высшее", "МГУ", "Факультет ВМиК",

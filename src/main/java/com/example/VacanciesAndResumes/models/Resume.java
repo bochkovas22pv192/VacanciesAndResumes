@@ -13,7 +13,6 @@ public class Resume {
     private Specialization specialization;
     private List<WorkExperience> workExperiences;
     private List<Language> languages;
-    private AdditionalInfo additionalInfo;
     private List<Document> documents;
     private List<Education> educations;
     private List<CertificatesQualification> certificatesQualifications;

@@ -22,25 +22,25 @@ public class WorkExperience {
     @JoinColumn(name="candidate_id")
     private Candidate candidate;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String organizationName;
 
     @Column(length = 100)
     private String industry;
 
     @Column(length = 100)
-    private String organizationWebsite ;
+    private String website ;
 
     @Column(length = 100)
-    private String companyCity ;
+    private String city ;
 
-    @Column
-    private String position;
+    @Column(length = 100, nullable = false)
+    private String roleName;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate startDate;
 
-    @Column
+    @Column(nullable = false)
     private boolean isCurrentJob;
 
     @Column

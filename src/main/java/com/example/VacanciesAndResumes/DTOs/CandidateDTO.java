@@ -20,6 +20,8 @@ public class CandidateDTO {
     private  String region;
     private  String city;
     private  String citizenship;
-    @JsonProperty(value = "has_workpermit")
+    @JsonProperty(value = "has_work_permit")
     private  boolean hasWorkPermit;
+    private int relocate;
+    private int travel;
 }

@@ -18,7 +18,7 @@ public class Vacancy {
     @Column(nullable = false)
     private Long vacancyId;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String title;
 
     @Column(nullable = false, length = 100)
@@ -28,8 +28,14 @@ public class Vacancy {
     @Column
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private int salary;
+
+    @Column(length = 3)
+    private String currency;
+
+    @Column(nullable = false, length = 20)
+    private String grade;
 
     @Column(nullable = false, length = 20)
     private String country;
@@ -41,13 +47,9 @@ public class Vacancy {
     private String city;
 
     @Column(nullable = false)
-    private String customerProject;
+    private boolean isActive;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private boolean isActive;
-
 
 }
