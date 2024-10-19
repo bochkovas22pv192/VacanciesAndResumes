@@ -31,18 +31,18 @@ public class VacancyService {
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){
-        if(vacancyDTO.getGrade().isEmpty()){
-            throw  new TaskGradeEmptyException();
-        }
-        if(vacancyDTO.getRole().isEmpty()){
-            throw  new TaskRoleEmptyException();
-        }
-        if(vacancyDTO.getSalary().matches(".*[a-zA-Z]+.*")){
-            throw  new SalaryFormatException();
-        }
-        Vacancy vacancy = vacancyMapper.vacancyDTOToVacancy(vacancyDTO);
-
-        vacancyRepository.save(vacancy);
+//        if(vacancyDTO.getGrade().isEmpty()){
+//            throw  new TaskGradeEmptyException();
+//        }
+//        if(vacancyDTO.getRole().isEmpty()){
+//            throw  new TaskRoleEmptyException();
+//        }
+//        if(vacancyDTO.getSalary().matches(".*[a-zA-Z]+.*")){
+//            throw  new SalaryFormatException();
+//        }
+//        Vacancy vacancy = vacancyMapper.vacancyDTOToVacancy(vacancyDTO);
+//
+//        vacancyRepository.save(vacancy);
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");
     }

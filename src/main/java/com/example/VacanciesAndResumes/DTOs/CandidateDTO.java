@@ -3,6 +3,8 @@ package com.example.VacanciesAndResumes.DTOs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,4 +26,6 @@ public class CandidateDTO {
     private  boolean hasWorkPermit;
     private int relocate;
     private int travel;
+    @JsonProperty(value = "employments")
+    private Set<EmploymentDTO> employments;
 }

@@ -12,11 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table
-public class Vacancy {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long vacancyId;
+public class Vacancy extends PersistableEntity {
 
     @Column(length = 100)
     private String title;

@@ -5,16 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table
-public class Specialization {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long specializationId ;
+public class Specialization extends PersistableEntity {
 
     @OneToOne
     @JoinColumn(name="candidate_id")
@@ -31,4 +29,7 @@ public class Specialization {
 
     @Column(length = 3)
     private String currency;
+
+    @ManyToMany(mappedBy = "specializations")
+    Set<KeySkill> keySkills;
 }

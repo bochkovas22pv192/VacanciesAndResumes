@@ -1,25 +1,22 @@
 package com.example.VacanciesAndResumes.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
+import java.util.UUID;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
-@Table(name = "candidate")
-public class Candidate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long candidateId;
+@Table
+public class Candidate extends PersistableEntity {
 
     @Column(nullable = false, length=50)
     private String lastName;
@@ -90,5 +87,11 @@ public class Candidate {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Document> documents;
+
+    @ManyToMany(mappedBy = "candidates")
+    @ToString.Exclude
+    Set<Employment>  employments;
+
+    public Candidate(UUID id){this.setId(id);}
 
 }

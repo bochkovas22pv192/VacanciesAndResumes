@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table
-public class Contact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long contactId ;
+public class Contact extends PersistableEntity {
 
     @OneToOne
     @JoinColumn(name="candidate_id")

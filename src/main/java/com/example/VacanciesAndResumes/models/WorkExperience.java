@@ -12,11 +12,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table
-public class WorkExperience {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long workExperienceId  ;
+public class WorkExperience extends PersistableEntity {
 
     @ManyToOne
     @JoinColumn(name="candidate_id")

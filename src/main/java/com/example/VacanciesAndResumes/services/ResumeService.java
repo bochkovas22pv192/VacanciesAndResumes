@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional
 public class ResumeService {
 
-    private  final AdditionalInfoRepository additionalInfoRepository;
+
     private  final CertificatesQualificationRepository certificatesQualificationRepository;
     private  final ContactRepository contactRepository;
     private  final DocumentRepository documentRepository;
@@ -88,7 +88,7 @@ public class ResumeService {
         if(checkForLetters(resumeDTO.getContact().getWhatsapp())){
             throw new BadRequestException("Неверно заполнено поле \"Ватсап\"");
         }
-        if(resumeDTO.getSpecialization().getDesiredPosition().isEmpty()){
+        if(resumeDTO.getSpecialization().getRoleName().isEmpty()){
             throw new BadRequestException("Неверно заполнено поле \"Желаемая позиция\"");
         }
         for(WorkExperienceDTO workExperienceDTO : resumeDTO.getWorkExperiences()){

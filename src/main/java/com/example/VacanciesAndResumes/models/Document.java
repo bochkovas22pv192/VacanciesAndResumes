@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tb_documents")
-public class Document {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long documentId     ;
+public class Document extends PersistableEntity {
 
     @ManyToOne
     @JoinColumn(name="candidate_id")

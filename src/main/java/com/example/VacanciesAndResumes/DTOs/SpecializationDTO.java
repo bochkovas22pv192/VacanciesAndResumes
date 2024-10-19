@@ -3,6 +3,8 @@ package com.example.VacanciesAndResumes.DTOs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -12,4 +14,6 @@ public class SpecializationDTO {
     private  String grade;
     private  int salary;
     private  String currency;
+    @JsonProperty(value = "key_skills")
+    private Set<KeySkillDTO> keySkills;
 }

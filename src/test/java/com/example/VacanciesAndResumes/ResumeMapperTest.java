@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @SpringBootTest
@@ -36,10 +36,14 @@ public class ResumeMapperTest {
         candidate.setCity("Белгород");
         candidate.setCitizenship("Россия");
         candidate.setHasWorkPermit(true);
+        candidate.setRelocate(1);
+        candidate.setTravel(1);
+        candidate.setEmployments(Set.of(Employment.builder().employmentName("Полная занятость").build()));
 
         assertEquals(resumeMapper.candidateToCandidateDTO(candidate),
                 new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992-10-30", "Россия",
-                        "Белгородская область", "Белгород", "Россия", true, 1, 1)
+                        "Белгородская область", "Белгород", "Россия", true,
+                        1, 1, Set.of(new EmploymentDTO("Полная занятость")))
                 );
     }
 
@@ -56,11 +60,15 @@ public class ResumeMapperTest {
         candidate.setCity("Белгород");
         candidate.setCitizenship("Россия");
         candidate.setHasWorkPermit(true);
+        candidate.setRelocate(1);
+        candidate.setTravel(1);
+        candidate.setEmployments(Set.of(Employment.builder().employmentName("Полная занятость").build()));
 
         assertEquals(candidate,
                 resumeMapper.candidateDTOToCandidate(new CandidateDTO("Иванов", "Иван",
                         "Иванович", 1, "1992-10-30", "Россия",
-                        "Белгородская область", "Белгород", "Россия", true, 1, 1))
+                        "Белгородская область", "Белгород", "Россия", true,
+                        1, 1, Set.of(new EmploymentDTO("Полная занятость"))))
         );
     }
 
@@ -181,6 +189,46 @@ public class ResumeMapperTest {
     }
 
     @Test
+    void employmentToEmploymentDTO(){
+        Employment employment = new Employment();
+        employment.setEmploymentName("Полная занятость");
+
+        assertEquals(resumeMapper.employmentToEmploymentDTO(employment),
+                new EmploymentDTO("Полная занятость")
+        );
+    }
+
+    @Test
+    void employmentDTOToEmployment(){
+        Employment employment = new Employment();
+        employment.setEmploymentName("Полная занятость");
+
+        assertEquals(employment,
+                resumeMapper.employmentDTOToEmployment(new EmploymentDTO("Полная занятость"))
+        );
+    }
+
+    @Test
+    void keySkillToKeySkillDTO(){
+        KeySkill keySkill = new KeySkill();
+        keySkill.setKeySkillName("Полная занятость");
+
+        assertEquals(resumeMapper.keySkillToKeySkillDTO(keySkill),
+                new KeySkillDTO("Полная занятость")
+        );
+    }
+
+    @Test
+    void keySkillDTOToKeySkill(){
+        KeySkill keySkill = new KeySkill();
+        keySkill.setKeySkillName("Полная занятость");
+
+        assertEquals(keySkill,
+                resumeMapper.keySkillDTOToKeySkill(new KeySkillDTO("Полная занятость"))
+        );
+    }
+
+    @Test
     void languageToLanguageDTO(){
         Language language = new Language();
         language.setLanguage("Английский");
@@ -246,29 +294,29 @@ public class ResumeMapperTest {
     @Test
     void specializationToSpecializationDTO(){
         Specialization specialization = new Specialization();
-        specialization.setDesiredPosition("Разработчик");
+        specialization.setRoleName("Разработчик");
         specialization.setGrade("Middle");
-        specialization.setKeySkills("Python, SQL, Docker");
         specialization.setSalary(10000);
         specialization.setCurrency("RUB");
+        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
 
         assertEquals(resumeMapper.specializationToSpecializationDTO(specialization),
-                new SpecializationDTO("Разработчик", "Middle", "Python, SQL, Docker", 10000, "RUB")
+                new SpecializationDTO("Разработчик", "Middle", 10000, "RUB", Set.of(new KeySkillDTO("Python")))
         );
     }
 
     @Test
     void specializationDTOToSpecialization(){
         Specialization specialization = new Specialization();
-        specialization.setDesiredPosition("Разработчик");
+        specialization.setRoleName("Разработчик");
         specialization.setGrade("Middle");
-        specialization.setKeySkills("Python, SQL, Docker");
         specialization.setSalary(10000);
         specialization.setCurrency("RUB");
+        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
 
         assertEquals(specialization,
                 resumeMapper.specializationDTOToSpecialization(new SpecializationDTO("Разработчик", "Middle",
-                        "Python, SQL, Docker", 10000, "RUB"))
+                        10000, "RUB", Set.of(new KeySkillDTO("Python"))))
         );
     }
 
@@ -277,9 +325,9 @@ public class ResumeMapperTest {
         WorkExperience workExperience = new WorkExperience();
         workExperience.setOrganizationName("Tech Corp");
         workExperience.setIndustry("IT");
-        workExperience.setOrganizationWebsite("techcorp.com");
-        workExperience.setCompanyCity("Москва");
-        workExperience.setPosition("Программист");
+        workExperience.setWebsite("techcorp.com");
+        workExperience.setCity("Москва");
+        workExperience.setRoleName("Программист");
         workExperience.setStartDate(LocalDate.parse("2015-07-15", dtf));
         workExperience.setCurrentJob(false);
         workExperience.setEndDate(LocalDate.parse("2020-08-28", dtf));
@@ -298,9 +346,9 @@ public class ResumeMapperTest {
         WorkExperience workExperience = new WorkExperience();
         workExperience.setOrganizationName("Tech Corp");
         workExperience.setIndustry("IT");
-        workExperience.setOrganizationWebsite("techcorp.com");
-        workExperience.setCompanyCity("Москва");
-        workExperience.setPosition("Программист");
+        workExperience.setWebsite("techcorp.com");
+        workExperience.setCity("Москва");
+        workExperience.setRoleName("Программист");
         workExperience.setStartDate(LocalDate.parse("2015-07-15", dtf));
         workExperience.setCurrentJob(false);
         workExperience.setEndDate(LocalDate.parse("2020-08-28", dtf));

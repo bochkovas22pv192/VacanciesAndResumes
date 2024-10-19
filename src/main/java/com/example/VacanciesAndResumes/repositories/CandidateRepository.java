@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
-public interface CandidateRepository extends JpaRepository<Candidate, Long> {
-    @Modifying
-    @Query(value = "DELETE FROM personal_info", nativeQuery = true)
-    void deleteRep();
+public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
+
 }

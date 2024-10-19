@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tb_language")
-public class Language {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long languagesId   ;
+public class Language extends PersistableEntity {
 
     @ManyToOne
     @JoinColumn(name="candidate_id")

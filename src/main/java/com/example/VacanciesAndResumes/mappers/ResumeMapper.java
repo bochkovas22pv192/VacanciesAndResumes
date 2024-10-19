@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResumeMapper {
@@ -63,6 +64,19 @@ public interface ResumeMapper {
     @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy-MM-dd")
     @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy-MM-dd")
     List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
+
+    EmploymentDTO employmentToEmploymentDTO(Employment entity);
+    Employment employmentDTOToEmployment(EmploymentDTO entity);
+
+    Set<EmploymentDTO> employmentToEmploymentDTO(Set<Employment> entity);
+    Set<Employment> employmentDTOToEmployment(Set<EmploymentDTO> entity);
+
+    KeySkillDTO keySkillToKeySkillDTO(KeySkill entity);
+    KeySkill keySkillDTOToKeySkill(KeySkillDTO entity);
+
+    Set<KeySkillDTO> keySkillToKeySkillDTO(Set<KeySkill> entity);
+    Set<KeySkill> keySkillDTOToKeySkill(Set<KeySkillDTO> entity);
+
 
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;
