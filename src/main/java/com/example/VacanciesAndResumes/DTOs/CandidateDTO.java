@@ -26,6 +26,6 @@ public class CandidateDTO {
     private  boolean hasWorkPermit;
     private int relocate;
     private int travel;
-    @JsonProperty(value = "employments")
-    private Set<EmploymentDTO> employments;
+    @JsonProperty(value = "employment")
+    private String employments;
 }

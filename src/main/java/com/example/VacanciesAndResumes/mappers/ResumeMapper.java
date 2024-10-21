@@ -65,25 +65,60 @@ public interface ResumeMapper {
     @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy-MM-dd")
     List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
 
-    EmploymentDTO employmentToEmploymentDTO(Employment entity);
-    Employment employmentDTOToEmployment(EmploymentDTO entity);
-
-    Set<EmploymentDTO> employmentToEmploymentDTO(Set<Employment> entity);
-    Set<Employment> employmentDTOToEmployment(Set<EmploymentDTO> entity);
-
-    KeySkillDTO keySkillToKeySkillDTO(KeySkill entity);
-    KeySkill keySkillDTOToKeySkill(KeySkillDTO entity);
-
-    Set<KeySkillDTO> keySkillToKeySkillDTO(Set<KeySkill> entity);
-    Set<KeySkill> keySkillDTOToKeySkill(Set<KeySkillDTO> entity);
-
-
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;
     }
     default String bytesToString(byte[] bytes) {
         if (bytes != null){
             return new String(bytes, StandardCharsets.UTF_8);
+        }
+        return null;
+    }
+
+    default Set<KeySkill> stringToKeySkill(String string) {
+        if (string != null){
+            Set<KeySkill> result = new java.util.HashSet<>(Set.of());
+            for (String stringTemp : string.split(", ")){
+                KeySkill keySkill = new KeySkill();
+                keySkill.setKeySkillName(stringTemp);
+                result.add(keySkill);
+            }
+            return result;
+        }
+        return null;
+    }
+
+    default String KeySkillToString(Set<KeySkill> keySkills) {
+        if (keySkills != null && !keySkills.isEmpty()){
+            StringBuilder result = new StringBuilder();
+            for(KeySkill keySkill : keySkills){
+                result.append(keySkill.getKeySkillName()).append(", ");
+            }
+            return result.substring(0, result.length() - 2);
+        }
+        return null;
+    }
+
+    default Set<Employment> stringToEmployment(String string) {
+        if (string != null){
+            Set<Employment> result = new java.util.HashSet<>(Set.of());
+            for (String stringTemp : string.split(", ")){
+                Employment employment = new Employment();
+                employment.setEmploymentName(stringTemp);
+                result.add(employment);
+            }
+            return result;
+        }
+        return null;
+    }
+
+    default String EmploymentToString(Set<Employment> employments) {
+        if (employments != null && !employments.isEmpty()){
+            StringBuilder result = new StringBuilder();
+            for(Employment employment : employments){
+                result.append(employment.getEmploymentName()).append(", ");
+            }
+            return result.substring(0, result.length() - 2);
         }
         return null;
     }

@@ -7,6 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 
 import java.util.UUID;
@@ -21,5 +22,6 @@ public abstract class PersistableEntity implements Persistable<UUID> {
     private UUID id;
 
     @Override
-    public  boolean isNew(){return  false;}
+    @Transient
+    public  boolean isNew(){return  id == null;}
 }

@@ -12,8 +12,8 @@ public class SpecializationDTO {
     @JsonProperty(value = "role_name")
     private  String roleName;
     private  String grade;
+    @JsonProperty(value = "key_skills")
+    private String keySkills;
     private  int salary;
     private  String currency;
-    @JsonProperty(value = "key_skills")
-    private Set<KeySkillDTO> keySkills;
 }

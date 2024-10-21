@@ -43,7 +43,7 @@ public class ResumeMapperTest {
         assertEquals(resumeMapper.candidateToCandidateDTO(candidate),
                 new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true,
-                        1, 1, Set.of(new EmploymentDTO("Полная занятость")))
+                        1, 1, "Полная занятость")
                 );
     }
 
@@ -68,7 +68,7 @@ public class ResumeMapperTest {
                 resumeMapper.candidateDTOToCandidate(new CandidateDTO("Иванов", "Иван",
                         "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true,
-                        1, 1, Set.of(new EmploymentDTO("Полная занятость"))))
+                        1, 1, "Полная занятость"))
         );
     }
 
@@ -189,46 +189,6 @@ public class ResumeMapperTest {
     }
 
     @Test
-    void employmentToEmploymentDTO(){
-        Employment employment = new Employment();
-        employment.setEmploymentName("Полная занятость");
-
-        assertEquals(resumeMapper.employmentToEmploymentDTO(employment),
-                new EmploymentDTO("Полная занятость")
-        );
-    }
-
-    @Test
-    void employmentDTOToEmployment(){
-        Employment employment = new Employment();
-        employment.setEmploymentName("Полная занятость");
-
-        assertEquals(employment,
-                resumeMapper.employmentDTOToEmployment(new EmploymentDTO("Полная занятость"))
-        );
-    }
-
-    @Test
-    void keySkillToKeySkillDTO(){
-        KeySkill keySkill = new KeySkill();
-        keySkill.setKeySkillName("Полная занятость");
-
-        assertEquals(resumeMapper.keySkillToKeySkillDTO(keySkill),
-                new KeySkillDTO("Полная занятость")
-        );
-    }
-
-    @Test
-    void keySkillDTOToKeySkill(){
-        KeySkill keySkill = new KeySkill();
-        keySkill.setKeySkillName("Полная занятость");
-
-        assertEquals(keySkill,
-                resumeMapper.keySkillDTOToKeySkill(new KeySkillDTO("Полная занятость"))
-        );
-    }
-
-    @Test
     void languageToLanguageDTO(){
         Language language = new Language();
         language.setLanguage("Английский");
@@ -301,7 +261,7 @@ public class ResumeMapperTest {
         specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
 
         assertEquals(resumeMapper.specializationToSpecializationDTO(specialization),
-                new SpecializationDTO("Разработчик", "Middle", 10000, "RUB", Set.of(new KeySkillDTO("Python")))
+                new SpecializationDTO("Разработчик", "Middle","Python", 10000, "RUB")
         );
     }
 
@@ -312,11 +272,11 @@ public class ResumeMapperTest {
         specialization.setGrade("Middle");
         specialization.setSalary(10000);
         specialization.setCurrency("RUB");
-        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
+        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build(), KeySkill.builder().keySkillName("C++").build()));
 
         assertEquals(specialization,
-                resumeMapper.specializationDTOToSpecialization(new SpecializationDTO("Разработчик", "Middle",
-                        10000, "RUB", Set.of(new KeySkillDTO("Python"))))
+                resumeMapper.specializationDTOToSpecialization(new SpecializationDTO("Разработчик", "Middle","Python, C++",
+                        10000, "RUB"))
         );
     }
 
@@ -360,6 +320,39 @@ public class ResumeMapperTest {
                 resumeMapper.workExperienceDTOToWorkExperience(new WorkExperienceDTO("Tech Corp", "IT",
                         "techcorp.com", "Москва", "Программист", "2015-07-15",
                         false, "2020-08-28", "Работа в крупной компании"))
+        );
+    }
+
+    @Test
+    void stringToKeySkill(){
+        Set<KeySkill> keySkills = Set.of(KeySkill.builder().keySkillName("Python").build(), KeySkill.builder().keySkillName("C++").build());
+        assertEquals(keySkills,
+                    resumeMapper.stringToKeySkill("Python, C++" )
+        );
+    }
+
+    @Test
+    void KeySkillToString(){
+        Set<KeySkill> keySkills = Set.of(KeySkill.builder().keySkillName("Python").build());
+        assertEquals(resumeMapper.KeySkillToString(keySkills),
+                "Python"
+        );
+    }
+
+    @Test
+    void stringToEmployment(){
+        Set<Employment> employments = Set.of(Employment.builder().employmentName("Полная занятость").build(),
+                Employment.builder().employmentName("Частичная занятость").build());
+        assertEquals(employments,
+                resumeMapper.stringToEmployment("Полная занятость, Частичная занятость")
+        );
+    }
+
+    @Test
+    void EmploymentToString(){
+        Set<Employment> employments = Set.of(Employment.builder().employmentName("Полная занятость").build());
+        assertEquals(resumeMapper.EmploymentToString(employments),
+               "Полная занятость"
         );
     }
 }

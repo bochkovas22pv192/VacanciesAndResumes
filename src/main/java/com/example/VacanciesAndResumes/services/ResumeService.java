@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +30,8 @@ public class ResumeService {
     private  final CandidateRepository candidateRepository;
     private  final SpecializationRepository specializationRepository;
     private  final WorkExperienceRepository workExperienceRepository;
+    private final EmploymentRepository employmentRepository;
+    private final KeySkillRepository keySkillRepository;
 
     @Autowired
     ResumeMapper resumeMapper;
@@ -40,16 +43,16 @@ public class ResumeService {
     public List<ResumeDTO> getResumeAll(){
         List<Resume> resumes = new java.util.ArrayList<>(List.of());
         List<Candidate> candidates = candidateRepository.findAll();
-        for (int i = 0; i < candidates.size(); i++) {
+        for (Candidate candidate : candidates) {
             Resume creatingResume = new Resume();
-            creatingResume.setCandidate(candidates.get(i));
-            creatingResume.setCertificatesQualifications(List.of(certificatesQualificationRepository.findAll().get(i)));
-            creatingResume.setContact(contactRepository.findAll().get(i));
-            creatingResume.setEducations(List.of(educationRepository.findAll().get(i)));
-            creatingResume.setSpecialization(specializationRepository.findAll().get(i));
-            creatingResume.setWorkExperiences(List.of(workExperienceRepository.findAll().get(i)));
-            creatingResume.setLanguages((List<Language>) candidates.get(i).getLanguages());
-            creatingResume.setDocuments((List<Document>) candidates.get(i).getDocuments());
+            creatingResume.setCandidate(candidate);
+            creatingResume.setCertificatesQualifications((List<CertificatesQualification>) candidate.getCertificatesQualifications());
+            creatingResume.setContact(candidate.getContact());
+            creatingResume.setEducations((List<Education>) candidate.getEducations());
+            creatingResume.setSpecialization(candidate.getSpecialization());
+            creatingResume.setWorkExperiences((List<WorkExperience>) candidate.getWorkExperiences());
+            creatingResume.setLanguages((List<Language>) candidate.getLanguages());
+            creatingResume.setDocuments((List<Document>) candidate.getDocuments());
             resumes.add(creatingResume);
         }
 
@@ -108,7 +111,20 @@ public class ResumeService {
         }
 
         resume.getContact().setCandidate(resume.getCandidate());
+
+
+        for(Employment employment : resume.getCandidate().getEmployments()){
+            employment.setId(employmentRepository.findByEmploymentName(employment.getEmploymentName()).getId());
+        }
+
         resume.getSpecialization().setCandidate(resume.getCandidate());
+
+        for(KeySkill keySkill : resume.getSpecialization().getKeySkills()){
+            keySkill.setId(keySkillRepository.findByKeySkillName(keySkill.getKeySkillName()).getId());
+        }
+
+
+
 
         for(Education education : resume.getEducations()){
             education.setCandidate(resume.getCandidate());
@@ -122,18 +138,21 @@ public class ResumeService {
 
         for(Language language : resume.getLanguages()){
             language.setCandidate(resume.getCandidate());
-            languageRepository.save(language);
         }
         for (Document document : resume.getDocuments()){
             document.setCandidate(resume.getCandidate());
-            documentRepository.save(document);
         }
+
+        resume.getCandidate().setCreatedAt(LocalDateTime.now());
+        resume.getCandidate().setStatus("Не знаю");
 
         candidateRepository.save(resume.getCandidate());
         contactRepository.save(resume.getContact());
         educationRepository.saveAll(resume.getEducations());
         specializationRepository.save(resume.getSpecialization());
         certificatesQualificationRepository.saveAll(resume.getCertificatesQualifications());
+        documentRepository.saveAll(resume.getDocuments());
+        languageRepository.saveAll(resume.getLanguages());
         workExperienceRepository.saveAll(resume.getWorkExperiences());
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");
