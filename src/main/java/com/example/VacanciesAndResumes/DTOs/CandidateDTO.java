@@ -28,4 +28,6 @@ public class CandidateDTO {
     private int travel;
     @JsonProperty(value = "employment")
     private String employments;
+    @JsonProperty(value = "key_skills")
+    private String keySkills;
 }

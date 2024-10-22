@@ -15,7 +15,9 @@ public class VacancyDTO {
     private  String description;
     private  int salary;
     private  String currency;
+    private  String grade;
     private  String country;
     private  String region;
     private  String city;
+    private CustomerDTO customer;
 }

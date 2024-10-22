@@ -113,7 +113,7 @@ public interface ResumeMapper {
     }
 
     default String EmploymentToString(Set<Employment> employments) {
-        if (employments != null && !employments.isEmpty()){
+        if (employments != null){
             StringBuilder result = new StringBuilder();
             for(Employment employment : employments){
                 result.append(employment.getEmploymentName()).append(", ");

@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @Table
 public class Vacancy extends PersistableEntity {
 
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+
     @Column(length = 100)
     private String title;
 

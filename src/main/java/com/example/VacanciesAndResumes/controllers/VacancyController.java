@@ -5,6 +5,8 @@ import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class VacancyController {
     }
 
     @PostMapping("/")
-    ResumeAnswerDTO createResume(@RequestBody VacancyDTO vacancyDTO) {
-        return service.createVacancy(vacancyDTO);
+    ResponseEntity<ResumeAnswerDTO> createResume(@RequestBody VacancyDTO vacancyDTO) {
+        return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }
 }

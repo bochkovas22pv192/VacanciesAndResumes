@@ -4,13 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
+@EqualsAndHashCode(exclude = {"candidates"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -23,5 +21,5 @@ public class KeySkill extends PersistableEntity {
     private String keySkillName;
 
     @ManyToMany
-    Set<Specialization> specializations;
+    Set<Candidate> candidates;
 }

@@ -39,11 +39,12 @@ public class ResumeMapperTest {
         candidate.setRelocate(1);
         candidate.setTravel(1);
         candidate.setEmployments(Set.of(Employment.builder().employmentName("Полная занятость").build()));
+        candidate.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
 
         assertEquals(resumeMapper.candidateToCandidateDTO(candidate),
                 new CandidateDTO("Иванов", "Иван", "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true,
-                        1, 1, "Полная занятость")
+                        1, 1, "Полная занятость", "Python")
                 );
     }
 
@@ -63,12 +64,13 @@ public class ResumeMapperTest {
         candidate.setRelocate(1);
         candidate.setTravel(1);
         candidate.setEmployments(Set.of(Employment.builder().employmentName("Полная занятость").build()));
+        candidate.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
 
         assertEquals(candidate,
                 resumeMapper.candidateDTOToCandidate(new CandidateDTO("Иванов", "Иван",
                         "Иванович", 1, "1992-10-30", "Россия",
                         "Белгородская область", "Белгород", "Россия", true,
-                        1, 1, "Полная занятость"))
+                        1, 1, "Полная занятость", "Python"))
         );
     }
 
@@ -258,10 +260,10 @@ public class ResumeMapperTest {
         specialization.setGrade("Middle");
         specialization.setSalary(10000);
         specialization.setCurrency("RUB");
-        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build()));
+
 
         assertEquals(resumeMapper.specializationToSpecializationDTO(specialization),
-                new SpecializationDTO("Разработчик", "Middle","Python", 10000, "RUB")
+                new SpecializationDTO("Разработчик", "Middle", 10000, "RUB")
         );
     }
 
@@ -272,10 +274,9 @@ public class ResumeMapperTest {
         specialization.setGrade("Middle");
         specialization.setSalary(10000);
         specialization.setCurrency("RUB");
-        specialization.setKeySkills(Set.of(KeySkill.builder().keySkillName("Python").build(), KeySkill.builder().keySkillName("C++").build()));
 
         assertEquals(specialization,
-                resumeMapper.specializationDTOToSpecialization(new SpecializationDTO("Разработчик", "Middle","Python, C++",
+                resumeMapper.specializationDTOToSpecialization(new SpecializationDTO("Разработчик", "Middle",
                         10000, "RUB"))
         );
     }

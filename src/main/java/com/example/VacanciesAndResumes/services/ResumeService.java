@@ -110,21 +110,23 @@ public class ResumeService {
             throw new BadRequestException("Неверно заполнено поле \"Дата рождения\"");
         }
 
-        resume.getContact().setCandidate(resume.getCandidate());
-
-
+        List<Employment> employmentList = new java.util.ArrayList<>(List.of());
         for(Employment employment : resume.getCandidate().getEmployments()){
-            employment.setId(employmentRepository.findByEmploymentName(employment.getEmploymentName()).getId());
+            employmentList.add(employmentRepository.findByEmploymentName(employment.getEmploymentName()));
+        }
+        resume.getCandidate().getEmployments().clear();
+        for (Employment employment : employmentList) {
+            employment.getCandidates().add(resume.getCandidate());
         }
 
-        resume.getSpecialization().setCandidate(resume.getCandidate());
-
-        for(KeySkill keySkill : resume.getSpecialization().getKeySkills()){
-            keySkill.setId(keySkillRepository.findByKeySkillName(keySkill.getKeySkillName()).getId());
+        List<KeySkill> keySkillList = new java.util.ArrayList<>(List.of());
+        for(KeySkill keySkill : resume.getCandidate().getKeySkills()){
+            keySkillList.add(keySkillRepository.findByKeySkillName(keySkill.getKeySkillName()));
         }
-
-
-
+        resume.getCandidate().getKeySkills().clear();
+        for (KeySkill keySkill : keySkillList) {
+            keySkill.getCandidates().add(resume.getCandidate());
+        }
 
         for(Education education : resume.getEducations()){
             education.setCandidate(resume.getCandidate());
@@ -135,13 +137,15 @@ public class ResumeService {
         for(WorkExperience workExperience : resume.getWorkExperiences()){
             workExperience.setCandidate(resume.getCandidate());
         }
-
         for(Language language : resume.getLanguages()){
             language.setCandidate(resume.getCandidate());
         }
         for (Document document : resume.getDocuments()){
             document.setCandidate(resume.getCandidate());
         }
+
+        resume.getSpecialization().setCandidate(resume.getCandidate());
+        resume.getContact().setCandidate(resume.getCandidate());
 
         resume.getCandidate().setCreatedAt(LocalDateTime.now());
         resume.getCandidate().setStatus("Не знаю");

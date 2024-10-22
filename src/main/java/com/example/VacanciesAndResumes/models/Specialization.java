@@ -3,9 +3,11 @@ package com.example.VacanciesAndResumes.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +31,4 @@ public class Specialization extends PersistableEntity {
 
     @Column(length = 3)
     private String currency;
-
-    @ManyToMany(mappedBy = "specializations")
-    Set<KeySkill> keySkills;
 }

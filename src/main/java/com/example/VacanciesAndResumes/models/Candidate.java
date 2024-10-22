@@ -9,7 +9,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
-
+@EqualsAndHashCode(exclude = {"contact", "specialization", "workExperiences", "languages",
+        "educations", "certificatesQualifications", "documents"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -88,9 +89,12 @@ public class Candidate extends PersistableEntity {
     @ToString.Exclude
     private Collection<Document> documents;
 
-    @ManyToMany(mappedBy = "candidates")
+    @ManyToMany(mappedBy = "candidates", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     Set<Employment>  employments;
+
+    @ManyToMany(mappedBy = "candidates")
+    Set<KeySkill> keySkills;
 
     public Candidate(UUID id){this.setId(id);}
 
