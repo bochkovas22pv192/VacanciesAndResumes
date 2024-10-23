@@ -146,7 +146,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(201)
                 .extract().body().as(ResumeAnswerDTO.class);
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно сохранено")));
@@ -278,7 +278,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -377,7 +377,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -476,7 +476,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -575,7 +575,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -674,7 +674,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -773,7 +773,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -872,7 +872,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -971,7 +971,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1071,7 +1071,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1171,7 +1171,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1271,7 +1271,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1371,7 +1371,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1472,7 +1472,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1572,7 +1572,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Personal_Info/")
+                .post("api/candidate/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 

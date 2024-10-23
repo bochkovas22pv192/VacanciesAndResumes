@@ -12,13 +12,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/Personal_Info")
+@RequestMapping("api/candidate")
 public class ResumeController {
     private final ResumeService service;
 
 
     @GetMapping("/")
-    List<ResumeDTO> GetResumeAll() {
+    List<ResumeDTO> getResumeAll() {
         return service.getResumeAll();
     }
 

@@ -70,7 +70,7 @@ public class VacancyControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Vacancies/")
+                .post("/api/vacancy/")
                 .then().statusCode(201)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -104,7 +104,7 @@ public class VacancyControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Vacancies/")
+                .post("/api/vacancy/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -133,7 +133,7 @@ public class VacancyControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/v1/Vacancies/")
+                .post("/api/vacancy/")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
