@@ -41,22 +41,9 @@ public class ResumeService {
     }
 
     public List<ResumeDTO> getResumeAll(){
-        List<Resume> resumes = new java.util.ArrayList<>(List.of());
         List<Candidate> candidates = candidateRepository.findAll();
-        for (Candidate candidate : candidates) {
-            Resume creatingResume = new Resume();
-            creatingResume.setCandidate(candidate);
-            creatingResume.setCertificatesQualifications((List<CertificatesQualification>) candidate.getCertificatesQualifications());
-            creatingResume.setContact(candidate.getContact());
-            creatingResume.setEducations((List<Education>) candidate.getEducations());
-            creatingResume.setSpecialization(candidate.getSpecialization());
-            creatingResume.setWorkExperiences((List<WorkExperience>) candidate.getWorkExperiences());
-            creatingResume.setLanguages((List<Language>) candidate.getLanguages());
-            creatingResume.setDocuments((List<Document>) candidate.getDocuments());
-            resumes.add(creatingResume);
-        }
 
-        return resumeMapper.resumeToResumeDTO(resumes);
+        return resumeMapper.candidateToResumeDTO(candidates);
     }
 
     public ResumeAnswerDTO createResume(ResumeDTO resumeDTO){

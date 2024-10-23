@@ -13,6 +13,11 @@ import java.util.Set;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResumeMapper {
 
+    @Mapping(target = "candidate", source = "entity")
+    ResumeDTO candidateToResumeDTO (Candidate entity);
+
+    List<ResumeDTO> candidateToResumeDTO (List<Candidate> entity);
+
     ResumeDTO resumeToResumeDTO(Resume entity);
     Resume resumeDTOToResume(ResumeDTO entity);
 
