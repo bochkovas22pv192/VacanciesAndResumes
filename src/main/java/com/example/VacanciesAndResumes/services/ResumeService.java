@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.services;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
 import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.WorkExperienceDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.*;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
@@ -32,6 +33,7 @@ public class ResumeService {
     private  final WorkExperienceRepository workExperienceRepository;
     private final EmploymentRepository employmentRepository;
     private final KeySkillRepository keySkillRepository;
+    private final HandbookRepository handbookRepository;
 
     @Autowired
     ResumeMapper resumeMapper;
@@ -147,5 +149,12 @@ public class ResumeService {
         workExperienceRepository.saveAll(resume.getWorkExperiences());
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");
+    }
+
+    public ResumeGetStatusAnswerDTO getStatusList(){
+        ResumeGetStatusAnswerDTO result = new ResumeGetStatusAnswerDTO();
+        result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findByCode("Resume Status")));
+        result.setStatus("success");
+        return result;
     }
 }

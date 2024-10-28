@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.mappers;
 
 import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.models.*;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
 public interface ResumeMapper {
 
     @Mapping(target = "candidate", source = "entity")
@@ -70,6 +71,8 @@ public interface ResumeMapper {
     @Mapping(target="startDate", source="entity.startDate", dateFormat = "yyyy-MM-dd")
     @Mapping(target="endDate", source="entity.endDate", dateFormat = "yyyy-MM-dd")
     List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
+
+    List<ResumeStatusDTO> HandbookToResumeStatusDTO(List<Handbook> entity);
 
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;

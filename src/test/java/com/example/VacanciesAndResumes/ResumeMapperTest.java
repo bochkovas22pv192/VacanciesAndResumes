@@ -356,4 +356,14 @@ public class ResumeMapperTest {
                "Полная занятость"
         );
     }
+
+    @Test
+    void HandbookToResumeStatusDTO(){
+        List<Handbook> handbooks = List.of(Handbook.builder().code("Resume Status").keyName("offer").valueName("Оффер").build(),
+                Handbook.builder().code("Resume Status").keyName("screening").valueName("Скрининг").build());
+        assertEquals(resumeMapper.HandbookToResumeStatusDTO(handbooks), List.of(new ResumeStatusDTO("offer", "Оффер"),
+                new ResumeStatusDTO("screening", "Скрининг"))
+
+        );
+    }
 }

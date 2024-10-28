@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.controllers;
 
 import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
 import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
 import com.example.VacanciesAndResumes.services.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class ResumeController {
     @GetMapping("/")
     List<ResumeDTO> getResumeAll() {
         return service.getResumeAll();
+    }
+
+    @GetMapping("/statuses")
+    ResumeGetStatusAnswerDTO getResumeStatus() {
+        return service.getStatusList();
     }
 
     @PostMapping("/")

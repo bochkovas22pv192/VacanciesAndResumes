@@ -61,6 +61,12 @@ public class Candidate extends PersistableEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column
+    private boolean docOffer;
+
+    @Column
+    private boolean docScreen;
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Contact contact;

@@ -2,9 +2,11 @@ package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Employment;
+import com.example.VacanciesAndResumes.models.Handbook;
 import com.example.VacanciesAndResumes.models.KeySkill;
 import com.example.VacanciesAndResumes.repositories.CustomerRepository;
 import com.example.VacanciesAndResumes.repositories.EmploymentRepository;
+import com.example.VacanciesAndResumes.repositories.HandbookRepository;
 import com.example.VacanciesAndResumes.repositories.KeySkillRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ class LoadDatabase {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    HandbookRepository handbookRepository;
+
 
     @Bean
     CommandLineRunner initDatabase() {
@@ -40,6 +45,9 @@ class LoadDatabase {
 
         Customer customer = Customer.builder().name("ТН").build();
 
+        Handbook handbook1 = Handbook.builder().code("Resume Status").keyName("offer").valueName("Оффер").build();
+        Handbook handbook2 = Handbook.builder().code("Resume Status").keyName("screening").valueName("Скрининг").build();
+
         return args -> {
             log.info("Preloading " + employmentRepository.save(employment1));
             log.info("Preloading " + employmentRepository.save(employment2));
@@ -48,6 +56,9 @@ class LoadDatabase {
             log.info("Preloading " + keySkillRepository.save(keySkill2));
 
             log.info("Preloading " + customerRepository.save(customer));
+
+            log.info("Preloading " + handbookRepository.save(handbook1));
+            log.info("Preloading " + handbookRepository.save(handbook2));
         };
     }
 }
