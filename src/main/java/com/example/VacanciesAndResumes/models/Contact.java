@@ -1,10 +1,9 @@
 package com.example.VacanciesAndResumes.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -14,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Table
 public class Contact extends PersistableEntity {
 
+    @JsonBackReference
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name="candidate_id")
     private Candidate candidate;

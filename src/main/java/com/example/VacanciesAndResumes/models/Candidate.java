@@ -1,5 +1,6 @@
 package com.example.VacanciesAndResumes.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -67,38 +68,47 @@ public class Candidate extends PersistableEntity {
     @Column
     private boolean docScreen;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Contact contact;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Specialization specialization;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<WorkExperience> workExperiences;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Language> languages;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Education> educations;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<CertificatesQualification> certificatesQualifications;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
     private Collection<Document> documents;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "candidates", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     Set<Employment>  employments;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "candidates")
     Set<KeySkill> keySkills;
 

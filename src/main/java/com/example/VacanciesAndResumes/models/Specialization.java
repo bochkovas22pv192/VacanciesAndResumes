@@ -1,10 +1,8 @@
 package com.example.VacanciesAndResumes.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -16,6 +14,8 @@ import java.util.Set;
 @Table
 public class Specialization extends PersistableEntity {
 
+    @JsonBackReference
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name="candidate_id")
     private Candidate candidate;

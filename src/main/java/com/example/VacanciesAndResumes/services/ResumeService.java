@@ -1,21 +1,32 @@
 package com.example.VacanciesAndResumes.services;
 
-import com.example.VacanciesAndResumes.DTOs.ResumeDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.WorkExperienceDTO;
+
+import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.*;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
+
+
 
 @RequiredArgsConstructor
 @Service
@@ -38,8 +49,15 @@ public class ResumeService {
     @Autowired
     ResumeMapper resumeMapper;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     private boolean checkForLetters(String s){
         return s.matches(".*[a-zA-Z]+.*");
+    }
+
+    public Candidate getCandidateByID(UUID id){
+        return candidateRepository.findById(id).orElseThrow(() -> new BadRequestException("Нет резюме с таким id"));
     }
 
     public List<ResumeDTO> getResumeAll(){
@@ -137,7 +155,7 @@ public class ResumeService {
         resume.getContact().setCandidate(resume.getCandidate());
 
         resume.getCandidate().setCreatedAt(LocalDateTime.now());
-        resume.getCandidate().setStatus("Не знаю");
+        resume.getCandidate().setStatus("Стакан резюме");
 
         candidateRepository.save(resume.getCandidate());
         contactRepository.save(resume.getContact());
@@ -156,5 +174,29 @@ public class ResumeService {
         result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findByCode("Resume Status")));
         result.setStatus("success");
         return result;
+    }
+
+    public ResumeAnswerDTO updateCandidatePatch(UUID id, JsonPatch jsonPatch) throws JsonPatchException, IOException {
+        Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new BadRequestException("Нет резюме с таким id"));
+        JsonNode patched = jsonPatch.apply(objectMapper.convertValue(resumeMapper.candidateToCandidatePatchDTO(candidate), JsonNode.class));
+        Candidate newCandidate = resumeMapper.candidatePatchDTOToCandidate(objectMapper.treeToValue(patched, CandidatePatchDTO.class));
+        candidate.setLastName(newCandidate.getLastName());
+        candidate.setFirstName(newCandidate.getFirstName());
+        candidate.setMiddleName(newCandidate.getMiddleName());
+        candidate.setGender(newCandidate.getGender());
+        candidate.setBirthDate(newCandidate.getBirthDate());
+        candidate.setCountry(newCandidate.getCountry());
+        candidate.setRegion(newCandidate.getRegion());
+        candidate.setCity(newCandidate.getCity());
+        candidate.setCitizenship(newCandidate.getCitizenship());
+        candidate.setStatus(newCandidate.getStatus());
+        candidate.setHasWorkPermit(newCandidate.isHasWorkPermit());
+        candidate.setRelocate(newCandidate.getRelocate());
+        candidate.setTravel(newCandidate.getTravel());
+        candidate.setCreatedAt(newCandidate.getCreatedAt());
+        candidate.setDocOffer(newCandidate.isDocOffer());
+        candidate.setDocScreen(newCandidate.isDocScreen());
+        candidateRepository.save(candidate);
+        return new ResumeAnswerDTO("success", "Успешно изменено");
     }
 }

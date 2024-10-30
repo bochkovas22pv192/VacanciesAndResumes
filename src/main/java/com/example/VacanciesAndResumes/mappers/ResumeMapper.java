@@ -1,6 +1,7 @@
 package com.example.VacanciesAndResumes.mappers;
 
 import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
 import com.example.VacanciesAndResumes.models.*;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -73,6 +74,9 @@ public interface ResumeMapper {
     List<WorkExperience> workExperienceDTOToWorkExperience(List<WorkExperienceDTO> entity);
 
     List<ResumeStatusDTO> HandbookToResumeStatusDTO(List<Handbook> entity);
+
+    CandidatePatchDTO candidateToCandidatePatchDTO (Candidate entity);
+    Candidate candidatePatchDTOToCandidate (CandidatePatchDTO entity);
 
     default byte[] stringToBytes(String string) {
         return string != null ? string.getBytes() : null;

@@ -1,5 +1,6 @@
 package com.example.VacanciesAndResumes.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -19,6 +20,8 @@ public class Employment extends PersistableEntity {
     @Column(nullable = false, length=50)
     private String employmentName;
 
+    @JsonBackReference
+    @ToString.Exclude
     @ManyToMany
     Set<Candidate> candidates;
 }
