@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ais
+    username: postgres
+    password: 2002
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    root: info
+    com.work: info
+  file:
+    name: work.log
+    path: /
+server:
+  port: 8084

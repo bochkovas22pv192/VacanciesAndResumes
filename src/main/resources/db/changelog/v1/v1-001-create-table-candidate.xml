@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-candidate" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="candidate" />
+            </not>
+        </preConditions>
+        <createTable tableName="candidate" remarks="Таблица резюме кандидатов">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="last_name" type="varchar(50)" remarks="Фамилия кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)" remarks="Имя кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(50)" remarks="Отчество кандидата"/>
+            <column name="gender" type="smallint" remarks="Пол кандидата"/>
+            <column name="birth_date" type="date" remarks="Дата рождения кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="varchar(20)" remarks="Страна проживания кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="varchar(100)" remarks="Регион проживания кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(100)" remarks="Город проживания кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="citizenship" type="varchar(100)" remarks="Гражданство кандидата"/>
+            <column name="status" type="varchar(20)" remarks="Стаутс резюме">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp" remarks="Дата и время создания резюме">
+                <constraints nullable="false"/>
+            </column>
+            <column name="has_workpermit" type="boolean" remarks="Наличие разрешения на работу кандидата"/>
+            <column name="relocation" type="smallint" remarks="Готовность к переезду кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="travel" type="smallint" remarks="Готовность к командировкам у кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doc_offer" type="boolean" remarks="Файл 'Оффера' прикреплен/не прикреплен"/>
+            <column name="doc_screen" type="boolean" remarks="Файл 'Оффера' прикреплен/не прикреплен"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

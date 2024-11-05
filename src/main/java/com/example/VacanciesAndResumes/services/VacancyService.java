@@ -44,7 +44,7 @@ public class VacancyService {
         vacancy.setActive(true);
         Customer customer = customerRepository.findByName(vacancy.getCustomer().getName());
         if(customer == null){
-            customer = customerRepository.save(vacancy.getCustomer());
+            throw new BadRequestException("Не существует организации " + vacancy.getCustomer().getName());
         }
         vacancy.setCustomer(customer);
         vacancyRepository.save(vacancy);

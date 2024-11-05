@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-employment_candidates" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="employment_candidates" />
+            </not>
+        </preConditions>
+        <createTable tableName="employment_candidates" remarks="Таблица со сведениями о занятости кандидатов">
+            <column name="employment_id" type="uuid" remarks="Идентификатор занятости">
+                <constraints nullable="false"  foreignKeyName="fk_employments_candidates_employment" references="employment(id)"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор резюме">
+                <constraints nullable="false" foreignKeyName="fk_employments_candidates_candidate" references="candidate(id)" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

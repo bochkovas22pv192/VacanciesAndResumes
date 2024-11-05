@@ -18,12 +18,12 @@ public class VacancyController {
 
     private final VacancyService service;
 
-    @GetMapping("/")
+    @GetMapping
     List<VacancyDTO> getVacancyAll(){
         return service.getVacancyAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     ResponseEntity<ResumeAnswerDTO> createResume(@RequestBody VacancyDTO vacancyDTO) {
         return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }

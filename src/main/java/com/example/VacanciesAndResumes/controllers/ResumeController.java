@@ -24,7 +24,7 @@ import java.util.UUID;
 public class ResumeController {
     private final ResumeService service;
 
-    @GetMapping("/")
+    @GetMapping
     List<ResumeDTO> getResumeAll() {
         return service.getResumeAll();
     }
@@ -34,7 +34,7 @@ public class ResumeController {
         return service.getStatusList();
     }
 
-    @PostMapping("/")
+    @PostMapping
     ResponseEntity<ResumeAnswerDTO> createResume(@RequestBody ResumeDTO resumeDTO) {
         return new ResponseEntity<ResumeAnswerDTO>(service.createResume(resumeDTO), HttpStatus.CREATED) ;
     }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-contact" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="contact" />
+            </not>
+        </preConditions>
+        <createTable tableName="contact" remarks="Таблица с данными о контактах кандидатов">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false" foreignKeyName="fk_contact_candidate" references="candidate(id)"/>
+            </column>
+            <column name="mobile_phone" type="varchar(15)" remarks="Мобильный  телефон">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)" remarks="Адрес электронной почты">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telegram" type="varchar(33)" remarks="Телеграм">
+                <constraints nullable="false"/>
+            </column>
+            <column name="whatsapp" type="varchar(15)" remarks="Ватсап">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vk" type="varchar(100)" remarks="Вконтакте"/>
+            <column name="habr" type="varchar(100)" remarks="Хабр"/>
+            <column name="linkedin" type="varchar(100)" remarks="Линкедин"/>
+            <column name="github" type="varchar(100)" remarks="Гитхаб"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-contact" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tb_document" />
+            </not>
+        </preConditions>
+        <createTable tableName="tb_document" remarks="Таблица с документами кандидатов">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false" foreignKeyName="fk_document_candidate" references="candidate(id)"/>
+            </column>
+            <column name="document" type="varchar(255)" remarks="Документ">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

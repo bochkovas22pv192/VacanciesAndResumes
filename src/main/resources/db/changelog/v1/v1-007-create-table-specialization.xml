@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-specialization" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="specialization" />
+            </not>
+        </preConditions>
+        <createTable tableName="specialization" remarks="Таблица со специализацией">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false" foreignKeyName="fk_language_candidate" references="candidate(id)"/>
+            </column>
+            <column name="role_name" type="varchar(100)" remarks="Желаемая должность">
+                <constraints nullable="false"/>
+            </column>
+            <column name="grade" type="varchar(20)" remarks="Грэйд">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="integer" remarks="Зарплата"/>
+            <column name="currency" type="varchar(3)" remarks="Валюта"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

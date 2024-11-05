@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-work_experience" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="work_experience" />
+            </not>
+        </preConditions>
+        <createTable tableName="work_experience" remarks="Таблица с данными об опыте работы кандидата">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false" foreignKeyName="fk_education_candidate" references="candidate(id)"/>
+            </column>
+            <column name="organization_name" type="varchar(100)" remarks="Организация">
+                <constraints nullable="false"/>
+            </column>
+            <column name="industry" type="varchar(100)" remarks="Направление деятельности организации"/>
+            <column name="website" type="varchar(100)" remarks="Сайт компании"/>
+            <column name="city" type="varchar(100)" remarks="Город компании"/>
+            <column name="role_name" type="varchar(100)" remarks="Должность">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_data" type="date" remarks="Дата начала работы">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_current_job" type="boolean" remarks="По настоящее время">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_data" type="date" remarks="Дата окончания работы"/>
+            <column name="additional_info" type="text" remarks="Поле для описания прошлого опыта работы"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

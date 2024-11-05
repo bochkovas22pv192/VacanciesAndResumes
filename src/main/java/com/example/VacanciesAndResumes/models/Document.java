@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tb_documents")
+@Table(name = "tb_document")
 public class Document extends PersistableEntity {
 
     @JsonBackReference

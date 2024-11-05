@@ -20,9 +20,9 @@ public class Language extends PersistableEntity {
     @JoinColumn(name="candidate_id")
     private Candidate candidate;
 
-    @Column(length = 3)
+    @Column(length = 3, nullable = false)
     private String language;
 
-    @Column(length = 2)
+    @Column(length = 2, nullable = false)
     private String level;
 }

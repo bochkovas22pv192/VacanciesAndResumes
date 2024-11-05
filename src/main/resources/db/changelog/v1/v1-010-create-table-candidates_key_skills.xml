@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-key_skill_candidates" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="key_skill_candidates" />
+            </not>
+        </preConditions>
+        <createTable tableName="key_skill_candidates" remarks="Таблица со сведениями   кандидатов">
+            <column name="candidate_id" type="uuid" remarks="Идентификатор резюме">
+                <constraints nullable="false"  foreignKeyName="fk_candidates_key_skills_candidate" references="candidate(id)"/>
+            </column>
+            <column name="key_skill_id" type="uuid" remarks="Идентификатор ключевого навыка">
+                <constraints nullable="false" foreignKeyName="fk_candidates_key_skills_key_skill" references="key_skill(id)" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-vacancy" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="vacancy" />
+            </not>
+        </preConditions>
+        <createTable tableName="vacancy" remarks="Таблица вакансий">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="uuid" remarks="Идентификатор компании заказчика">
+                <constraints nullable="false" foreignKeyName="fk_vacancy_customer" references="customer(id)"/>
+            </column>
+            <column name="title" type="varchar(100)" remarks="Название вакансии"/>
+            <column name="role_name" type="varchar(100)" remarks="Должность">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="clob" remarks="Описание вакансии"/>
+            <column name="salary" type="integer" remarks="Зарплата"/>
+            <column name="currency" type="varchar(3)" remarks="Валюта"/>
+            <column name="grade" type="varchar(20)" remarks="Грейд">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="varchar(20)" remarks="Страна">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="varchar(100)" remarks="Регион">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(100)" remarks="Город">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp" remarks="Дата создания">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="boolean" remarks="Статус вакансии">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

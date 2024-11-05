@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-education" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="education" />
+            </not>
+        </preConditions>
+        <createTable tableName="education" remarks="Таблица с данными об образовании кандидатов">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false" foreignKeyName="fk_education_candidate" references="candidate(id)"/>
+            </column>
+            <column name="education_level" type="varchar(50)" remarks="Уровень образования кандидата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="institution" type="varchar(100)" remarks="Учебное заведение">
+                <constraints nullable="false"/>
+            </column>
+            <column name="faculty" type="varchar(100)" remarks="Факультет"/>
+            <column name="specialization" type="varchar(100)" remarks="Специальность"/>
+            <column name="graduation_year" type="smallint" remarks="Год окончания">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
