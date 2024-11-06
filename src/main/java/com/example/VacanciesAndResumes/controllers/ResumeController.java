@@ -45,14 +45,14 @@ public class ResumeController {
         String jsonPatchString = jsonPatch.toString().split("value: \"")[1];
         String newStatus = jsonPatchString.substring(0, jsonPatchString.length()-2);
         Candidate candidate = service.getCandidateByID(UUID.fromString(id));
-        if (newStatus.equals("Оффер") && !candidate.isDocOffer()){
-            throw new BadRequestException("Изменения статуса на \"Оффер\" возможно только при наличии документов на оффер");
+        if (newStatus.equals("Offer") && !candidate.isDocOffer()){
+            throw new BadRequestException("Изменения статуса на \"Offer\" возможно только при наличии документов на оффер");
         }
-        if (newStatus.equals("Скриннинг") && !candidate.isDocScreen()){
-            throw new BadRequestException("Изменения статуса на \"Скриннинг\" возможно только при наличии документов скриннинга");
+        if (newStatus.equals("Screening") && !candidate.isDocScreen()){
+            throw new BadRequestException("Изменения статуса на \"Screening\" возможно только при наличии документов скриннинга");
         }
-        if (newStatus.equals("Нанят") && !candidate.getStatus().equals("Оффер")){
-            throw new BadRequestException("Изменения статуса на \"Нанят\" возможно только после предоставления оффера");
+        if (newStatus.equals("Hired") && !candidate.getStatus().equals("Оффер")){
+            throw new BadRequestException("Изменения статуса на \"Hired\" возможно только после предоставления оффера");
         }
         return new ResponseEntity<ResumeAnswerDTO>(service.updateCandidatePatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
     }

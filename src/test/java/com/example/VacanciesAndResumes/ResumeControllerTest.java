@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.DTOs.*;
 
+import com.example.VacanciesAndResumes.repositories.CandidateRepository;
 import com.example.VacanciesAndResumes.services.ResumeService;
 import io.restassured.RestAssured;
 import org.hamcrest.MatcherAssert;
@@ -18,6 +19,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -28,6 +30,9 @@ class ResumeControllerTest {
 
     @Autowired
     ResumeService resumeService;
+
+    @Autowired
+    CandidateRepository candidateRepository;
 
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -146,7 +151,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(201)
                 .extract().body().as(ResumeAnswerDTO.class);
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно сохранено")));
@@ -184,6 +189,464 @@ class ResumeControllerTest {
         MatcherAssert.assertThat(resume.getSpecialization(),
                 equalTo(new SpecializationDTO("Разработчик", "Middle",
                         100000, "RUB")));
+    }
+
+    @Test
+    void shouldGetResumeStatuses(){
+         ResumeGetStatusAnswerDTO result = given()
+                .contentType("application/json")
+                .when()
+                .get("api/candidate/statuses")
+                .then().statusCode(200)
+                .extract().body().as(ResumeGetStatusAnswerDTO.class);
+        MatcherAssert.assertThat(result,
+                equalTo(resumeService.getStatusList()));
+    }
+
+    @Test
+    void shouldPatchResumeStatus(){
+        String requestBody = "{\n" +
+                "    \n" +
+                "  \"candidate\": {\n" +
+                "    \"last_name\": \"Иванов\",\n" +
+                "    \"first_name\": \"Иван\",\n" +
+                "    \"middle_name\": \"Иванович\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"birth_date\": \"1990-01-01\",\n" +
+                "    \"country\": \"Россия\",\n" +
+                "    \"region\": \"Москва\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"citizenship\": \"РФ\",\n" +
+                "    \"has_workpermit\": true,\n" +
+                "    \"relocate\": 1,\n" +
+                "    \"travel\": 1,\n" +
+                "    \"employment\": \"Полная занятость, Частичная занятость\",\n" +
+                "        \"key_skills\": \"Python, C++\"\n" +
+                "    \n" +
+                "  },\n" +
+                " \n" +
+                "  \"contact\": {\n" +
+                "    \"mobile_phone\": \"+79999999999\",\n" +
+                "    \"email\": \"ivanov@mail.ru\",\n" +
+                "    \"telegram\": \"@ivanov\",\n" +
+                "    \"whatsapp\": \"+79999999999\",\n" +
+                "    \"vk\": \"vk.com/ivanov\",\n" +
+                "    \"habr\": \"habr.com/ivanov\",\n" +
+                "    \"linkedin\": \"linkedin.com/in/ivanov\",\n" +
+                "    \"github\": \"github.com/ivanov\"\n" +
+                "  },\n" +
+                "\"specialization\": {\n" +
+                "    \"role_name\": \"Разработчик\",\n" +
+                "    \"grade\": \"Middle\",\n" +
+                "    \"salary\": 100000,\n" +
+                "    \"currency\": \"RUB\"\n" +
+                "  },\n" +
+                "\"work_experience\": [\n" +
+                "{\n" +
+                "    \"organization_name\": \"Tech Corp\",\n" +
+                "    \"industry\": \"IT\",\n" +
+                "    \"website\": \"techcorp.com\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"role_name\": \"Программист\",\n" +
+                "    \"start_data\": \"2015-07-15\",\n" +
+                "    \"is_current_job\": false,\n" +
+                "    \"end_data\": \"2020-08-28\",\n" +
+                "    \"additional_info\": \"Работа в крупной компании\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"language\": [\n" +
+                "    {\n" +
+                "      \"language\": \"eng\",\n" +
+                "      \"level\": \"C1\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"language\": \"grm\",\n" +
+                "      \"level\": \"B1\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "\"document\": [\n" +
+                "{\n" +
+                "    \"document_path\": \"aaaaaaaa\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"document_path\": \"bbbbbbb\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"education\": [\n" +
+                "{\n" +
+                "     \"education_level\": \"Высшее\",\n" +
+                "    \"institution\": \"МГУ\",\n" +
+                "    \"faculty\": \"Факультет ВМиК\",\n" +
+                "    \"specialization\": \"Программная инженерия\",\n" +
+                "     \"graduation_year\": 2019\n" +
+                "  }\n" +
+                "],\n" +
+                " \"certificate_qualification\": [\n" +
+                "{\n" +
+                "    \"educational_institution\": \"Skillbox\",\n" +
+                "    \"organization\": \"ООО Skillbox\",\n" +
+                "    \"specialization\": \"Python разработка\",\n" +
+                "    \"graduation_yearn\": 2023\n" +
+                "}\n" +
+                "]\n" +
+                "}";
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post("api/candidate")
+                .then().statusCode(201);
+
+        requestBody = "[\n" +
+                "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Look\"} \n" +
+                "]";
+        UUID id = candidateRepository.findAll().getLast().getId();
+        ResumeAnswerDTO result = given()
+                .contentType("application/json-patch+json")
+                .body(requestBody)
+                .when()
+                .patch("api/candidate/" + id.toString())
+                .then().statusCode(200)
+                .extract().body().as(ResumeAnswerDTO.class);
+        MatcherAssert.assertThat(result,
+                equalTo(new ResumeAnswerDTO("success", "Успешно изменено")));
+
+        MatcherAssert.assertThat(candidateRepository.findAll().getLast().getStatus(),
+                equalTo("Look"));
+
+    }
+
+    @Test
+    void shouldInvalidGetChangeStatusOfferException(){
+        String requestBody = "{\n" +
+                "    \n" +
+                "  \"candidate\": {\n" +
+                "    \"last_name\": \"Иванов\",\n" +
+                "    \"first_name\": \"Иван\",\n" +
+                "    \"middle_name\": \"Иванович\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"birth_date\": \"1990-01-01\",\n" +
+                "    \"country\": \"Россия\",\n" +
+                "    \"region\": \"Москва\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"citizenship\": \"РФ\",\n" +
+                "    \"has_workpermit\": true,\n" +
+                "    \"relocate\": 1,\n" +
+                "    \"travel\": 1,\n" +
+                "    \"employment\": \"Полная занятость, Частичная занятость\",\n" +
+                "        \"key_skills\": \"Python, C++\"\n" +
+                "    \n" +
+                "  },\n" +
+                " \n" +
+                "  \"contact\": {\n" +
+                "    \"mobile_phone\": \"+79999999999\",\n" +
+                "    \"email\": \"ivanov@mail.ru\",\n" +
+                "    \"telegram\": \"@ivanov\",\n" +
+                "    \"whatsapp\": \"+79999999999\",\n" +
+                "    \"vk\": \"vk.com/ivanov\",\n" +
+                "    \"habr\": \"habr.com/ivanov\",\n" +
+                "    \"linkedin\": \"linkedin.com/in/ivanov\",\n" +
+                "    \"github\": \"github.com/ivanov\"\n" +
+                "  },\n" +
+                "\"specialization\": {\n" +
+                "    \"role_name\": \"Разработчик\",\n" +
+                "    \"grade\": \"Middle\",\n" +
+                "    \"salary\": 100000,\n" +
+                "    \"currency\": \"RUB\"\n" +
+                "  },\n" +
+                "\"work_experience\": [\n" +
+                "{\n" +
+                "    \"organization_name\": \"Tech Corp\",\n" +
+                "    \"industry\": \"IT\",\n" +
+                "    \"website\": \"techcorp.com\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"role_name\": \"Программист\",\n" +
+                "    \"start_data\": \"2015-07-15\",\n" +
+                "    \"is_current_job\": false,\n" +
+                "    \"end_data\": \"2020-08-28\",\n" +
+                "    \"additional_info\": \"Работа в крупной компании\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"language\": [\n" +
+                "    {\n" +
+                "      \"language\": \"eng\",\n" +
+                "      \"level\": \"C1\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"language\": \"grm\",\n" +
+                "      \"level\": \"B1\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "\"document\": [\n" +
+                "{\n" +
+                "    \"document_path\": \"aaaaaaaa\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"document_path\": \"bbbbbbb\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"education\": [\n" +
+                "{\n" +
+                "     \"education_level\": \"Высшее\",\n" +
+                "    \"institution\": \"МГУ\",\n" +
+                "    \"faculty\": \"Факультет ВМиК\",\n" +
+                "    \"specialization\": \"Программная инженерия\",\n" +
+                "     \"graduation_year\": 2019\n" +
+                "  }\n" +
+                "],\n" +
+                " \"certificate_qualification\": [\n" +
+                "{\n" +
+                "    \"educational_institution\": \"Skillbox\",\n" +
+                "    \"organization\": \"ООО Skillbox\",\n" +
+                "    \"specialization\": \"Python разработка\",\n" +
+                "    \"graduation_yearn\": 2023\n" +
+                "}\n" +
+                "]\n" +
+                "}";
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post("api/candidate")
+                .then().statusCode(201);
+
+        requestBody = "[\n" +
+                "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Offer\"} \n" +
+                "]";
+        UUID id = candidateRepository.findAll().getLast().getId();
+        ResumeAnswerDTO result = given()
+                .contentType("application/json-patch+json")
+                .body(requestBody)
+                .when()
+                .patch("api/candidate/" + id.toString())
+                .then().statusCode(400)
+                .extract().body().as(ResumeAnswerDTO.class);
+        MatcherAssert.assertThat(result,
+                equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                        "Изменения статуса на \"Offer\" возможно только при наличии документов на оффер")));
+
+    }
+
+    @Test
+    void shouldInvalidGetChangeStatusScreeningException(){
+        String requestBody = "{\n" +
+                "    \n" +
+                "  \"candidate\": {\n" +
+                "    \"last_name\": \"Иванов\",\n" +
+                "    \"first_name\": \"Иван\",\n" +
+                "    \"middle_name\": \"Иванович\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"birth_date\": \"1990-01-01\",\n" +
+                "    \"country\": \"Россия\",\n" +
+                "    \"region\": \"Москва\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"citizenship\": \"РФ\",\n" +
+                "    \"has_workpermit\": true,\n" +
+                "    \"relocate\": 1,\n" +
+                "    \"travel\": 1,\n" +
+                "    \"employment\": \"Полная занятость, Частичная занятость\",\n" +
+                "        \"key_skills\": \"Python, C++\"\n" +
+                "    \n" +
+                "  },\n" +
+                " \n" +
+                "  \"contact\": {\n" +
+                "    \"mobile_phone\": \"+79999999999\",\n" +
+                "    \"email\": \"ivanov@mail.ru\",\n" +
+                "    \"telegram\": \"@ivanov\",\n" +
+                "    \"whatsapp\": \"+79999999999\",\n" +
+                "    \"vk\": \"vk.com/ivanov\",\n" +
+                "    \"habr\": \"habr.com/ivanov\",\n" +
+                "    \"linkedin\": \"linkedin.com/in/ivanov\",\n" +
+                "    \"github\": \"github.com/ivanov\"\n" +
+                "  },\n" +
+                "\"specialization\": {\n" +
+                "    \"role_name\": \"Разработчик\",\n" +
+                "    \"grade\": \"Middle\",\n" +
+                "    \"salary\": 100000,\n" +
+                "    \"currency\": \"RUB\"\n" +
+                "  },\n" +
+                "\"work_experience\": [\n" +
+                "{\n" +
+                "    \"organization_name\": \"Tech Corp\",\n" +
+                "    \"industry\": \"IT\",\n" +
+                "    \"website\": \"techcorp.com\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"role_name\": \"Программист\",\n" +
+                "    \"start_data\": \"2015-07-15\",\n" +
+                "    \"is_current_job\": false,\n" +
+                "    \"end_data\": \"2020-08-28\",\n" +
+                "    \"additional_info\": \"Работа в крупной компании\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"language\": [\n" +
+                "    {\n" +
+                "      \"language\": \"eng\",\n" +
+                "      \"level\": \"C1\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"language\": \"grm\",\n" +
+                "      \"level\": \"B1\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "\"document\": [\n" +
+                "{\n" +
+                "    \"document_path\": \"aaaaaaaa\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"document_path\": \"bbbbbbb\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"education\": [\n" +
+                "{\n" +
+                "     \"education_level\": \"Высшее\",\n" +
+                "    \"institution\": \"МГУ\",\n" +
+                "    \"faculty\": \"Факультет ВМиК\",\n" +
+                "    \"specialization\": \"Программная инженерия\",\n" +
+                "     \"graduation_year\": 2019\n" +
+                "  }\n" +
+                "],\n" +
+                " \"certificate_qualification\": [\n" +
+                "{\n" +
+                "    \"educational_institution\": \"Skillbox\",\n" +
+                "    \"organization\": \"ООО Skillbox\",\n" +
+                "    \"specialization\": \"Python разработка\",\n" +
+                "    \"graduation_yearn\": 2023\n" +
+                "}\n" +
+                "]\n" +
+                "}";
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post("api/candidate")
+                .then().statusCode(201);
+
+        requestBody = "[\n" +
+                "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Screening\"} \n" +
+                "]";
+        UUID id = candidateRepository.findAll().getLast().getId();
+        ResumeAnswerDTO result = given()
+                .contentType("application/json-patch+json")
+                .body(requestBody)
+                .when()
+                .patch("api/candidate/" + id.toString())
+                .then().statusCode(400)
+                .extract().body().as(ResumeAnswerDTO.class);
+        MatcherAssert.assertThat(result,
+                equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                        "Изменения статуса на \"Screening\" возможно только при наличии документов скриннинга")));
+
+    }
+
+    @Test
+    void shouldInvalidGetChangeStatusHiredException(){
+        String requestBody = "{\n" +
+                "    \n" +
+                "  \"candidate\": {\n" +
+                "    \"last_name\": \"Иванов\",\n" +
+                "    \"first_name\": \"Иван\",\n" +
+                "    \"middle_name\": \"Иванович\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"birth_date\": \"1990-01-01\",\n" +
+                "    \"country\": \"Россия\",\n" +
+                "    \"region\": \"Москва\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"citizenship\": \"РФ\",\n" +
+                "    \"has_workpermit\": true,\n" +
+                "    \"relocate\": 1,\n" +
+                "    \"travel\": 1,\n" +
+                "    \"employment\": \"Полная занятость, Частичная занятость\",\n" +
+                "        \"key_skills\": \"Python, C++\"\n" +
+                "    \n" +
+                "  },\n" +
+                " \n" +
+                "  \"contact\": {\n" +
+                "    \"mobile_phone\": \"+79999999999\",\n" +
+                "    \"email\": \"ivanov@mail.ru\",\n" +
+                "    \"telegram\": \"@ivanov\",\n" +
+                "    \"whatsapp\": \"+79999999999\",\n" +
+                "    \"vk\": \"vk.com/ivanov\",\n" +
+                "    \"habr\": \"habr.com/ivanov\",\n" +
+                "    \"linkedin\": \"linkedin.com/in/ivanov\",\n" +
+                "    \"github\": \"github.com/ivanov\"\n" +
+                "  },\n" +
+                "\"specialization\": {\n" +
+                "    \"role_name\": \"Разработчик\",\n" +
+                "    \"grade\": \"Middle\",\n" +
+                "    \"salary\": 100000,\n" +
+                "    \"currency\": \"RUB\"\n" +
+                "  },\n" +
+                "\"work_experience\": [\n" +
+                "{\n" +
+                "    \"organization_name\": \"Tech Corp\",\n" +
+                "    \"industry\": \"IT\",\n" +
+                "    \"website\": \"techcorp.com\",\n" +
+                "    \"city\": \"Москва\",\n" +
+                "    \"role_name\": \"Программист\",\n" +
+                "    \"start_data\": \"2015-07-15\",\n" +
+                "    \"is_current_job\": false,\n" +
+                "    \"end_data\": \"2020-08-28\",\n" +
+                "    \"additional_info\": \"Работа в крупной компании\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"language\": [\n" +
+                "    {\n" +
+                "      \"language\": \"eng\",\n" +
+                "      \"level\": \"C1\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"language\": \"grm\",\n" +
+                "      \"level\": \"B1\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "\"document\": [\n" +
+                "{\n" +
+                "    \"document_path\": \"aaaaaaaa\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"document_path\": \"bbbbbbb\"\n" +
+                "  }\n" +
+                "],\n" +
+                "\"education\": [\n" +
+                "{\n" +
+                "     \"education_level\": \"Высшее\",\n" +
+                "    \"institution\": \"МГУ\",\n" +
+                "    \"faculty\": \"Факультет ВМиК\",\n" +
+                "    \"specialization\": \"Программная инженерия\",\n" +
+                "     \"graduation_year\": 2019\n" +
+                "  }\n" +
+                "],\n" +
+                " \"certificate_qualification\": [\n" +
+                "{\n" +
+                "    \"educational_institution\": \"Skillbox\",\n" +
+                "    \"organization\": \"ООО Skillbox\",\n" +
+                "    \"specialization\": \"Python разработка\",\n" +
+                "    \"graduation_yearn\": 2023\n" +
+                "}\n" +
+                "]\n" +
+                "}";
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post("api/candidate")
+                .then().statusCode(201);
+
+        requestBody = "[\n" +
+                "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Hired\"} \n" +
+                "]";
+        UUID id = candidateRepository.findAll().getLast().getId();
+        ResumeAnswerDTO result = given()
+                .contentType("application/json-patch+json")
+                .body(requestBody)
+                .when()
+                .patch("api/candidate/" + id.toString())
+                .then().statusCode(400)
+                .extract().body().as(ResumeAnswerDTO.class);
+        MatcherAssert.assertThat(result,
+                equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                        "Изменения статуса на \"Hired\" возможно только после предоставления оффера")));
+
     }
 
     @Test
@@ -278,7 +741,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -377,7 +840,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -476,11 +939,12 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(), "Неверно заполнено поле \"Отчество\"")));
+        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                "Неверно заполнено поле \"Отчество\"")));
     }
 
     @Test
@@ -575,7 +1039,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -674,11 +1138,12 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(), "Неверно заполнено поле \"Страна\"")));
+        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                "Неверно заполнено поле \"Страна\"")));
     }
 
     @Test
@@ -773,11 +1238,12 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(), "Неверно заполнено поле \"Регион\"")));
+        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                "Неверно заполнено поле \"Регион\"")));
     }
 
     @Test
@@ -872,11 +1338,12 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(), "Неверно заполнено поле \"Город\"")));
+        MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
+                "Неверно заполнено поле \"Город\"")));
     }
 
     @Test
@@ -971,7 +1438,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1071,7 +1538,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1171,7 +1638,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1271,7 +1738,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1371,7 +1838,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1472,7 +1939,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -1572,7 +2039,7 @@ class ResumeControllerTest {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("api/candidate/")
+                .post("api/candidate")
                 .then().statusCode(400)
                 .extract().body().as(ResumeAnswerDTO.class);
 
