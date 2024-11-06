@@ -45,8 +45,11 @@ class LoadDatabase {
 
         Customer customer = Customer.builder().name("ТН").build();
 
-        Handbook handbook1 = Handbook.builder().code("Resume Status").keyName("offer").valueName("Оффер").build();
-        Handbook handbook2 = Handbook.builder().code("Resume Status").keyName("screening").valueName("Скрининг").build();
+        Handbook handbook1 = Handbook.builder().code("Resume Status").keyName("Offer").valueName("Оффер").build();
+        Handbook handbook2 = Handbook.builder().code("Resume Status").keyName("Screening").valueName("Скрининг").build();
+
+        Handbook handbook3 = Handbook.builder().code("Vacancy Status").keyName("true").valueName("Активная вакансия").build();
+        Handbook handbook4 = Handbook.builder().code("Vacancy Status").keyName("false").valueName("Вакансия в архиве").build();
 
         return args -> {
             log.info("Preloading " + employmentRepository.save(employment1));
@@ -59,6 +62,9 @@ class LoadDatabase {
 
             log.info("Preloading " + handbookRepository.save(handbook1));
             log.info("Preloading " + handbookRepository.save(handbook2));
+
+            log.info("Preloading " + handbookRepository.save(handbook3));
+            log.info("Preloading " + handbookRepository.save(handbook4));
         };
     }
 }

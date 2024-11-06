@@ -2,7 +2,9 @@ package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.DTOs.*;
 
+import com.example.VacanciesAndResumes.models.Handbook;
 import com.example.VacanciesAndResumes.repositories.CandidateRepository;
+import com.example.VacanciesAndResumes.repositories.HandbookRepository;
 import com.example.VacanciesAndResumes.services.ResumeService;
 import io.restassured.RestAssured;
 import org.hamcrest.MatcherAssert;
@@ -33,6 +35,9 @@ class ResumeControllerTest {
 
     @Autowired
     CandidateRepository candidateRepository;
+
+    @Autowired
+    HandbookRepository handbookRepository;
 
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -193,7 +198,11 @@ class ResumeControllerTest {
 
     @Test
     void shouldGetResumeStatuses(){
-         ResumeGetStatusAnswerDTO result = given()
+        Handbook handbook1 = Handbook.builder().code("Resume Status").keyName("Offer").valueName("Оффер").build();
+        Handbook handbook2 = Handbook.builder().code("Resume Status").keyName("Screening").valueName("Скрининг").build();
+        handbookRepository.save(handbook1);
+        handbookRepository.save(handbook2);
+        ResumeGetStatusAnswerDTO result = given()
                 .contentType("application/json")
                 .when()
                 .get("api/candidate/statuses")
@@ -317,7 +326,7 @@ class ResumeControllerTest {
     }
 
     @Test
-    void shouldInvalidGetChangeStatusOfferException(){
+    void shouldGetChangeStatusOfferException(){
         String requestBody = "{\n" +
                 "    \n" +
                 "  \"candidate\": {\n" +
@@ -428,7 +437,7 @@ class ResumeControllerTest {
     }
 
     @Test
-    void shouldInvalidGetChangeStatusScreeningException(){
+    void shouldGetChangeStatusScreeningException(){
         String requestBody = "{\n" +
                 "    \n" +
                 "  \"candidate\": {\n" +
@@ -539,7 +548,7 @@ class ResumeControllerTest {
     }
 
     @Test
-    void shouldInvalidGetChangeStatusHiredException(){
+    void shouldGetChangeStatusHiredException(){
         String requestBody = "{\n" +
                 "    \n" +
                 "  \"candidate\": {\n" +

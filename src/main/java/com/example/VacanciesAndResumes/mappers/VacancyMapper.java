@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.mappers;
 
 import com.example.VacanciesAndResumes.DTOs.CustomerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
+import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import org.mapstruct.Builder;
@@ -20,4 +21,7 @@ public interface VacancyMapper {
 
     CustomerDTO customerToCustomerDTO(Customer entity);
     Customer customerDTOToCustomer(CustomerDTO entity);
+
+    VacancyPatchDTO vacancyToVacancyPatchDTO(Vacancy entity);
+    Vacancy vacancyPatchDTOToVacancy(VacancyPatchDTO  entity);
 }

@@ -2,20 +2,33 @@ package com.example.VacanciesAndResumes.services;
 
 
 import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
+import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
 import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
+import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
+import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
+import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
+import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import com.example.VacanciesAndResumes.repositories.CustomerRepository;
+import com.example.VacanciesAndResumes.repositories.HandbookRepository;
 import com.example.VacanciesAndResumes.repositories.VacancyRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +39,12 @@ public class VacancyService {
     private final CustomerRepository customerRepository;
 
     private final VacancyMapper vacancyMapper;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
+    private final ResumeMapper resumeMapper;
+    private final HandbookRepository handbookRepository;
 
     public List<VacancyDTO> getVacancyAll(){
 
@@ -50,5 +69,30 @@ public class VacancyService {
         vacancyRepository.save(vacancy);
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");
+    }
+
+    public ResumeGetStatusAnswerDTO getVacancyStatuses (){
+        ResumeGetStatusAnswerDTO result = new ResumeGetStatusAnswerDTO();
+        result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findByCode("Vacancy Status")));
+        result.setStatus("success");
+        return result;
+    }
+
+    public ResumeAnswerDTO updateVacancyPatch(UUID id, JsonPatch jsonPatch) throws JsonPatchException, IOException {
+        Vacancy vacancy = vacancyRepository.findById(id).orElseThrow(() -> new BadRequestException("Нет вакансии с таким id"));
+        JsonNode patched = jsonPatch.apply(objectMapper.convertValue(vacancyMapper.vacancyToVacancyPatchDTO(vacancy), JsonNode.class));
+        Vacancy newVacancy = vacancyMapper.vacancyPatchDTOToVacancy(objectMapper.treeToValue(patched, VacancyPatchDTO.class));
+        vacancy.setTitle(newVacancy.getTitle());
+        vacancy.setRoleName(newVacancy.getRoleName());
+        vacancy.setDescription(newVacancy.getDescription());
+        vacancy.setSalary(newVacancy.getSalary());
+        vacancy.setCurrency(newVacancy.getCurrency());
+        vacancy.setGrade(newVacancy.getGrade());
+        vacancy.setCountry(newVacancy.getCountry());
+        vacancy.setRegion(newVacancy.getRegion());
+        vacancy.setCity(newVacancy.getCity());
+        vacancy.setActive(newVacancy.isActive());
+        vacancyRepository.save(vacancy);
+        return new ResumeAnswerDTO("success", "Успешно изменено");
     }
 }
