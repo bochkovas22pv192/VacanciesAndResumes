@@ -1,9 +1,7 @@
 package com.example.VacanciesAndResumes.controllers;
 
 
-import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
+import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.services.VacancyService;
@@ -37,13 +35,19 @@ public class VacancyController {
 
 
     @PostMapping
-    ResponseEntity<ResumeAnswerDTO> createResume(@RequestBody VacancyDTO vacancyDTO) {
+    ResponseEntity<ResumeAnswerDTO> createVacancy(@RequestBody VacancyDTO vacancyDTO) {
         return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
-    ResponseEntity<ResumeAnswerDTO> updateResumeStatus(@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
+    ResponseEntity<ResumeAnswerDTO> updateVacancyStatus(@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, IOException {
         return new ResponseEntity<ResumeAnswerDTO>(service.updateVacancyPatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
+    }
+
+    @PostMapping(path = "/{vacancy_id}/comment")
+    CommentVacancyPostAnswerDTO createCommentVacancy (@PathVariable("vacancy_id") String vacancyId,
+                                                      @RequestBody CommentVacancyPostDTO commentVacancyPostDTO) {
+        return service.createCommentVacancy(UUID.fromString(vacancyId), commentVacancyPostDTO);
     }
 }

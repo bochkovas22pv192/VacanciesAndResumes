@@ -1,17 +1,17 @@
 package com.example.VacanciesAndResumes.services;
 
 
-import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
+import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.Candidate;
+import com.example.VacanciesAndResumes.models.CommentVacancy;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
+import com.example.VacanciesAndResumes.repositories.CommentVacancyRepository;
 import com.example.VacanciesAndResumes.repositories.CustomerRepository;
 import com.example.VacanciesAndResumes.repositories.HandbookRepository;
 import com.example.VacanciesAndResumes.repositories.VacancyRepository;
@@ -37,6 +37,7 @@ public class VacancyService {
 
     private final VacancyRepository vacancyRepository;
     private final CustomerRepository customerRepository;
+    private final CommentVacancyRepository commentVacancyRepository;
 
     private final VacancyMapper vacancyMapper;
 
@@ -94,5 +95,16 @@ public class VacancyService {
         vacancy.setActive(newVacancy.isActive());
         vacancyRepository.save(vacancy);
         return new ResumeAnswerDTO("success", "Успешно изменено");
+    }
+
+    public CommentVacancyPostAnswerDTO createCommentVacancy(UUID vacancyId, CommentVacancyPostDTO commentVacancyPostDTO){
+
+        CommentVacancy commentVacancy = vacancyMapper.commentVacancyPostDTOToCommentVacancy(commentVacancyPostDTO);
+
+        commentVacancy.setVacancy(vacancyRepository.findById(vacancyId).orElseThrow(() -> new BadRequestException("Нет вакансии с таким id")));
+        commentVacancy.setCreatedAt(LocalDateTime.now());
+
+        commentVacancyRepository.save(commentVacancy);
+        return new CommentVacancyPostAnswerDTO("success", "OK", commentVacancyRepository.findAll().getLast().getId());
     }
 }
