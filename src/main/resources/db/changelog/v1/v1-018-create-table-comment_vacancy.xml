@@ -17,6 +17,9 @@
             <column name="vacancy_id" type="uuid" remarks="Идентификатор вакансии">
                 <constraints nullable="false" foreignKeyName="fk_comment_vacancy_vacancy" references="vacancy(id)"/>
             </column>
+            <column name="employee_id" type="uuid" remarks="Идентификатор автора">
+                <constraints nullable="false" foreignKeyName="fk_comment_vacancy_employee" references="employee(id)"/>
+            </column>
             <column name="comment_text" type="varchar(255)" remarks="Текст комментария">
                 <constraints nullable="false"/>
             </column>

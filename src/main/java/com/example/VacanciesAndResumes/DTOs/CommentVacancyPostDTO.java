@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CommentVacancyPostDTO {
+    @JsonProperty(value = "employee_id")
+    private String employeeId;
     @JsonProperty(value = "comment_text")
     private String commentText;
     @JsonProperty(value = "is_system_record")

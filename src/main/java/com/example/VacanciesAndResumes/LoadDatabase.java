@@ -1,13 +1,7 @@
 package com.example.VacanciesAndResumes;
 
-import com.example.VacanciesAndResumes.models.Customer;
-import com.example.VacanciesAndResumes.models.Employment;
-import com.example.VacanciesAndResumes.models.Handbook;
-import com.example.VacanciesAndResumes.models.KeySkill;
-import com.example.VacanciesAndResumes.repositories.CustomerRepository;
-import com.example.VacanciesAndResumes.repositories.EmploymentRepository;
-import com.example.VacanciesAndResumes.repositories.HandbookRepository;
-import com.example.VacanciesAndResumes.repositories.KeySkillRepository;
+import com.example.VacanciesAndResumes.models.*;
+import com.example.VacanciesAndResumes.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +28,9 @@ class LoadDatabase {
     @Autowired
     HandbookRepository handbookRepository;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
 
     @Bean
     CommandLineRunner initDatabase() {
@@ -51,6 +48,8 @@ class LoadDatabase {
         Handbook handbook3 = Handbook.builder().code("Vacancy Status").keyName("true").valueName("Активная вакансия").build();
         Handbook handbook4 = Handbook.builder().code("Vacancy Status").keyName("false").valueName("Вакансия в архиве").build();
 
+        Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
+
         return args -> {
             log.info("Preloading " + employmentRepository.save(employment1));
             log.info("Preloading " + employmentRepository.save(employment2));
@@ -65,6 +64,8 @@ class LoadDatabase {
 
             log.info("Preloading " + handbookRepository.save(handbook3));
             log.info("Preloading " + handbookRepository.save(handbook4));
+
+            log.info("Preloading " + employeeRepository.save(employee1));
         };
     }
 }

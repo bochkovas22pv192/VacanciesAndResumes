@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -51,5 +53,9 @@ public class Vacancy extends PersistableEntity {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacancy")
+    @ToString.Exclude
+    private Collection<CommentVacancy> commentVacancies;
 
 }

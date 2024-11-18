@@ -22,6 +22,11 @@ public class CommentVacancy extends PersistableEntity {
     @JoinColumn(name="vacancy_id")
     private Vacancy vacancy;
 
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name="employee_id")
+    private Employee employee;
+
     @Column(nullable = false, length = 255)
     private String commentText;
 

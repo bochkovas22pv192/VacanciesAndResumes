@@ -11,10 +11,7 @@ import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.models.CommentVacancy;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
-import com.example.VacanciesAndResumes.repositories.CommentVacancyRepository;
-import com.example.VacanciesAndResumes.repositories.CustomerRepository;
-import com.example.VacanciesAndResumes.repositories.HandbookRepository;
-import com.example.VacanciesAndResumes.repositories.VacancyRepository;
+import com.example.VacanciesAndResumes.repositories.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -38,7 +35,7 @@ public class VacancyService {
     private final VacancyRepository vacancyRepository;
     private final CustomerRepository customerRepository;
     private final CommentVacancyRepository commentVacancyRepository;
-
+    private final EmployeeRepository employeeRepository;
     private final VacancyMapper vacancyMapper;
 
     @Autowired
@@ -102,6 +99,8 @@ public class VacancyService {
         CommentVacancy commentVacancy = vacancyMapper.commentVacancyPostDTOToCommentVacancy(commentVacancyPostDTO);
 
         commentVacancy.setVacancy(vacancyRepository.findById(vacancyId).orElseThrow(() -> new BadRequestException("Нет вакансии с таким id")));
+        commentVacancy.setEmployee(employeeRepository.findById(UUID.fromString(commentVacancyPostDTO.getEmployeeId()))
+                .orElseThrow(() -> new BadRequestException("Нет работника с таким id")));
         commentVacancy.setCreatedAt(LocalDateTime.now());
 
         commentVacancyRepository.save(commentVacancy);
