@@ -3,6 +3,7 @@ package com.example.VacanciesAndResumes.services;
 
 import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
+import com.example.VacanciesAndResumes.DTOs.patch.CommentVacancyPatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
@@ -94,6 +95,16 @@ public class VacancyService {
         return new ResumeAnswerDTO("success", "Успешно изменено");
     }
 
+    public CommentVacancyGetDTO getCommentsForVacancy(UUID vacancyId){
+
+        List<CommentVacancy> temp = commentVacancyRepository
+                .findByVacancy(vacancyRepository.findById(vacancyId).orElseThrow(()->new BadRequestException("Нет вакансии с таким id")));
+
+        List<CommentVacancyDTO> result = vacancyMapper.commentVacancyToCommentVacancyDTO(temp);
+
+        return new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.", result);
+    }
+
     public CommentVacancyPostAnswerDTO createCommentVacancy(UUID vacancyId, CommentVacancyPostDTO commentVacancyPostDTO){
 
         CommentVacancy commentVacancy = vacancyMapper.commentVacancyPostDTOToCommentVacancy(commentVacancyPostDTO);
@@ -105,5 +116,21 @@ public class VacancyService {
 
         commentVacancyRepository.save(commentVacancy);
         return new CommentVacancyPostAnswerDTO("success", "OK", commentVacancyRepository.findAll().getLast().getId());
+    }
+
+    public CommentVacancyPostAnswerDTO updateCommentVacancy (UUID id, JsonPatch jsonPatch) throws JsonPatchException, IOException {
+        CommentVacancy commentVacancy =
+                commentVacancyRepository.findById(id).orElseThrow(() -> new BadRequestException("Нет комментария с таким id"));
+        JsonNode patched = jsonPatch.apply(objectMapper.convertValue(vacancyMapper.commentVacancyToCommentVacancyPatchDTO(commentVacancy),
+                JsonNode.class));
+        CommentVacancyPatchDTO newCommentVacancy = objectMapper.treeToValue(patched, CommentVacancyPatchDTO.class);
+
+        commentVacancy.setCommentText(newCommentVacancy.getCommentText());
+        commentVacancy.setSystemRecord(newCommentVacancy.isSystemRecord());
+        
+        commentVacancyRepository.save(commentVacancy);
+
+        return new CommentVacancyPostAnswerDTO("Комментарий успешно обновлен", "OK",
+                id);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Configuration
@@ -31,6 +33,12 @@ class LoadDatabase {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    VacancyRepository vacancyRepository;
+
+    @Autowired
+    CommentVacancyRepository commentVacancyRepository;
+
 
     @Bean
     CommandLineRunner initDatabase() {
@@ -50,6 +58,13 @@ class LoadDatabase {
 
         Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
 
+        Vacancy vacancy1 = new Vacancy(customer, "Программист Java в проект", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
+                "Москва", "Москва", true, LocalDateTime.now(), List.of());
+
+        CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
+                false, LocalDateTime.now(), LocalDateTime.now());
+
         return args -> {
             log.info("Preloading " + employmentRepository.save(employment1));
             log.info("Preloading " + employmentRepository.save(employment2));
@@ -66,6 +81,9 @@ class LoadDatabase {
             log.info("Preloading " + handbookRepository.save(handbook4));
 
             log.info("Preloading " + employeeRepository.save(employee1));
+
+            log.info("Preloading " + vacancyRepository.save(vacancy1));
+            log.info("Preloading " + commentVacancyRepository.save(commentVacancy1));
         };
     }
 }

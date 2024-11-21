@@ -1,12 +1,9 @@
 package com.example.VacanciesAndResumes;
 
-import com.example.VacanciesAndResumes.DTOs.CustomerDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.ResumeGetStatusAnswerDTO;
-import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
-import com.example.VacanciesAndResumes.models.Handbook;
-import com.example.VacanciesAndResumes.repositories.HandbookRepository;
-import com.example.VacanciesAndResumes.repositories.VacancyRepository;
+import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.mappers.VacancyMapper;
+import com.example.VacanciesAndResumes.models.*;
+import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import io.restassured.RestAssured;
 import org.hamcrest.MatcherAssert;
@@ -20,6 +17,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -34,10 +34,22 @@ public class VacancyControllerTest {
     VacancyService vacancyService;
 
     @Autowired
+    VacancyMapper vacancyMapper;
+
+    @Autowired
     VacancyRepository vacancyRepository;
 
     @Autowired
     HandbookRepository handbookRepository;
+
+    @Autowired
+    CommentVacancyRepository commentVacancyRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
             "postgres:16-alpine"
@@ -57,11 +69,29 @@ public class VacancyControllerTest {
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
+        customerRepository.deleteAll();
     }
 
+    @Test
+    void TestServicePost(){
+        Customer customer = Customer.builder().name("ТН").build();
+        customerRepository.save(customer);
+
+        vacancyService.createVacancy(new VacancyDTO("Программист Java в проект",
+                        "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
+                        "Москва", new CustomerDTO("ТН")));
+
+        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()), equalTo( new VacancyDTO("Программист Java в проект",
+                "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
+                "Москва", new CustomerDTO("ТН")
+
+        )));
+    }
 
     @Test
     void shouldCreateVacancy() {
+        Customer customer = Customer.builder().name("ТН").build();
+        customerRepository.save(customer);
         String requestBody = "{\n" +
                 "    \"title\":\"Программист Java в проект\",    \n" +
                 "    \"role_name\":\"Java разработчик\", \n" +
@@ -112,6 +142,8 @@ public class VacancyControllerTest {
 
     @Test
     void shouldChangeVacancyStatus(){
+        Customer customer = Customer.builder().name("ТН").build();
+        customerRepository.save(customer);
         String requestBody = "{\n" +
                 "    \"title\":\"Программист Java в проект\",    \n" +
                 "    \"role_name\":\"Java разработчик\", \n" +
@@ -206,6 +238,37 @@ public class VacancyControllerTest {
 
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO(HttpStatus.BAD_REQUEST.toString(),
                 "Введено недопустимое значения поля «Роль»")));
+    }
+
+    @Test
+    void shouldCGetCommentVacancy() {
+        Customer customer = Customer.builder().name("ТН").build();
+
+        Vacancy vacancy1 = new Vacancy(customer, "Программист Java в проект", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
+                "Москва", "Москва", true, LocalDateTime.now(), List.of());
+
+        Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
+
+        CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
+                false, LocalDateTime.now(), LocalDateTime.now());
+
+        customerRepository.save(customer);
+        vacancyRepository.save(vacancy1);
+        employeeRepository.save(employee1);
+        commentVacancyRepository.save(commentVacancy1);
+
+        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+
+
+        CommentVacancyGetDTO result = given()
+                .contentType("application/json")
+                .when()
+                .get("/api/vacancy/" + vacancyId + "/comment")
+                .then().statusCode(200)
+                .extract().body().as(CommentVacancyGetDTO.class);
+
+        MatcherAssert.assertThat(result, equalTo(vacancyService.getCommentsForVacancy(vacancyId)));
     }
 
 }

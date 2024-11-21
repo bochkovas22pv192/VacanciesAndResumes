@@ -45,9 +45,20 @@ public class VacancyController {
         return new ResponseEntity<ResumeAnswerDTO>(service.updateVacancyPatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
     }
 
+    @GetMapping(path = "/{vacancy_id}/comment")
+    CommentVacancyGetDTO getCommentsVacancy (@PathVariable("vacancy_id") String vacancyId){
+        return service.getCommentsForVacancy(UUID.fromString(vacancyId));
+    }
+
     @PostMapping(path = "/{vacancy_id}/comment")
     CommentVacancyPostAnswerDTO createCommentVacancy (@PathVariable("vacancy_id") String vacancyId,
                                                       @RequestBody CommentVacancyPostDTO commentVacancyPostDTO) {
         return service.createCommentVacancy(UUID.fromString(vacancyId), commentVacancyPostDTO);
+    }
+
+    @PatchMapping(path = "/comment/{id}", consumes = "application/json-patch+json")
+    CommentVacancyPostAnswerDTO patchCommentVacancyText (@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
+            throws JsonPatchException, IOException {
+        return service.updateCommentVacancy(UUID.fromString(id), jsonPatch);
     }
 }
