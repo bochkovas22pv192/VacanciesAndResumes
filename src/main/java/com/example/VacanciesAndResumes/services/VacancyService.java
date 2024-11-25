@@ -133,4 +133,9 @@ public class VacancyService {
         return new CommentVacancyPostAnswerDTO("Комментарий успешно обновлен", "OK",
                 id);
     }
+
+    public ResumeAnswerDTO deleteCommentVacancy (UUID id){
+        commentVacancyRepository.deleteById(id);
+        return new ResumeAnswerDTO("OK", "Комментарий успешно удален.");
+    }
 }

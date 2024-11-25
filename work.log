@@ -1,456 +1,128 @@
-2024-11-21T16:15:59.072+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Starting VacanciesAndResumesApplication using Java 23 with PID 12308 (C:\programs\JavaProjects\VacanciesAndResumes\target\classes started by User in C:\programs\JavaProjects\VacanciesAndResumes)
-2024-11-21T16:15:59.075+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : No active profile set, falling back to 1 default profile: "default"
-2024-11-21T16:16:00.075+03:00  INFO 12308 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-21T16:16:00.206+03:00  INFO 12308 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 118 ms. Found 15 JPA repository interfaces.
-2024-11-21T16:16:00.950+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
-2024-11-21T16:16:00.981+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-21T16:16:00.981+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-11-21T16:16:01.050+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-11-21T16:16:01.050+03:00  INFO 12308 --- [VacanciesAndResumes] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1890 ms
-2024-11-21T16:16:01.252+03:00  INFO 12308 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-21T16:16:01.514+03:00  INFO 12308 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@31723307
-2024-11-21T16:16:01.516+03:00  INFO 12308 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-21T16:16:01.742+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.database                       : Set default schema name to public
-2024-11-21T16:16:02.141+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-001-create-table-candidate.xml
-2024-11-21T16:16:02.334+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-002-create-table-education.xml
-2024-11-21T16:16:02.413+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-003-create-table-contact.xml
-2024-11-21T16:16:02.461+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-004-create-table-document.xml
-2024-11-21T16:16:02.487+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-005-create-table-language.xml
-2024-11-21T16:16:02.500+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-006-create-table-certificate-qualification.xml
-2024-11-21T16:16:02.512+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-007-create-table-specialization.xml
-2024-11-21T16:16:02.545+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-008-create-table-work_experience.xml
-2024-11-21T16:16:02.574+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-009-create-table-key_skill.xml
-2024-11-21T16:16:02.586+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-010-create-table-candidates_key_skills.xml
-2024-11-21T16:16:02.596+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-011-create-table-employment.xml
-2024-11-21T16:16:02.607+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-012-create-table-employments_candidates.xml
-2024-11-21T16:16:02.621+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-013-create-table-handbook.xml
-2024-11-21T16:16:02.635+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-014-create-table-customer.xml
-2024-11-21T16:16:02.721+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-015-create-table-vacancy.xml
-2024-11-21T16:16:02.753+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-016-create-table-employee.xml
-2024-11-21T16:16:02.785+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-018-create-table-comment_vacancy.xml
-2024-11-21T16:16:02.937+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:16:03.037+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.ui                             : Database is up to date, no changesets to execute
-2024-11-21T16:16:03.041+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:16:03.053+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : UPDATE SUMMARY
-2024-11-21T16:16:03.053+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : Run:                          0
-2024-11-21T16:16:03.054+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : Previously run:              17
-2024-11-21T16:16:03.054+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : Filtered out:                 0
-2024-11-21T16:16:03.054+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : -------------------------------
-2024-11-21T16:16:03.054+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : Total change sets:           17
-2024-11-21T16:16:03.055+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.util                           : Update summary generated
-2024-11-21T16:16:03.056+03:00  INFO 12308 --- [VacanciesAndResumes] [main] liquibase.command                        : Command execution complete
-2024-11-21T16:16:03.228+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-21T16:16:03.312+03:00  INFO 12308 --- [VacanciesAndResumes] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-21T16:16:03.367+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-21T16:16:03.792+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-21T16:16:03.848+03:00  WARN 12308 --- [VacanciesAndResumes] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-21T16:16:05.306+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-21T16:16:05.322+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.322+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "certificates_qualification" не существует, пропускается
-2024-11-21T16:16:05.322+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.322+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "contact" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "education" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "specialization" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_document" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_language" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "vacancy" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "work_experience" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "candidate" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "certificates_qualification" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "comment_vacancy" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "contact" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "customer" не существует, пропускается
-2024-11-21T16:16:05.337+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "education" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employee" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment_candidates" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "handbook" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill_candidates" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "specialization" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_document" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_language" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "vacancy" не существует, пропускается
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:16:05.353+03:00  WARN 12308 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "work_experience" не существует, пропускается
-2024-11-21T16:16:05.437+03:00  INFO 12308 --- [VacanciesAndResumes] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:16:06.741+03:00  WARN 12308 --- [VacanciesAndResumes] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-21T16:16:07.277+03:00  INFO 12308 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
-2024-11-21T16:16:07.285+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Started VacanciesAndResumesApplication in 8.871 seconds (process running for 9.498)
-2024-11-21T16:16:07.348+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Частичная занятость)
-2024-11-21T16:16:07.350+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Полная занятость)
-2024-11-21T16:16:07.353+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=Python)
-2024-11-21T16:16:07.355+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=C++)
-2024-11-21T16:16:07.358+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Customer(name=ТН)
-2024-11-21T16:16:07.361+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Offer, valueName=Оффер)
-2024-11-21T16:16:07.363+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Screening, valueName=Скрининг)
-2024-11-21T16:16:07.365+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=true, valueName=Активная вакансия)
-2024-11-21T16:16:07.367+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=false, valueName=Вакансия в архиве)
-2024-11-21T16:16:07.370+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employee(firstName=Иван, lastName=Иванов, middleName=null, email=ivan@gmail.com)
-2024-11-21T16:16:07.396+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Vacancy(customer=Customer(name=ТН), title=Программист Java в проект, roleName=Java разработчик, description=Нужен хороший разраб, salary=10000, currency=RUB, grade=Junior, country=Россия, region=Москва, city=Москва, isActive=true, createdAt=2024-11-21T16:16:06.701363300)
-2024-11-21T16:16:07.402+03:00  INFO 12308 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading CommentVacancy(commentText=Отличная вакансия!, isSystemRecord=false, createdAt=2024-11-21T16:16:06.701363300, updatedAt=2024-11-21T16:16:06.701363300)
-2024-11-21T16:19:09.941+03:00  INFO 12308 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:19:09.997+03:00  INFO 12308 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-21T16:19:10.006+03:00  INFO 12308 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-11-21T16:19:35.439+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Starting VacanciesAndResumesApplication using Java 23 with PID 4888 (C:\programs\JavaProjects\VacanciesAndResumes\target\classes started by User in C:\programs\JavaProjects\VacanciesAndResumes)
-2024-11-21T16:19:35.442+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : No active profile set, falling back to 1 default profile: "default"
-2024-11-21T16:19:36.472+03:00  INFO 4888 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-21T16:19:36.601+03:00  INFO 4888 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 117 ms. Found 15 JPA repository interfaces.
-2024-11-21T16:19:37.418+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
-2024-11-21T16:19:37.439+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-21T16:19:37.440+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-11-21T16:19:37.519+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-11-21T16:19:37.520+03:00  INFO 4888 --- [VacanciesAndResumes] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1986 ms
-2024-11-21T16:19:37.749+03:00  INFO 4888 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-21T16:19:37.982+03:00  INFO 4888 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5c059a68
-2024-11-21T16:19:37.984+03:00  INFO 4888 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-21T16:19:38.183+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.database                       : Set default schema name to public
-2024-11-21T16:19:38.609+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-001-create-table-candidate.xml
-2024-11-21T16:19:38.829+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-002-create-table-education.xml
-2024-11-21T16:19:38.887+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-003-create-table-contact.xml
-2024-11-21T16:19:38.925+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-004-create-table-document.xml
-2024-11-21T16:19:38.943+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-005-create-table-language.xml
-2024-11-21T16:19:38.962+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-006-create-table-certificate-qualification.xml
-2024-11-21T16:19:38.996+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-007-create-table-specialization.xml
-2024-11-21T16:19:39.029+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-008-create-table-work_experience.xml
-2024-11-21T16:19:39.043+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-009-create-table-key_skill.xml
-2024-11-21T16:19:39.055+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-010-create-table-candidates_key_skills.xml
-2024-11-21T16:19:39.069+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-011-create-table-employment.xml
-2024-11-21T16:19:39.090+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-012-create-table-employments_candidates.xml
-2024-11-21T16:19:39.125+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-013-create-table-handbook.xml
-2024-11-21T16:19:39.164+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-014-create-table-customer.xml
-2024-11-21T16:19:39.183+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-015-create-table-vacancy.xml
-2024-11-21T16:19:39.245+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-016-create-table-employee.xml
-2024-11-21T16:19:39.257+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-018-create-table-comment_vacancy.xml
-2024-11-21T16:19:39.377+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:19:39.482+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.ui                             : Database is up to date, no changesets to execute
-2024-11-21T16:19:39.484+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:19:39.496+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : UPDATE SUMMARY
-2024-11-21T16:19:39.497+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : Run:                          0
-2024-11-21T16:19:39.497+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : Previously run:              17
-2024-11-21T16:19:39.497+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : Filtered out:                 0
-2024-11-21T16:19:39.497+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : -------------------------------
-2024-11-21T16:19:39.497+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : Total change sets:           17
-2024-11-21T16:19:39.498+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.util                           : Update summary generated
-2024-11-21T16:19:39.500+03:00  INFO 4888 --- [VacanciesAndResumes] [main] liquibase.command                        : Command execution complete
-2024-11-21T16:19:39.604+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-21T16:19:39.700+03:00  INFO 4888 --- [VacanciesAndResumes] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-21T16:19:39.760+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-21T16:19:40.188+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-21T16:19:40.243+03:00  WARN 4888 --- [VacanciesAndResumes] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-21T16:19:41.826+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-21T16:19:41.845+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.846+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "certificates_qualification" не существует, пропускается
-2024-11-21T16:19:41.847+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.847+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:19:41.848+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.848+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:19:41.849+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.849+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "contact" не существует, пропускается
-2024-11-21T16:19:41.849+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.850+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "education" не существует, пропускается
-2024-11-21T16:19:41.850+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.850+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:19:41.851+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.851+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:19:41.852+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.852+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:19:41.853+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.853+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:19:41.854+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.854+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "specialization" не существует, пропускается
-2024-11-21T16:19:41.855+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.855+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_document" не существует, пропускается
-2024-11-21T16:19:41.856+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.856+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_language" не существует, пропускается
-2024-11-21T16:19:41.857+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.857+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "vacancy" не существует, пропускается
-2024-11-21T16:19:41.858+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.858+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "work_experience" не существует, пропускается
-2024-11-21T16:19:41.859+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.860+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "candidate" не существует, пропускается
-2024-11-21T16:19:41.860+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.860+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "certificates_qualification" не существует, пропускается
-2024-11-21T16:19:41.861+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.861+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "comment_vacancy" не существует, пропускается
-2024-11-21T16:19:41.862+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.862+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "contact" не существует, пропускается
-2024-11-21T16:19:41.862+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.862+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "customer" не существует, пропускается
-2024-11-21T16:19:41.863+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.863+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "education" не существует, пропускается
-2024-11-21T16:19:41.864+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.864+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employee" не существует, пропускается
-2024-11-21T16:19:41.864+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.865+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment" не существует, пропускается
-2024-11-21T16:19:41.865+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.865+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment_candidates" не существует, пропускается
-2024-11-21T16:19:41.866+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.866+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "handbook" не существует, пропускается
-2024-11-21T16:19:41.866+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.866+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill" не существует, пропускается
-2024-11-21T16:19:41.867+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.867+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill_candidates" не существует, пропускается
-2024-11-21T16:19:41.868+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.868+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "specialization" не существует, пропускается
-2024-11-21T16:19:41.868+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.868+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_document" не существует, пропускается
-2024-11-21T16:19:41.869+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.869+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_language" не существует, пропускается
-2024-11-21T16:19:41.869+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.869+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "vacancy" не существует, пропускается
-2024-11-21T16:19:41.870+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:19:41.870+03:00  WARN 4888 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "work_experience" не существует, пропускается
-2024-11-21T16:19:41.972+03:00  INFO 4888 --- [VacanciesAndResumes] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:19:42.929+03:00  WARN 4888 --- [VacanciesAndResumes] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-21T16:19:43.347+03:00  INFO 4888 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
-2024-11-21T16:19:43.357+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Started VacanciesAndResumesApplication in 8.506 seconds (process running for 9.105)
-2024-11-21T16:19:43.434+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Частичная занятость)
-2024-11-21T16:19:43.436+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Полная занятость)
-2024-11-21T16:19:43.440+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=Python)
-2024-11-21T16:19:43.442+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=C++)
-2024-11-21T16:19:43.445+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Customer(name=ТН)
-2024-11-21T16:19:43.449+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Offer, valueName=Оффер)
-2024-11-21T16:19:43.451+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Screening, valueName=Скрининг)
-2024-11-21T16:19:43.453+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=true, valueName=Активная вакансия)
-2024-11-21T16:19:43.455+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=false, valueName=Вакансия в архиве)
-2024-11-21T16:19:43.459+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employee(firstName=Иван, lastName=Иванов, middleName=null, email=ivan@gmail.com)
-2024-11-21T16:19:43.488+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Vacancy(customer=Customer(name=ТН), title=Программист Java в проект, roleName=Java разработчик, description=Нужен хороший разраб, salary=10000, currency=RUB, grade=Junior, country=Россия, region=Москва, city=Москва, isActive=true, createdAt=2024-11-21T16:19:42.886300800)
-2024-11-21T16:19:43.495+03:00  INFO 4888 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading CommentVacancy(commentText=Отличная вакансия!, isSystemRecord=false, createdAt=2024-11-21T16:19:42.886300800, updatedAt=2024-11-21T16:19:42.886300800)
-2024-11-21T16:19:59.537+03:00  INFO 4888 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-11-21T16:19:59.537+03:00  INFO 4888 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-11-21T16:19:59.540+03:00  INFO 4888 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
-2024-11-21T16:19:59.908+03:00 ERROR 4888 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.github.fge.jsonpatch.JsonPatchException: no such path in target JSON document] with root cause
-
-com.github.fge.jsonpatch.JsonPatchException: no such path in target JSON document
-	at com.github.fge.jsonpatch.ReplaceOperation.apply(ReplaceOperation.java:67) ~[json-patch-1.12.jar:na]
-	at com.github.fge.jsonpatch.JsonPatch.apply(JsonPatch.java:148) ~[json-patch-1.12.jar:na]
-	at com.example.VacanciesAndResumes.services.VacancyService.updateCommentVacancy(VacancyService.java:124) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379) ~[spring-tx-6.1.13.jar:6.1.13]
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.13.jar:6.1.13]
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720) ~[spring-aop-6.1.13.jar:6.1.13]
-	at com.example.VacanciesAndResumes.services.VacancyService$$SpringCGLIB$$0.updateCommentVacancy(<generated>) ~[classes/:na]
-	at com.example.VacanciesAndResumes.controllers.VacancyController.patchCommentVacancyText(VacancyController.java:62) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.1.13.jar:6.1.13]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.30.jar:6.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar:6.1.13]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
-	at java.base/java.lang.Thread.run(Thread.java:1575) ~[na:na]
-
-2024-11-21T16:20:42.595+03:00  INFO 4888 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:20:42.647+03:00  INFO 4888 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-21T16:20:42.654+03:00  INFO 4888 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-11-21T16:21:35.235+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Starting VacanciesAndResumesApplication using Java 23 with PID 8104 (C:\programs\JavaProjects\VacanciesAndResumes\target\classes started by User in C:\programs\JavaProjects\VacanciesAndResumes)
-2024-11-21T16:21:35.239+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : No active profile set, falling back to 1 default profile: "default"
-2024-11-21T16:21:36.139+03:00  INFO 8104 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-21T16:21:36.265+03:00  INFO 8104 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 113 ms. Found 15 JPA repository interfaces.
-2024-11-21T16:21:36.917+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
-2024-11-21T16:21:36.935+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-21T16:21:36.936+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-11-21T16:21:37.005+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-11-21T16:21:37.006+03:00  INFO 8104 --- [VacanciesAndResumes] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1668 ms
-2024-11-21T16:21:37.198+03:00  INFO 8104 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-21T16:21:37.429+03:00  INFO 8104 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ea7a4c3
-2024-11-21T16:21:37.432+03:00  INFO 8104 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-21T16:21:37.640+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.database                       : Set default schema name to public
-2024-11-21T16:21:38.020+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-001-create-table-candidate.xml
-2024-11-21T16:21:38.202+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-002-create-table-education.xml
-2024-11-21T16:21:38.269+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-003-create-table-contact.xml
-2024-11-21T16:21:38.402+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-004-create-table-document.xml
-2024-11-21T16:21:38.447+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-005-create-table-language.xml
-2024-11-21T16:21:38.473+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-006-create-table-certificate-qualification.xml
-2024-11-21T16:21:38.519+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-007-create-table-specialization.xml
-2024-11-21T16:21:38.609+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-008-create-table-work_experience.xml
-2024-11-21T16:21:38.632+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-009-create-table-key_skill.xml
-2024-11-21T16:21:38.651+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-010-create-table-candidates_key_skills.xml
-2024-11-21T16:21:38.673+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-011-create-table-employment.xml
-2024-11-21T16:21:38.695+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-012-create-table-employments_candidates.xml
-2024-11-21T16:21:38.706+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-013-create-table-handbook.xml
-2024-11-21T16:21:38.715+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-014-create-table-customer.xml
-2024-11-21T16:21:38.724+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-015-create-table-vacancy.xml
-2024-11-21T16:21:38.735+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-016-create-table-employee.xml
-2024-11-21T16:21:38.747+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-018-create-table-comment_vacancy.xml
-2024-11-21T16:21:38.851+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:21:38.963+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.ui                             : Database is up to date, no changesets to execute
-2024-11-21T16:21:38.968+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
-2024-11-21T16:21:38.981+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : UPDATE SUMMARY
-2024-11-21T16:21:38.981+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : Run:                          0
-2024-11-21T16:21:38.982+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : Previously run:              17
-2024-11-21T16:21:38.982+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : Filtered out:                 0
-2024-11-21T16:21:38.982+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : -------------------------------
-2024-11-21T16:21:38.982+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : Total change sets:           17
-2024-11-21T16:21:38.983+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.util                           : Update summary generated
-2024-11-21T16:21:38.984+03:00  INFO 8104 --- [VacanciesAndResumes] [main] liquibase.command                        : Command execution complete
-2024-11-21T16:21:39.087+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-21T16:21:39.161+03:00  INFO 8104 --- [VacanciesAndResumes] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-21T16:21:39.211+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-21T16:21:39.636+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-21T16:21:39.699+03:00  WARN 8104 --- [VacanciesAndResumes] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-21T16:21:40.998+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-21T16:21:41.016+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.016+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "certificates_qualification" не существует, пропускается
-2024-11-21T16:21:41.017+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.018+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:21:41.018+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.018+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
-2024-11-21T16:21:41.019+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.019+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "contact" не существует, пропускается
-2024-11-21T16:21:41.020+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.020+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "education" не существует, пропускается
-2024-11-21T16:21:41.021+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.021+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:21:41.022+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.023+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
-2024-11-21T16:21:41.023+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.024+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:21:41.024+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.024+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
-2024-11-21T16:21:41.025+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.025+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "specialization" не существует, пропускается
-2024-11-21T16:21:41.026+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.026+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_document" не существует, пропускается
-2024-11-21T16:21:41.026+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.026+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_language" не существует, пропускается
-2024-11-21T16:21:41.027+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.027+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "vacancy" не существует, пропускается
-2024-11-21T16:21:41.028+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.028+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "work_experience" не существует, пропускается
-2024-11-21T16:21:41.029+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.029+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "candidate" не существует, пропускается
-2024-11-21T16:21:41.029+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.030+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "certificates_qualification" не существует, пропускается
-2024-11-21T16:21:41.030+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.030+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "comment_vacancy" не существует, пропускается
-2024-11-21T16:21:41.031+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.031+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "contact" не существует, пропускается
-2024-11-21T16:21:41.032+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.032+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "customer" не существует, пропускается
-2024-11-21T16:21:41.033+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.033+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "education" не существует, пропускается
-2024-11-21T16:21:41.033+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.034+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employee" не существует, пропускается
-2024-11-21T16:21:41.034+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.034+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment" не существует, пропускается
-2024-11-21T16:21:41.035+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.035+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment_candidates" не существует, пропускается
-2024-11-21T16:21:41.035+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.036+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "handbook" не существует, пропускается
-2024-11-21T16:21:41.037+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.037+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill" не существует, пропускается
-2024-11-21T16:21:41.038+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.038+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill_candidates" не существует, пропускается
-2024-11-21T16:21:41.039+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.039+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "specialization" не существует, пропускается
-2024-11-21T16:21:41.040+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.040+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_document" не существует, пропускается
-2024-11-21T16:21:41.040+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.040+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_language" не существует, пропускается
-2024-11-21T16:21:41.041+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.041+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "vacancy" не существует, пропускается
-2024-11-21T16:21:41.041+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2024-11-21T16:21:41.042+03:00  WARN 8104 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "work_experience" не существует, пропускается
-2024-11-21T16:21:41.146+03:00  INFO 8104 --- [VacanciesAndResumes] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:21:41.900+03:00  WARN 8104 --- [VacanciesAndResumes] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-21T16:21:42.219+03:00  INFO 8104 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
-2024-11-21T16:21:42.232+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Started VacanciesAndResumesApplication in 7.556 seconds (process running for 8.027)
-2024-11-21T16:21:42.308+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Частичная занятость)
-2024-11-21T16:21:42.310+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Полная занятость)
-2024-11-21T16:21:42.313+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=Python)
-2024-11-21T16:21:42.316+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=C++)
-2024-11-21T16:21:42.320+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Customer(name=ТН)
-2024-11-21T16:21:42.324+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Offer, valueName=Оффер)
-2024-11-21T16:21:42.327+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Screening, valueName=Скрининг)
-2024-11-21T16:21:42.330+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=true, valueName=Активная вакансия)
-2024-11-21T16:21:42.333+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=false, valueName=Вакансия в архиве)
-2024-11-21T16:21:42.338+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employee(firstName=Иван, lastName=Иванов, middleName=null, email=ivan@gmail.com)
-2024-11-21T16:21:42.364+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Vacancy(customer=Customer(name=ТН), title=Программист Java в проект, roleName=Java разработчик, description=Нужен хороший разраб, salary=10000, currency=RUB, grade=Junior, country=Россия, region=Москва, city=Москва, isActive=true, createdAt=2024-11-21T16:21:41.866942600)
-2024-11-21T16:21:42.371+03:00  INFO 8104 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading CommentVacancy(commentText=Отличная вакансия!, isSystemRecord=false, createdAt=2024-11-21T16:21:41.866942600, updatedAt=2024-11-21T16:21:41.866942600)
-2024-11-21T16:21:54.820+03:00  INFO 8104 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-11-21T16:21:54.821+03:00  INFO 8104 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-11-21T16:21:54.823+03:00  INFO 8104 --- [VacanciesAndResumes] [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-11-21T16:22:12.415+03:00  INFO 8104 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-21T16:22:12.468+03:00  INFO 8104 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-21T16:22:12.468+03:00  INFO 8104 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-25T12:16:42.292+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Starting VacanciesAndResumesApplication using Java 23 with PID 4984 (C:\programs\JavaProjects\VacanciesAndResumes\target\classes started by User in C:\programs\JavaProjects\VacanciesAndResumes)
+2024-11-25T12:16:42.296+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : No active profile set, falling back to 1 default profile: "default"
+2024-11-25T12:16:43.846+03:00  INFO 4984 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-25T12:16:43.997+03:00  INFO 4984 --- [VacanciesAndResumes] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 140 ms. Found 15 JPA repository interfaces.
+2024-11-25T12:16:44.872+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2024-11-25T12:16:44.896+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-25T12:16:44.896+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-11-25T12:16:44.976+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-25T12:16:44.984+03:00  INFO 4984 --- [VacanciesAndResumes] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2429 ms
+2024-11-25T12:16:45.250+03:00  INFO 4984 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-25T12:16:45.683+03:00  INFO 4984 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e900e1a
+2024-11-25T12:16:45.683+03:00  INFO 4984 --- [VacanciesAndResumes] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-25T12:16:45.971+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.database                       : Set default schema name to public
+2024-11-25T12:16:46.555+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-001-create-table-candidate.xml
+2024-11-25T12:16:46.896+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-002-create-table-education.xml
+2024-11-25T12:16:46.923+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-003-create-table-contact.xml
+2024-11-25T12:16:46.952+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-004-create-table-document.xml
+2024-11-25T12:16:46.967+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-005-create-table-language.xml
+2024-11-25T12:16:46.987+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-006-create-table-certificate-qualification.xml
+2024-11-25T12:16:47.008+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-007-create-table-specialization.xml
+2024-11-25T12:16:47.024+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-008-create-table-work_experience.xml
+2024-11-25T12:16:47.040+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-009-create-table-key_skill.xml
+2024-11-25T12:16:47.052+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-010-create-table-candidates_key_skills.xml
+2024-11-25T12:16:47.067+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-011-create-table-employment.xml
+2024-11-25T12:16:47.081+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-012-create-table-employments_candidates.xml
+2024-11-25T12:16:47.093+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-013-create-table-handbook.xml
+2024-11-25T12:16:47.103+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-014-create-table-customer.xml
+2024-11-25T12:16:47.202+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-015-create-table-vacancy.xml
+2024-11-25T12:16:47.222+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-016-create-table-employee.xml
+2024-11-25T12:16:47.235+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading resource: db/changelog/v1/v1-018-create-table-comment_vacancy.xml
+2024-11-25T12:16:47.349+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-25T12:16:47.489+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2024-11-25T12:16:47.491+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2024-11-25T12:16:47.504+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : UPDATE SUMMARY
+2024-11-25T12:16:47.505+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : Run:                          0
+2024-11-25T12:16:47.505+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : Previously run:              17
+2024-11-25T12:16:47.505+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : Filtered out:                 0
+2024-11-25T12:16:47.505+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : -------------------------------
+2024-11-25T12:16:47.506+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : Total change sets:           17
+2024-11-25T12:16:47.507+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.util                           : Update summary generated
+2024-11-25T12:16:47.508+03:00  INFO 4984 --- [VacanciesAndResumes] [main] liquibase.command                        : Command execution complete
+2024-11-25T12:16:47.625+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-25T12:16:47.779+03:00  INFO 4984 --- [VacanciesAndResumes] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-25T12:16:47.901+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-25T12:16:48.361+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-25T12:16:48.432+03:00  WARN 4984 --- [VacanciesAndResumes] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-25T12:16:49.865+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "certificates_qualification" не существует, пропускается
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "comment_vacancy" не существует, пропускается
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "contact" не существует, пропускается
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.889+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "education" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "employment_candidates" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "key_skill_candidates" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "specialization" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_document" не существует, пропускается
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.897+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "tb_language" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "vacancy" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : отношение "work_experience" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "candidate" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "certificates_qualification" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "comment_vacancy" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "contact" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "customer" не существует, пропускается
+2024-11-25T12:16:49.905+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "education" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employee" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "employment_candidates" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "handbook" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "key_skill_candidates" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "specialization" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_document" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "tb_language" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "vacancy" не существует, пропускается
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-11-25T12:16:49.913+03:00  WARN 4984 --- [VacanciesAndResumes] [main] o.h.engine.jdbc.spi.SqlExceptionHelper   : таблица "work_experience" не существует, пропускается
+2024-11-25T12:16:50.009+03:00  INFO 4984 --- [VacanciesAndResumes] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T12:16:50.755+03:00  WARN 4984 --- [VacanciesAndResumes] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-25T12:16:51.099+03:00  INFO 4984 --- [VacanciesAndResumes] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2024-11-25T12:16:51.115+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.V.VacanciesAndResumesApplication     : Started VacanciesAndResumesApplication in 9.595 seconds (process running for 10.604)
+2024-11-25T12:16:51.179+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Частичная занятость)
+2024-11-25T12:16:51.187+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employment(employmentName=Полная занятость)
+2024-11-25T12:16:51.187+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=Python)
+2024-11-25T12:16:51.187+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading KeySkill(keySkillName=C++)
+2024-11-25T12:16:51.195+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Customer(name=ТН)
+2024-11-25T12:16:51.195+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Offer, valueName=Оффер)
+2024-11-25T12:16:51.195+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Resume Status, keyName=Screening, valueName=Скрининг)
+2024-11-25T12:16:51.203+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=true, valueName=Активная вакансия)
+2024-11-25T12:16:51.203+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Handbook(code=Vacancy Status, keyName=false, valueName=Вакансия в архиве)
+2024-11-25T12:16:51.203+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Employee(firstName=Иван, lastName=Иванов, middleName=null, email=ivan@gmail.com)
+2024-11-25T12:16:51.235+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading Vacancy(customer=Customer(name=ТН), title=Программист Java в проект, roleName=Java разработчик, description=Нужен хороший разраб, salary=10000, currency=RUB, grade=Junior, country=Россия, region=Москва, city=Москва, isActive=true, createdAt=2024-11-25T12:16:50.715801400)
+2024-11-25T12:16:51.235+03:00  INFO 4984 --- [VacanciesAndResumes] [main] c.e.VacanciesAndResumes.LoadDatabase     : Preloading CommentVacancy(commentText=Отличная вакансия!, isSystemRecord=false, createdAt=2024-11-25T12:16:50.715801400, updatedAt=2024-11-25T12:16:50.715801400)
+2024-11-25T12:16:57.289+03:00  INFO 4984 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T12:16:57.341+03:00  INFO 4984 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-25T12:16:57.348+03:00  INFO 4984 --- [VacanciesAndResumes] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

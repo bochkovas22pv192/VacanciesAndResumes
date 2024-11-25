@@ -61,4 +61,9 @@ public class VacancyController {
             throws JsonPatchException, IOException {
         return service.updateCommentVacancy(UUID.fromString(id), jsonPatch);
     }
+
+    @DeleteMapping(path = "/comment/{id}")
+    ResumeAnswerDTO deleteCommentVacancy (@PathVariable("id") String id){
+        return service.deleteCommentVacancy(UUID.fromString(id));
+    }
 }
