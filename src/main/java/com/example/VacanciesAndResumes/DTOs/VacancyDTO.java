@@ -11,13 +11,15 @@ import lombok.NoArgsConstructor;
 public class VacancyDTO {
     private  String title;
     @JsonProperty(value = "role_name")
-    private  String roleName;
-    private  String description;
-    private  int salary;
-    private  String currency;
-    private  String grade;
-    private  String country;
-    private  String region;
-    private  String city;
+    private String roleName;
+    private String description;
+    private int salary;
+    private String currency;
+    private String grade;
+    private String country;
+    private String region;
+    private String city;
+    @JsonProperty(value = "owner_id")
+    private String ownerId;
     private CustomerDTO customer;
 }

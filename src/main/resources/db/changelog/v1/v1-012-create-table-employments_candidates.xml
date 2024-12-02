@@ -15,7 +15,7 @@
                 <constraints nullable="false"  foreignKeyName="fk_employments_candidates_employment" references="employment(id)"/>
             </column>
             <column name="candidate_id" type="uuid" remarks="Идентификатор резюме">
-                <constraints nullable="false" foreignKeyName="fk_employments_candidates_candidate" references="candidate(id)" primaryKey="true"/>
+                <constraints nullable="false" foreignKeyName="fk_employments_candidates_candidate" references="candidate(id)"/>
             </column>
         </createTable>
     </changeSet>

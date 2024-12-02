@@ -109,7 +109,7 @@ public class Candidate extends PersistableEntity {
     Set<Employment>  employments;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "candidates")
+    @ManyToMany(mappedBy = "candidates", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     Set<KeySkill> keySkills;
 
     public Candidate(UUID id){this.setId(id);}

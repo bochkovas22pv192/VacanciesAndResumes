@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"favoriteVacancies", "vacancies", "commentVacancies"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,5 +30,13 @@ public class Employee extends PersistableEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     @ToString.Exclude
     private Collection<CommentVacancy> commentVacancies;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @ToString.Exclude
+    private Collection<Vacancy> vacancies;
+
+    @ManyToMany(mappedBy = "favoriteEmployees", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Set<Vacancy> favoriteVacancies;
 
 }

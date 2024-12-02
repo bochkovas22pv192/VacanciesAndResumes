@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class VacancyService {
     private final ResumeMapper resumeMapper;
     private final HandbookRepository handbookRepository;
 
-    public List<VacancyDTO> getVacancyAll(){
+    public List<VacancyDTO> getVacancyAll(Map<String, String> queryParams){
 
         return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll());
     }
@@ -57,10 +58,15 @@ public class VacancyService {
         if(vacancyDTO.getRoleName().isEmpty()){
             throw new BadRequestException("Введено недопустимое значения поля «Роль»");
         }
+
+
         Vacancy vacancy = vacancyMapper.vacancyDTOToVacancy(vacancyDTO);
+        vacancy.setEmployee(employeeRepository.findById(UUID.fromString(vacancyDTO.getOwnerId()))
+                .orElseThrow(() -> new BadRequestException("Нет такого работника")));
         vacancy.setCreatedAt(LocalDateTime.now());
         vacancy.setActive(true);
         Customer customer = customerRepository.findByName(vacancy.getCustomer().getName());
+
         if(customer == null){
             throw new BadRequestException("Не существует организации " + vacancy.getCustomer().getName());
         }
@@ -118,7 +124,8 @@ public class VacancyService {
         return new CommentVacancyPostAnswerDTO("success", "OK", commentVacancyRepository.findAll().getLast().getId());
     }
 
-    public CommentVacancyPostAnswerDTO updateCommentVacancy (UUID id, JsonPatch jsonPatch) throws JsonPatchException, IOException {
+    public CommentVacancyPostAnswerDTO updateCommentVacancy (UUID id, JsonPatch jsonPatch)
+            throws JsonPatchException, IOException {
         CommentVacancy commentVacancy =
                 commentVacancyRepository.findById(id).orElseThrow(() -> new BadRequestException("Нет комментария с таким id"));
         JsonNode patched = jsonPatch.apply(objectMapper.convertValue(vacancyMapper.commentVacancyToCommentVacancyPatchDTO(commentVacancy),

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1-create-table-favorite_vacancy" author="bochkov.ea">
+        <preConditions  onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="favorite_vacancy" />
+            </not>
+        </preConditions>
+        <createTable tableName="favorite_vacancy" remarks="Таблица вакансий в заклатках работника">
+            <column name="employee_id" type="uuid" remarks="Идентификатор резюме">
+                <constraints nullable="false"  foreignKeyName="fk_favorite_vacancy_employee" references="employee(id)"/>
+            </column>
+            <column name="vacancy_id" type="uuid" remarks="Идентификатор ключевого навыка">
+                <constraints nullable="false" foreignKeyName="fk_favorite_vacancy_vacancy" references="vacancy(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

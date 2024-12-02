@@ -10,12 +10,12 @@
                 <tableExists tableName="key_skill_candidates" />
             </not>
         </preConditions>
-        <createTable tableName="key_skill_candidates" remarks="Таблица со сведениями   кандидатов">
+        <createTable tableName="key_skill_candidates" remarks="Таблица объединения кандидатов и их ключевых навыков">
             <column name="candidate_id" type="uuid" remarks="Идентификатор резюме">
                 <constraints nullable="false"  foreignKeyName="fk_candidates_key_skills_candidate" references="candidate(id)"/>
             </column>
             <column name="key_skill_id" type="uuid" remarks="Идентификатор ключевого навыка">
-                <constraints nullable="false" foreignKeyName="fk_candidates_key_skills_key_skill" references="key_skill(id)" primaryKey="true"/>
+                <constraints nullable="false" foreignKeyName="fk_candidates_key_skills_key_skill" references="key_skill(id)"/>
             </column>
         </createTable>
     </changeSet>

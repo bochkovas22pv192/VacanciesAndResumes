@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +20,10 @@ public class Vacancy extends PersistableEntity {
     @ManyToOne
     @JoinColumn(name="customer_id")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name="owner_id")
+    private Employee employee;
 
     @Column(length = 100)
     private String title;
@@ -57,5 +62,14 @@ public class Vacancy extends PersistableEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacancy")
     @ToString.Exclude
     private Collection<CommentVacancy> commentVacancies;
+
+    @ManyToMany
+    @ToString.Exclude
+    @JoinTable(
+            name = "favorite_vacancy",
+            joinColumns = @JoinColumn(name = "vacancy_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private Set<Employee> favoriteEmployees;
 
 }

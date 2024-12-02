@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -24,8 +25,8 @@ public class VacancyController {
     private final VacancyService service;
 
     @GetMapping
-    List<VacancyDTO> getVacancyAll(){
-        return service.getVacancyAll();
+    List<VacancyDTO> getVacancyAll(@RequestParam(required=false) Map<String, String> queryParams){
+        return service.getVacancyAll(queryParams);
     }
 
     @GetMapping("/statuses")
@@ -66,4 +67,5 @@ public class VacancyController {
     ResumeAnswerDTO deleteCommentVacancy (@PathVariable("id") String id){
         return service.deleteCommentVacancy(UUID.fromString(id));
     }
+
 }

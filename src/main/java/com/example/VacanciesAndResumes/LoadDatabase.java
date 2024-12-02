@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -56,11 +58,14 @@ class LoadDatabase {
         Handbook handbook3 = Handbook.builder().code("Vacancy Status").keyName("true").valueName("Активная вакансия").build();
         Handbook handbook4 = Handbook.builder().code("Vacancy Status").keyName("false").valueName("Вакансия в архиве").build();
 
-        Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
+        Employee employee1 = Employee.builder().firstName("Иван")
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
 
-        Vacancy vacancy1 = new Vacancy(customer, "Программист Java в проект", "Java разработчик",
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "Программист Java в проект", "Java разработчик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
-                "Москва", "Москва", true, LocalDateTime.now(), List.of());
+                "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1)));
+
+
 
         CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
                 false, LocalDateTime.now(), LocalDateTime.now());

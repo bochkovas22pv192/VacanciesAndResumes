@@ -17,6 +17,9 @@
             <column name="customer_id" type="uuid" remarks="Идентификатор компании заказчика">
                 <constraints nullable="false" foreignKeyName="fk_vacancy_customer" references="customer(id)"/>
             </column>
+            <column name="owner_id" type="uuid" remarks="Идентификатор создателя вакансии">
+                <constraints nullable="false" foreignKeyName="fk_vacancy_owner" references="employee(id)"/>
+            </column>
             <column name="title" type="varchar(100)" remarks="Название вакансии"/>
             <column name="role_name" type="varchar(100)" remarks="Должность">
                 <constraints nullable="false"/>
