@@ -1,9 +1,6 @@
 package com.example.VacanciesAndResumes.mappers;
 
-import com.example.VacanciesAndResumes.DTOs.CommentVacancyDTO;
-import com.example.VacanciesAndResumes.DTOs.CommentVacancyPostDTO;
-import com.example.VacanciesAndResumes.DTOs.CustomerDTO;
-import com.example.VacanciesAndResumes.DTOs.VacancyDTO;
+import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.DTOs.patch.CommentVacancyPatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.models.CommentVacancy;
@@ -15,7 +12,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
 public interface VacancyMapper {
@@ -39,6 +38,14 @@ public interface VacancyMapper {
     List<CommentVacancyDTO> commentVacancyToCommentVacancyDTO(List<CommentVacancy> entity);
 
     CommentVacancyPatchDTO commentVacancyToCommentVacancyPatchDTO (CommentVacancy entity);
+
+    @Mapping(target = "salaryFrom", source = "salary_from")
+    @Mapping(target = "salaryTo", source = "salary_to")
+    VacancyQueryParamDTO queryMapToVacancyQueryParamDTO (Map<String, String> entity);
+
+    default List<String> stringSplitToList(String entity){
+        return Arrays.asList(entity.split("\\s+"));
+    }
 
     default String employeeToAuthor(Employee entity){
         if (entity!=null){

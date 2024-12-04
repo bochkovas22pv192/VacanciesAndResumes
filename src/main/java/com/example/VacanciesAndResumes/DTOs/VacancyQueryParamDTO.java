@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.BindParam;
 
+import java.util.List;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,20 +19,11 @@ public class VacancyQueryParamDTO {
     private String city;
     private String role;
     private boolean status;
-    private String grade;
-
-    @JsonProperty(value = "salary_from")
-    @BindParam(value = "salary_from")
+    private List<String> grade;
     private int salaryFrom;
-
-    @BindParam(value = "salary_to")
-    @JsonProperty(value = "salary_to")
     private int salaryTo;
-
-    private String skills;
     private boolean mine;
     private boolean favs;
-    private int page;
     private boolean sort;
     private String author;
 }

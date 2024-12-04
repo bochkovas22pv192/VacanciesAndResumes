@@ -60,10 +60,24 @@ class LoadDatabase {
 
         Employee employee1 = Employee.builder().firstName("Иван")
                 .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+        Employee employee2 = Employee.builder().firstName("Петр")
+                .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
 
-        Vacancy vacancy1 = new Vacancy(customer, employee1, "Программист Java в проект", "Java разработчик",
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1)));
+
+        Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>());
+
+        Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
                 "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1)));
+
+        Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>());
 
 
 
@@ -86,8 +100,12 @@ class LoadDatabase {
             log.info("Preloading " + handbookRepository.save(handbook4));
 
             log.info("Preloading " + employeeRepository.save(employee1));
+            log.info("Preloading " + employeeRepository.save(employee2));
 
             log.info("Preloading " + vacancyRepository.save(vacancy1));
+            log.info("Preloading " + vacancyRepository.save(vacancy2));
+            log.info("Preloading " + vacancyRepository.save(vacancy3));
+            log.info("Preloading " + vacancyRepository.save(vacancy4));
             log.info("Preloading " + commentVacancyRepository.save(commentVacancy1));
         };
     }

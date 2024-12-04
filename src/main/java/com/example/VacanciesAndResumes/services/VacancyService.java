@@ -13,6 +13,7 @@ import com.example.VacanciesAndResumes.models.CommentVacancy;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import com.example.VacanciesAndResumes.repositories.*;
+import com.example.VacanciesAndResumes.specifications.SpecificationVacancy;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -21,6 +22,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -39,6 +42,7 @@ public class VacancyService {
     private final CommentVacancyRepository commentVacancyRepository;
     private final EmployeeRepository employeeRepository;
     private final VacancyMapper vacancyMapper;
+    private final SpecificationVacancy specificationVacancy;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -47,8 +51,12 @@ public class VacancyService {
     private final HandbookRepository handbookRepository;
 
     public List<VacancyDTO> getVacancyAll(Map<String, String> queryParams){
+        VacancyQueryParamDTO vacancyQueryParamDTO = vacancyMapper.queryMapToVacancyQueryParamDTO(queryParams);
 
-        return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll());
+        Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
+
+        int page = queryParams.get("page") == null ? 1 : Integer.parseInt(queryParams.get("page"));
+        return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10)).getContent());
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){

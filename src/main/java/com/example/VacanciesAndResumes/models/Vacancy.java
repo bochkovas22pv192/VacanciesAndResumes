@@ -17,10 +17,12 @@ import java.util.Set;
 @Table
 public class Vacancy extends PersistableEntity {
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="customer_id")
     private Customer customer;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="owner_id")
     private Employee employee;
