@@ -39,12 +39,24 @@ public interface VacancyMapper {
 
     CommentVacancyPatchDTO commentVacancyToCommentVacancyPatchDTO (CommentVacancy entity);
 
+
     @Mapping(target = "salaryFrom", source = "salary_from")
     @Mapping(target = "salaryTo", source = "salary_to")
     VacancyQueryParamDTO queryMapToVacancyQueryParamDTO (Map<String, String> entity);
 
     default List<String> stringSplitToList(String entity){
+        if (entity == null || entity.isEmpty() || entity.isBlank()){
+            return null;
+        }
         return Arrays.asList(entity.split("\\s+"));
+    }
+
+    default Integer integerFromString(String entity){
+        return entity == null || entity.isEmpty() ? null : Integer.parseInt(entity);
+    }
+
+    default Boolean booleanFromString(String entity){
+        return entity == null || entity.isEmpty() ? null : Boolean.parseBoolean(entity);
     }
 
     default String employeeToAuthor(Employee entity){

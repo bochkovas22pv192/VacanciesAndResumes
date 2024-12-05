@@ -2,13 +2,11 @@ package com.example.VacanciesAndResumes.services;
 
 
 import com.example.VacanciesAndResumes.DTOs.*;
-import com.example.VacanciesAndResumes.DTOs.patch.CandidatePatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.CommentVacancyPatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
-import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.models.CommentVacancy;
 import com.example.VacanciesAndResumes.models.Customer;
 import com.example.VacanciesAndResumes.models.Vacancy;
@@ -23,11 +21,13 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -55,8 +55,19 @@ public class VacancyService {
 
         Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
 
+        Sort sort = Sort.by("title");
+        if (queryParams.containsKey("sort")){
+
+            HashSet<String> sortValues = new HashSet<String>(List.of("title", "roleName", "salary", "country", "region", "city", "createdAt"));
+
+            if (!sortValues.contains(queryParams.get("sort"))){
+                throw new BadRequestException("Нет поля с таким именем для сортировки");
+            }
+            sort = Sort.by(queryParams.get("sort"));
+        }
+
         int page = queryParams.get("page") == null ? 1 : Integer.parseInt(queryParams.get("page"));
-        return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10)).getContent());
+        return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10, sort)).getContent());
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){

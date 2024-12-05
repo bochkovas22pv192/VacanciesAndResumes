@@ -18,12 +18,11 @@ public class VacancyQueryParamDTO {
     private String region;
     private String city;
     private String role;
-    private boolean status;
+    private Boolean status;
     private List<String> grade;
-    private int salaryFrom;
-    private int salaryTo;
-    private boolean mine;
-    private boolean favs;
-    private boolean sort;
+    private Integer salaryFrom;
+    private Integer salaryTo;
+    private Boolean mine;
+    private Boolean favs;
     private String author;
 }

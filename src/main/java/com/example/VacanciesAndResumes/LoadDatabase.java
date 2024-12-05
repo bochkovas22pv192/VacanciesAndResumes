@@ -65,18 +65,18 @@ class LoadDatabase {
 
         Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
-                "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1)));
+                "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1, employee2)));
 
         Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Java разработчик",
-                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
-                "Москва", "Белгород", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>());
+                "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee2)));
 
         Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
-                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
+                "Нужен хороший разраб", 2000, "RUB", "Senior", "Россия",
                 "Москва", "Москва", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1)));
 
         Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
-                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
+                "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
                 "Москва", "Белгород", true, LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>());
 
 
