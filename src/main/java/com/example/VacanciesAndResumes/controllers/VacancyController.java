@@ -25,7 +25,7 @@ public class VacancyController {
     private final VacancyService service;
 
     @GetMapping
-    List<VacancyDTO> getVacancyAll(@RequestParam(required=false) Map<String, String> queryParams){
+    VacancyGetAnswerDTO getVacancyAll(@RequestParam(required=false) Map<String, String> queryParams){
         return service.getVacancyAll(queryParams);
     }
 

@@ -34,7 +34,6 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class VacancyService {
 
     private final VacancyRepository vacancyRepository;
@@ -50,7 +49,7 @@ public class VacancyService {
     private final ResumeMapper resumeMapper;
     private final HandbookRepository handbookRepository;
 
-    public List<VacancyDTO> getVacancyAll(Map<String, String> queryParams){
+    public VacancyGetAnswerDTO getVacancyAll(Map<String, String> queryParams){
         VacancyQueryParamDTO vacancyQueryParamDTO = vacancyMapper.queryMapToVacancyQueryParamDTO(queryParams);
 
         Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
@@ -67,7 +66,10 @@ public class VacancyService {
         }
 
         int page = queryParams.get("page") == null ? 1 : Integer.parseInt(queryParams.get("page"));
-        return vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10, sort)).getContent());
+
+        List<Vacancy> vacancies = vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10, sort)).getContent();
+
+        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(vacancyQueryParamDTO.getAuthor())));
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){
@@ -80,16 +82,18 @@ public class VacancyService {
 
 
         Vacancy vacancy = vacancyMapper.vacancyDTOToVacancy(vacancyDTO);
+
         vacancy.setEmployee(employeeRepository.findById(UUID.fromString(vacancyDTO.getOwnerId()))
                 .orElseThrow(() -> new BadRequestException("Нет такого работника")));
         vacancy.setCreatedAt(LocalDateTime.now());
         vacancy.setActive(true);
-        Customer customer = customerRepository.findByName(vacancy.getCustomer().getName());
 
+        Customer customer = customerRepository.findByName(vacancy.getCustomer().getName());
         if(customer == null){
             throw new BadRequestException("Не существует организации " + vacancy.getCustomer().getName());
         }
         vacancy.setCustomer(customer);
+
         vacancyRepository.save(vacancy);
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");

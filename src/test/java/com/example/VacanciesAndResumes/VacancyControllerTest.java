@@ -1,11 +1,13 @@
 package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import io.restassured.RestAssured;
+import jakarta.transaction.Transactional;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,9 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -69,21 +69,33 @@ public class VacancyControllerTest {
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
+        commentVacancyRepository.deleteAll();
         customerRepository.deleteAll();
+        vacancyRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
     void TestServicePost(){
+        Employee employee1 = Employee.builder().firstName("Иван")
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+
+        employeeRepository.save(employee1);
+
+        UUID employeeId = employeeRepository.findAll().getLast().getId();
+
         Customer customer = Customer.builder().name("ТН").build();
         customerRepository.save(customer);
 
         vacancyService.createVacancy(new VacancyDTO("Программист Java в проект",
                         "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
-                        "Москва", new CustomerDTO("ТН")));
-
-        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()), equalTo( new VacancyDTO("Программист Java в проект",
-                "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
-                "Москва", new CustomerDTO("ТН")
+                        "Москва", employeeId.toString(), new CustomerDTO("ТН")));
+        Vacancy vacancy = vacancyRepository.findAll().getLast();
+        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()),
+                equalTo( new VacancyDTO("Программист Java в проект",
+                "Java разработчик", "Нужен хороший разраб", 10000, "RUB",
+                        "Junior", "Россия", "Москва",
+                "Москва",employeeId.toString(), new CustomerDTO("ТН")
 
         )));
     }
@@ -92,6 +104,13 @@ public class VacancyControllerTest {
     void shouldCreateVacancy() {
         Customer customer = Customer.builder().name("ТН").build();
         customerRepository.save(customer);
+
+        Employee employee1 = Employee.builder().firstName("Иван")
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+
+        employeeRepository.save(employee1);
+        UUID employeeId = employeeRepository.findAll().getLast().getId();
+
         String requestBody = "{\n" +
                 "    \"title\":\"Программист Java в проект\",    \n" +
                 "    \"role_name\":\"Java разработчик\", \n" +
@@ -102,6 +121,7 @@ public class VacancyControllerTest {
                 "    \"country\":\"Россия\",\n" +
                 "    \"region\":\"Москва\",\n" +
                 "    \"city\":\"Москва\",\n" +
+                "    \"owner_id\":\""+ employeeId +"\",\n" +
                 "    \"customer\":{\n" +
                 "    \"name\":\"ТН\"\n" +
                 "    }\n" +
@@ -117,9 +137,9 @@ public class VacancyControllerTest {
 
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно сохранено")));
 
-        MatcherAssert.assertThat(vacancyService.getVacancyAll().getLast(), equalTo( new VacancyDTO("Программист Java в проект",
+        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()), equalTo( new VacancyDTO("Программист Java в проект",
                 "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
-                "Москва", new CustomerDTO("ТН")
+                "Москва", employeeId.toString(), new CustomerDTO("ТН")
 
         )));
     }
@@ -143,38 +163,34 @@ public class VacancyControllerTest {
     @Test
     void shouldChangeVacancyStatus(){
         Customer customer = Customer.builder().name("ТН").build();
-        customerRepository.save(customer);
-        String requestBody = "{\n" +
-                "    \"title\":\"Программист Java в проект\",    \n" +
-                "    \"role_name\":\"Java разработчик\", \n" +
-                "    \"description\":\"Нужен хороший разраб\",\n" +
-                "    \"salary\":10000,\n" +
-                "    \"currency\":\"RUB\",\n" +
-                "    \"grade\":\"Junior\",\n" +
-                "    \"country\":\"Россия\",\n" +
-                "    \"region\":\"Москва\",\n" +
-                "    \"city\":\"Москва\",\n" +
-                "    \"customer\":{\n" +
-                "    \"name\":\"ТН\"\n" +
-                "    }\n" +
-                "}";
 
-        given()
-                .contentType("application/json")
-                .body(requestBody)
-                .when()
-                .post("/api/vacancy")
-                .then().statusCode(201);
-        requestBody = "[\n" +
+        Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
+
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "non", "Java разработчик",
+                "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
+                "Москва", "Белгород", true, LocalDateTime.now(),
+                List.of(), new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+
+
+        CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
+                false, LocalDateTime.now(), LocalDateTime.now());
+
+        customerRepository.save(customer);
+        employeeRepository.save(employee1);
+        vacancyRepository.save(vacancy1);
+        commentVacancyRepository.save(commentVacancy1);
+
+        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+
+        String requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/is_active\",\"value\":false} \n" +
                 "]";
 
-        UUID id = vacancyRepository.findAll().getLast().getId();
         ResumeAnswerDTO result = given()
                 .contentType("application/json-patch+json")
                 .body(requestBody)
                 .when()
-                .patch("/api/vacancy/" + id.toString())
+                .patch("/api/vacancy/" + vacancyId.toString())
                 .then().statusCode(200)
                 .extract().body().as(ResumeAnswerDTO.class);
 
@@ -244,18 +260,20 @@ public class VacancyControllerTest {
     void shouldCGetCommentVacancy() {
         Customer customer = Customer.builder().name("ТН").build();
 
-        Vacancy vacancy1 = new Vacancy(customer, "Программист Java в проект", "Java разработчик",
-                "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия",
-                "Москва", "Москва", true, LocalDateTime.now(), List.of());
-
         Employee employee1 = Employee.builder().firstName("Иван").lastName("Иванов").email("ivan@gmail.com").build();
+
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "non", "Java разработчик",
+                "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
+                "Москва", "Белгород", true, LocalDateTime.now(),
+                List.of(), new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+
 
         CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
                 false, LocalDateTime.now(), LocalDateTime.now());
 
         customerRepository.save(customer);
-        vacancyRepository.save(vacancy1);
         employeeRepository.save(employee1);
+        vacancyRepository.save(vacancy1);
         commentVacancyRepository.save(commentVacancy1);
 
         UUID vacancyId = vacancyRepository.findAll().getLast().getId();
@@ -268,7 +286,63 @@ public class VacancyControllerTest {
                 .then().statusCode(200)
                 .extract().body().as(CommentVacancyGetDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(vacancyService.getCommentsForVacancy(vacancyId)));
+        MatcherAssert.assertThat(result, equalTo(
+                new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.",
+                        vacancyMapper.commentVacancyToCommentVacancyDTO(commentVacancyRepository
+                                .findByVacancy(vacancyRepository.findById(vacancyId).orElse(null))))));
+    }
+
+    private void generateDataForSearchTest(){
+        Customer customer = Customer.builder().name("ТН").build();
+
+        Employee employee1 = Employee.builder().firstName("Иван")
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+        Employee employee2 = Employee.builder().firstName("Петр")
+                .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Москва", true,
+                LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1, employee2)), new LinkedHashSet<Candidate>());
+
+        Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Java разработчик",
+                "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                new LinkedHashSet<Employee>(List.of(employee2)), new LinkedHashSet<Candidate>());
+
+        Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
+                "Нужен хороший разраб", 2000, "RUB", "Senior", "Россия",
+                "Москва", "Москва", true, LocalDateTime.now(), List.of(),
+                new LinkedHashSet<Employee>(List.of(employee1)), new LinkedHashSet<Candidate>());
+
+        Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
+                "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+
+        customerRepository.save(customer);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        List<Vacancy> vacancies = List.of(vacancy1, vacancy2, vacancy3, vacancy4);
+        vacancyRepository.saveAll(vacancies);
+    }
+
+    @Test
+    @Transactional
+    void shouldGetAllVacancies(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult(), equalTo(vacancyService.getVacancyAll(new HashMap<>(Map.of(
+                "owner_id", employeeId.toString()
+        )))));
     }
 
 }

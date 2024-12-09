@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 
@@ -27,7 +28,8 @@ public class CommentVacancy extends PersistableEntity {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    @Column(nullable = false, length = 255)
+
+    @Column(nullable = false, columnDefinition="TEXT")
     private String commentText;
 
     @Column(nullable = false)

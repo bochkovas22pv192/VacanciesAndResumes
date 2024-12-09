@@ -74,4 +74,13 @@ public class Vacancy extends PersistableEntity {
     )
     private Set<Employee> favoriteEmployees;
 
+    @ManyToMany
+    @ToString.Exclude
+    @JoinTable(
+            name = "candidates_vacancies",
+            joinColumns = @JoinColumn(name = "vacancy_id"),
+            inverseJoinColumns = @JoinColumn(name = "candidate_id")
+    )
+    private Set<Candidate> vacancyCandidates;
+
 }

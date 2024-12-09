@@ -4,18 +4,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet id="1-create-table-favorite_vacancy" author="bochkov.ea">
+    <changeSet id="1-create-table-candidates_vacancies" author="bochkov.ea">
         <preConditions  onFail="MARK_RAN">
             <not>
-                <tableExists tableName="favorite_vacancy" />
+                <tableExists tableName="candidates_vacancies" />
             </not>
         </preConditions>
-        <createTable tableName="favorite_vacancy" remarks="Таблица вакансий в заклатках работника">
-            <column name="employee_id" type="uuid" remarks="Идентификатор работника">
-                <constraints nullable="false"  foreignKeyName="fk_favorite_vacancy_employee" references="employee(id)"/>
+        <createTable tableName="candidates_vacancies" remarks="Таблица связи вакансии и кандидта">
+            <column name="candidate_id" type="uuid" remarks="Идентификатор кандидата">
+                <constraints nullable="false"  foreignKeyName="fk_candidates_vacancies_candidate" references="candidate(id)"/>
             </column>
             <column name="vacancy_id" type="uuid" remarks="Идентификатор вакансии">
-                <constraints nullable="false" foreignKeyName="fk_favorite_vacancy_vacancy" references="vacancy(id)"/>
+                <constraints nullable="false" foreignKeyName="fk_candidates_vacancies_vacancy" references="vacancy(id)"/>
             </column>
         </createTable>
     </changeSet>

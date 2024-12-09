@@ -3,26 +3,26 @@ package com.example.VacanciesAndResumes.mappers;
 import com.example.VacanciesAndResumes.DTOs.*;
 import com.example.VacanciesAndResumes.DTOs.patch.CommentVacancyPatchDTO;
 import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
-import com.example.VacanciesAndResumes.models.CommentVacancy;
-import com.example.VacanciesAndResumes.models.Customer;
-import com.example.VacanciesAndResumes.models.Employee;
-import com.example.VacanciesAndResumes.models.Vacancy;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import com.example.VacanciesAndResumes.models.*;
+import org.hibernate.Hibernate;
+import org.mapstruct.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
 public interface VacancyMapper {
+    @Mapping(target = "ownerId", source = "entity.employee.id")
     VacancyDTO vacancyToVacancyDTO(Vacancy entity);
     Vacancy vacancyDTOToVacancy(VacancyDTO entity);
 
     List<VacancyDTO> vacancyToVacancyDTO(List<Vacancy> entity);
-    List<Vacancy> vacancyDTOToVacancy(List<VacancyDTO> entity);
+
+    @Mapping(target = "status", source = "active")
+    @Mapping(target = "customerName", source = "entity.customer", qualifiedByName = "getCustomerName")
+    @Mapping(target = "inFav", source = "entity", qualifiedByName="isInFav")
+    @Mapping(target = "candidateCount", source = "entity.vacancyCandidates", qualifiedByName="countCandidates")
+    VacancyGetDTO vacancyToVacancyGetDTO(Vacancy entity, @Context UUID employeeId);
+    List<VacancyGetDTO> vacancyToVacancyGetDTO(List<Vacancy> entity, @Context UUID employeeId);
 
     CustomerDTO customerToCustomerDTO(Customer entity);
     Customer customerDTOToCustomer(CustomerDTO entity);
@@ -42,6 +42,7 @@ public interface VacancyMapper {
 
     @Mapping(target = "salaryFrom", source = "salary_from")
     @Mapping(target = "salaryTo", source = "salary_to")
+    @Mapping(target = "author", source = "owner_id")
     VacancyQueryParamDTO queryMapToVacancyQueryParamDTO (Map<String, String> entity);
 
     default List<String> stringSplitToList(String entity){
@@ -66,5 +67,28 @@ public interface VacancyMapper {
             return result;
         }
         return null;
+    }
+
+
+    @Named("getCustomerName")
+    default String getCustomerName(Customer entity){
+        return entity == null ? null : entity.getName();
+    }
+
+    @Named("isInFav")
+    default Boolean isInFav(Vacancy entity, @Context UUID employeeId){
+        if (entity == null || employeeId == null){
+            return null;
+        }
+
+        return entity.getFavoriteEmployees().stream().anyMatch(e -> {
+            assert e.getId() != null;
+            return e.getId().equals(employeeId);
+        });
+    }
+
+    @Named("countCandidates")
+    default Integer countCandidates(Set<Candidate> entity){
+        return entity == null ? null :  entity.size();
     }
 }
