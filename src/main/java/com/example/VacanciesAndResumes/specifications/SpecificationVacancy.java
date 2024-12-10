@@ -4,6 +4,7 @@ import com.example.VacanciesAndResumes.DTOs.VacancyQueryParamDTO;
 import com.example.VacanciesAndResumes.models.Employee;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -115,11 +116,14 @@ public class SpecificationVacancy {
     private Specification<Vacancy> withMine(Boolean mine, String ownerId){
 
         return (root, query, criteriaBuilder) -> {
-            if (mine == null || !mine || ownerId == null || ownerId.isEmpty()){
+            if (mine == null || ownerId == null || ownerId.isEmpty()){
                 return criteriaBuilder.conjunction();
             }
             Join<Vacancy, Employee> vacancyOwner = root.join("employee");
-            return criteriaBuilder.equal(vacancyOwner.get("id"), UUID.fromString(ownerId));
+            if(mine){
+                return criteriaBuilder.equal(vacancyOwner.get("id"), UUID.fromString(ownerId));
+            }
+            return criteriaBuilder.notEqual(vacancyOwner.get("id"), UUID.fromString(ownerId));
         };
     }
 
@@ -129,8 +133,8 @@ public class SpecificationVacancy {
             if (favs == null || !favs || ownerId == null || ownerId.isEmpty()){
                 return criteriaBuilder.conjunction();
             }
-            Join<Vacancy, Employee> vacancyOwner = root.join("favoriteEmployees");
-            return criteriaBuilder.equal(vacancyOwner.get("id"), UUID.fromString(ownerId));
+            Join<Vacancy, Employee> vacancyFavs = root.join("favoriteEmployees", JoinType.LEFT);
+            return criteriaBuilder.equal(vacancyFavs.get("id"), UUID.fromString(ownerId));
         };
     }
 }

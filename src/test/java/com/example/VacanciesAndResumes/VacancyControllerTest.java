@@ -286,10 +286,10 @@ public class VacancyControllerTest {
                 .then().statusCode(200)
                 .extract().body().as(CommentVacancyGetDTO.class);
 
-        MatcherAssert.assertThat(result, equalTo(
-                new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.",
-                        vacancyMapper.commentVacancyToCommentVacancyDTO(commentVacancyRepository
-                                .findByVacancy(vacancyRepository.findById(vacancyId).orElse(null))))));
+        MatcherAssert.assertThat(result, equalTo(new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.",
+               List.of(new CommentVacancyDTO(result.getComments().getFirst().getId(), "Отличная вакансия!",
+                       "Иван Иванов", result.getComments().getFirst().getTimestamp()))
+        )));
     }
 
     private void generateDataForSearchTest(){
@@ -302,12 +302,12 @@ public class VacancyControllerTest {
 
         Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
-                "Москва", "Москва", true,
+                "Москва", "Москва", false,
                 LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1, employee2)), new LinkedHashSet<Candidate>());
 
-        Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Java разработчик",
+        Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Python разработчик",
                 "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
-                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                "Белгородская область", "Белгород", true, LocalDateTime.now(), List.of(),
                 new LinkedHashSet<Employee>(List.of(employee2)), new LinkedHashSet<Candidate>());
 
         Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
@@ -317,7 +317,7 @@ public class VacancyControllerTest {
 
         Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
                 "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
-                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                "Белгородская область", "Белгород", true, LocalDateTime.now(), List.of(),
                 new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
 
         customerRepository.save(customer);
@@ -328,8 +328,7 @@ public class VacancyControllerTest {
     }
 
     @Test
-    @Transactional
-    void shouldGetAllVacancies(){
+    void shouldGetVacanciesAll(){
         generateDataForSearchTest();
         UUID employeeId = employeeRepository.findAll().getFirst().getId();
         VacancyGetAnswerDTO result = given()
@@ -340,9 +339,322 @@ public class VacancyControllerTest {
                 .then().statusCode(200)
                 .extract().body().as(VacancyGetAnswerDTO.class);
 
-        MatcherAssert.assertThat(result.getResult(), equalTo(vacancyService.getVacancyAll(new HashMap<>(Map.of(
-                "owner_id", employeeId.toString()
-        )))));
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(2), equalTo(
+                new VacancyGetDTO(result.getResult().get(2).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(3), equalTo(
+                new VacancyGetDTO(result.getResult().get(3).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByCountry(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("country", "Россия")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByRegion(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("region", "Белгородская область")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+    }
+
+    @Test
+    void shouldGetVacanciesByCity(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("city", "Белгород")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByRole(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("role", "Python разработчик")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+    }
+
+    @Test
+    void shouldGetVacanciesByStatus(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("status", false)
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByGrade(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("grade", "Senior Junior")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(2), equalTo(
+                new VacancyGetDTO(result.getResult().get(2).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesBySalaryFrom(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("salary_from", 4000)
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+    }
+
+    @Test
+    void shouldGetVacanciesBySalaryTo(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("salary_to", 6000)
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(2), equalTo(
+                new VacancyGetDTO(result.getResult().get(2).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByFavs(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("favs", true)
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesByMine(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("mine", true)
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesSortSalary(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("sort", "salary")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(2), equalTo(
+                new VacancyGetDTO(result.getResult().get(2).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(3), equalTo(
+                new VacancyGetDTO(result.getResult().get(3).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+    }
+
+    @Test
+    void shouldGetVacanciesSortByDate(){
+        generateDataForSearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("sort", "createdAt")
+                .when()
+                .get("/api/vacancy")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner", "Python разработчик", "Middle", true,  "ТН", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(2), equalTo(
+                new VacancyGetDTO(result.getResult().get(2).getId(), "fav", "Java разработчик", "Senior", true,  "ТН", 0, true)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(3), equalTo(
+                new VacancyGetDTO(result.getResult().get(3).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
+        ));
+
+
+
+
+
     }
 
 }

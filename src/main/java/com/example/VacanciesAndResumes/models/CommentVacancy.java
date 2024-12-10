@@ -29,7 +29,7 @@ public class CommentVacancy extends PersistableEntity {
     private Employee employee;
 
 
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false)
     private String commentText;
 
     @Column(nullable = false)
