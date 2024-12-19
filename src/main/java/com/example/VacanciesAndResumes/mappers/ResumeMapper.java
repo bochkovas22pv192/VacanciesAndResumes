@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Set;
+
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
 public interface ResumeMapper {
@@ -88,9 +88,9 @@ public interface ResumeMapper {
         return null;
     }
 
-    default Set<KeySkill> stringToKeySkill(String string) {
+    default List<KeySkill> stringToKeySkill(String string) {
         if (string != null){
-            Set<KeySkill> result = new java.util.HashSet<>(Set.of());
+            List<KeySkill> result = new java.util.ArrayList<>(List.of());
             for (String stringTemp : string.split(", ")){
                 KeySkill keySkill = new KeySkill();
                 keySkill.setKeySkillName(stringTemp);
@@ -101,7 +101,7 @@ public interface ResumeMapper {
         return null;
     }
 
-    default String KeySkillToString(Set<KeySkill> keySkills) {
+    default String KeySkillToString(List<KeySkill> keySkills) {
         if (keySkills != null && !keySkills.isEmpty()){
             StringBuilder result = new StringBuilder();
             for(KeySkill keySkill : keySkills){
@@ -112,9 +112,9 @@ public interface ResumeMapper {
         return null;
     }
 
-    default Set<Employment> stringToEmployment(String string) {
+    default List<Employment> stringToEmployment(String string) {
         if (string != null){
-            Set<Employment> result = new java.util.HashSet<>(Set.of());
+            List<Employment> result = new java.util.ArrayList<>(List.of());
             for (String stringTemp : string.split(", ")){
                 Employment employment = new Employment();
                 employment.setEmploymentName(stringTemp);
@@ -125,7 +125,7 @@ public interface ResumeMapper {
         return null;
     }
 
-    default String EmploymentToString(Set<Employment> employments) {
+    default String EmploymentToString(List<Employment> employments) {
         if (employments != null){
             StringBuilder result = new StringBuilder();
             for(Employment employment : employments){

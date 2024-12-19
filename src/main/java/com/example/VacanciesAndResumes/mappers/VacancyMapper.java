@@ -81,14 +81,14 @@ public interface VacancyMapper {
             return null;
         }
 
-        return entity.getFavoriteEmployees().stream().anyMatch(e -> {
+        return entity.getFavoriteVacancies().stream().anyMatch(e -> {
             assert e.getId() != null;
-            return e.getId().equals(employeeId);
+            return e.getVacancy().getId().equals(entity.getId()) && e.getEmployee().getId().equals(employeeId);
         });
     }
 
     @Named("countCandidates")
-    default Integer countCandidates(Set<Candidate> entity){
+    default Integer countCandidates(List<Candidate> entity){
         return entity == null ? null :  entity.size();
     }
 }

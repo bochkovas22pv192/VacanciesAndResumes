@@ -1,14 +1,13 @@
 package com.example.VacanciesAndResumes.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +16,13 @@ import java.util.Set;
 @Table
 public class Vacancy extends PersistableEntity {
 
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="customer_id")
     private Customer customer;
 
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="owner_id")
@@ -62,25 +63,23 @@ public class Vacancy extends PersistableEntity {
     private LocalDateTime createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacancy")
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<CommentVacancy> commentVacancies;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacancy")
     @ToString.Exclude
-    @JoinTable(
-            name = "favorite_vacancy",
-            joinColumns = @JoinColumn(name = "vacancy_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private Set<Employee> favoriteEmployees;
+    @EqualsAndHashCode.Exclude
+    private List<FavoriteVacancy> favoriteVacancies;
 
     @ManyToMany
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinTable(
             name = "candidates_vacancies",
             joinColumns = @JoinColumn(name = "vacancy_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id")
     )
-    private Set<Candidate> vacancyCandidates;
+    private List<Candidate> vacancyCandidates;
 
 }

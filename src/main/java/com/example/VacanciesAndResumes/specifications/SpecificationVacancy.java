@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.specifications;
 
 import com.example.VacanciesAndResumes.DTOs.VacancyQueryParamDTO;
 import com.example.VacanciesAndResumes.models.Employee;
+import com.example.VacanciesAndResumes.models.FavoriteVacancy;
 import com.example.VacanciesAndResumes.models.Vacancy;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -133,7 +134,7 @@ public class SpecificationVacancy {
             if (favs == null || !favs || ownerId == null || ownerId.isEmpty()){
                 return criteriaBuilder.conjunction();
             }
-            Join<Vacancy, Employee> vacancyFavs = root.join("favoriteEmployees", JoinType.LEFT);
+            Join<Join<Vacancy, FavoriteVacancy>, Employee> vacancyFavs = root.join("favoriteVacancies").join("employee");
             return criteriaBuilder.equal(vacancyFavs.get("id"), UUID.fromString(ownerId));
         };
     }

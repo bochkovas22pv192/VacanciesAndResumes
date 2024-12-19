@@ -7,9 +7,7 @@ import com.example.VacanciesAndResumes.DTOs.patch.VacancyPatchDTO;
 import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
-import com.example.VacanciesAndResumes.models.CommentVacancy;
-import com.example.VacanciesAndResumes.models.Customer;
-import com.example.VacanciesAndResumes.models.Vacancy;
+import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.specifications.SpecificationVacancy;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,12 +25,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class VacancyService {
 
@@ -42,6 +38,9 @@ public class VacancyService {
     private final EmployeeRepository employeeRepository;
     private final VacancyMapper vacancyMapper;
     private final SpecificationVacancy specificationVacancy;
+    private final FavoriteVacancyRepository favoriteVacancyRepository;
+
+    private final HashSet<String> sortValues = new HashSet<String>(List.of("title", "roleName", "salary", "country", "region", "city", "createdAt"));
 
     @Autowired
     ObjectMapper objectMapper;
@@ -49,16 +48,16 @@ public class VacancyService {
     private final ResumeMapper resumeMapper;
     private final HandbookRepository handbookRepository;
 
+
     public VacancyGetAnswerDTO getVacancyAll(Map<String, String> queryParams){
         VacancyQueryParamDTO vacancyQueryParamDTO = vacancyMapper.queryMapToVacancyQueryParamDTO(queryParams);
+        List<Vacancy> vacancies1 = vacancyRepository.findAll();
+        List<Employee> employees1 = employeeRepository.findAll();
 
         Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
 
         Sort sort = Sort.by("title");
         if (queryParams.containsKey("sort")){
-
-            HashSet<String> sortValues = new HashSet<String>(List.of("title", "roleName", "salary", "country", "region", "city", "createdAt"));
-
             if (!sortValues.contains(queryParams.get("sort"))){
                 throw new BadRequestException("Нет поля с таким именем для сортировки");
             }
@@ -98,6 +97,26 @@ public class VacancyService {
 
         return new ResumeAnswerDTO("success", "Успешно сохранено");
     }
+
+//    public VacancyFavsDTO vacancyAddToFavs(VacancyFavsDTO vacancyFavsDTO){
+//        Vacancy vacancy = vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId())).orElseThrow(()->
+//                new BadRequestException("Нет вакансии с таким id"));
+//        vacancy.addToFavs(employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId())).orElseThrow(()->
+//                new BadRequestException("Нет Работника с таким id")));
+//        vacancyRepository.save(vacancy);
+//        return vacancyFavsDTO;
+//    }
+//
+//    public ResumeAnswerDTO vacancyRemoveFromFavs(VacancyFavsDTO vacancyFavsDTO){
+//
+//        Vacancy vacancy = vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId())).orElseThrow(()->
+//                new BadRequestException("Нет вакансии с таким id"));
+//        vacancy.removeFromFavs(employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId())).orElseThrow(()->
+//                new BadRequestException("Нет Работника с таким id")));
+//        vacancyRepository.save(vacancy);
+//
+//        return new ResumeAnswerDTO("success", "Успешно добавлено в избранное");
+//    }
 
     public ResumeGetStatusAnswerDTO getVacancyStatuses (){
         ResumeGetStatusAnswerDTO result = new ResumeGetStatusAnswerDTO();

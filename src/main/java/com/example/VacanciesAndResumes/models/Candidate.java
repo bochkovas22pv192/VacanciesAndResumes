@@ -7,6 +7,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -81,40 +82,40 @@ public class Candidate extends PersistableEntity {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
-    private Collection<WorkExperience> workExperiences;
+    private List<WorkExperience> workExperiences;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
-    private Collection<Language> languages;
+    private List<Language> languages;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
-    private Collection<Education> educations;
+    private List<Education> educations;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
-    private Collection<CertificatesQualification> certificatesQualifications;
+    private List<CertificatesQualification> certificatesQualifications;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
     @ToString.Exclude
-    private Collection<Document> documents;
+    private List<Document> documents;
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "candidates", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
-    Set<Employment>  employments;
+    List<Employment>  employments;
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "candidates", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    Set<KeySkill> keySkills;
+    List<KeySkill> keySkills;
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "vacancyCandidates")
-    Set<Vacancy> vacancies;
+    List<Vacancy> vacancies;
 
     public Candidate(UUID id){this.setId(id);}
 

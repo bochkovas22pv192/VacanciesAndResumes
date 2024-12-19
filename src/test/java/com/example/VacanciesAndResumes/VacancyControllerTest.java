@@ -6,13 +6,21 @@ import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.services.VacancyService;
+import com.jayway.jsonpath.Criteria;
 import io.restassured.RestAssured;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.hamcrest.MatcherAssert;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.engine.support.discovery.SelectorResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -37,6 +45,9 @@ public class VacancyControllerTest {
     VacancyMapper vacancyMapper;
 
     @Autowired
+    SessionFactory sessionFactory;
+
+    @Autowired
     VacancyRepository vacancyRepository;
 
     @Autowired
@@ -50,6 +61,9 @@ public class VacancyControllerTest {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    FavoriteVacancyRepository favoriteVacancyRepository;
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
             "postgres:16-alpine"
@@ -78,7 +92,7 @@ public class VacancyControllerTest {
     @Test
     void TestServicePost(){
         Employee employee1 = Employee.builder().firstName("Иван")
-                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
 
         employeeRepository.save(employee1);
 
@@ -106,7 +120,7 @@ public class VacancyControllerTest {
         customerRepository.save(customer);
 
         Employee employee1 = Employee.builder().firstName("Иван")
-                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
 
         employeeRepository.save(employee1);
         UUID employeeId = employeeRepository.findAll().getLast().getId();
@@ -169,7 +183,7 @@ public class VacancyControllerTest {
         Vacancy vacancy1 = new Vacancy(customer, employee1, "non", "Java разработчик",
                 "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
                 "Москва", "Белгород", true, LocalDateTime.now(),
-                List.of(), new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+                List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
 
         CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
@@ -265,7 +279,7 @@ public class VacancyControllerTest {
         Vacancy vacancy1 = new Vacancy(customer, employee1, "non", "Java разработчик",
                 "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
                 "Москва", "Белгород", true, LocalDateTime.now(),
-                List.of(), new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+                List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
 
         CommentVacancy commentVacancy1 = new CommentVacancy(vacancy1, employee1, "Отличная вакансия!",
@@ -296,35 +310,41 @@ public class VacancyControllerTest {
         Customer customer = Customer.builder().name("ТН").build();
 
         Employee employee1 = Employee.builder().firstName("Иван")
-                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
         Employee employee2 = Employee.builder().firstName("Петр")
-                .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+                .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
 
         Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
                 "Москва", "Москва", false,
-                LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of(employee1, employee2)), new LinkedHashSet<Candidate>());
+                LocalDateTime.now(), List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
         Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Python разработчик",
                 "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
                 "Белгородская область", "Белгород", true, LocalDateTime.now(), List.of(),
-                new LinkedHashSet<Employee>(List.of(employee2)), new LinkedHashSet<Candidate>());
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
         Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
                 "Нужен хороший разраб", 2000, "RUB", "Senior", "Россия",
                 "Москва", "Москва", true, LocalDateTime.now(), List.of(),
-                new LinkedHashSet<Employee>(List.of(employee1)), new LinkedHashSet<Candidate>());
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
         Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
                 "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
                 "Белгородская область", "Белгород", true, LocalDateTime.now(), List.of(),
-                new LinkedHashSet<Employee>(), new LinkedHashSet<Candidate>());
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        FavoriteVacancy favoriteVacancy1 = FavoriteVacancy.builder().vacancy(vacancy1).employee(employee1).build();
+        FavoriteVacancy favoriteVacancy2 = FavoriteVacancy.builder().vacancy(vacancy1).employee(employee2).build();
+        FavoriteVacancy favoriteVacancy3 = FavoriteVacancy.builder().vacancy(vacancy2).employee(employee2).build();
+        FavoriteVacancy favoriteVacancy4 = FavoriteVacancy.builder().vacancy(vacancy3).employee(employee1).build();
 
         customerRepository.save(customer);
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
         List<Vacancy> vacancies = List.of(vacancy1, vacancy2, vacancy3, vacancy4);
         vacancyRepository.saveAll(vacancies);
+        favoriteVacancyRepository.saveAll(List.of(favoriteVacancy1, favoriteVacancy2, favoriteVacancy3, favoriteVacancy4));
     }
 
     @Test
@@ -619,7 +639,6 @@ public class VacancyControllerTest {
         MatcherAssert.assertThat(result.getResult().get(3), equalTo(
                 new VacancyGetDTO(result.getResult().get(3).getId(), "owner and fav", "Java разработчик", "Junior", false,  "ТН", 0, true)
         ));
-
     }
 
     @Test
@@ -650,11 +669,67 @@ public class VacancyControllerTest {
         MatcherAssert.assertThat(result.getResult().get(3), equalTo(
                 new VacancyGetDTO(result.getResult().get(3).getId(), "non", "Java разработчик", "Junior", true,  "ТН", 0, false)
         ));
-
-
-
-
-
     }
+
+//    @Test
+//    void shouldAddToFavs(){
+//        Customer customer = Customer.builder().name("ТН").build();
+//
+//        Employee employee1 = Employee.builder().firstName("Сидор")
+//                .lastName("Сидоров").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
+//
+//        Vacancy vacancy1 = new Vacancy(customer, employee1, "TEST", "Java разработчик",
+//                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+//                "Москва", "Москва", false,
+//                LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of()), new LinkedHashSet<Candidate>());
+//
+//        customerRepository.save(customer);
+//        employeeRepository.save(employee1);
+//        vacancyRepository.save(vacancy1);
+//
+//        UUID employeeId = employeeRepository.findAll().getLast().getId();
+//        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+//
+//        String requestBody = "{\n" +
+//                "    \"employee_id\": \""+ employeeId + "\",\n" +
+//                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
+//                "}";
+//
+//        given()
+//                .contentType("application/json")
+//                .body(requestBody)
+//                .when()
+//                .post("/api/vacancy/add-favs")
+//                .then().statusCode(201);
+//
+////        Session session = sessionFactory.openSession();
+////        session.beginTransaction();
+////
+////        CriteriaBuilder builder = session.getCriteriaBuilder();
+////
+////        CriteriaQuery<Employee> criteriaQueryEmployee = builder.createQuery(Employee.class);
+////        Root<Employee> rootEmployee = criteriaQueryEmployee.from(Employee.class);
+////
+////        criteriaQueryEmployee.select(criteriaQueryEmployee.from(Employee.class)).where(builder.equal(rootEmployee.get("id"), employeeId));
+////
+////        Employee employee = session.createQuery(criteriaQueryEmployee).uniqueResult();
+////
+////        CriteriaQuery<Vacancy> criteriaQueryVacancy = builder.createQuery(Vacancy.class);
+////        Root<Vacancy> rootVacancy = criteriaQueryVacancy.from(Vacancy.class);
+////
+////        criteriaQueryVacancy.select(criteriaQueryVacancy.from(Vacancy.class)).where(builder.equal(rootVacancy.get("id"), vacancyId));
+////
+////        boolean result = session.createQuery(criteriaQueryVacancy).uniqueResult().getFavoriteEmployees().contains(employee);
+////
+////        session.close();
+////
+////        MatcherAssert.assertThat(result, equalTo(true));
+//
+//        Employee employee = employeeRepository.findAll().getLast();
+//        Hibernate.initialize(vacancy1.getFavoriteEmployees());
+//        Set<Employee> employeeList = vacancy1.getFavoriteEmployees();
+//        MatcherAssert.assertThat(employeeList.contains(employee), equalTo(true));
+//
+//    }
 
 }

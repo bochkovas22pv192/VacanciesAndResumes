@@ -11,6 +11,9 @@
             </not>
         </preConditions>
         <createTable tableName="favorite_vacancy" remarks="Таблица вакансий в заклатках работника">
+            <column name="id" type="uuid" remarks="Идентификатор записи">
+                <constraints primaryKey="true"/>
+            </column>
             <column name="employee_id" type="uuid" remarks="Идентификатор работника">
                 <constraints nullable="false"  foreignKeyName="fk_favorite_vacancy_employee" references="employee(id)"/>
             </column>

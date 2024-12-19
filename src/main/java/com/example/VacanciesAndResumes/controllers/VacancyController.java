@@ -2,8 +2,6 @@ package com.example.VacanciesAndResumes.controllers;
 
 
 import com.example.VacanciesAndResumes.DTOs.*;
-import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
-import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
@@ -13,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,6 +20,7 @@ import java.util.UUID;
 public class VacancyController {
 
     private final VacancyService service;
+
 
     @GetMapping
     VacancyGetAnswerDTO getVacancyAll(@RequestParam(required=false) Map<String, String> queryParams){
@@ -39,6 +37,16 @@ public class VacancyController {
     ResponseEntity<ResumeAnswerDTO> createVacancy(@RequestBody VacancyDTO vacancyDTO) {
         return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }
+
+//    @PostMapping(path = "/add-favs")
+//    ResponseEntity<VacancyFavsDTO> vacancyAddToFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
+//        return new ResponseEntity<VacancyFavsDTO>(service.vacancyAddToFavs(vacancyFavsDTO), HttpStatus.CREATED);
+//    }
+//
+//    @DeleteMapping(path = "/delete-favs")
+//    ResponseEntity<ResumeAnswerDTO> vacancyRemoveFromFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
+//        return new ResponseEntity<ResumeAnswerDTO>(service.vacancyRemoveFromFavs(vacancyFavsDTO), HttpStatus.OK);
+//    }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
     ResponseEntity<ResumeAnswerDTO> updateVacancyStatus(@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
