@@ -98,26 +98,6 @@ public class VacancyService {
         return new ResumeAnswerDTO("success", "Успешно сохранено");
     }
 
-//    public VacancyFavsDTO vacancyAddToFavs(VacancyFavsDTO vacancyFavsDTO){
-//        Vacancy vacancy = vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId())).orElseThrow(()->
-//                new BadRequestException("Нет вакансии с таким id"));
-//        vacancy.addToFavs(employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId())).orElseThrow(()->
-//                new BadRequestException("Нет Работника с таким id")));
-//        vacancyRepository.save(vacancy);
-//        return vacancyFavsDTO;
-//    }
-//
-//    public ResumeAnswerDTO vacancyRemoveFromFavs(VacancyFavsDTO vacancyFavsDTO){
-//
-//        Vacancy vacancy = vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId())).orElseThrow(()->
-//                new BadRequestException("Нет вакансии с таким id"));
-//        vacancy.removeFromFavs(employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId())).orElseThrow(()->
-//                new BadRequestException("Нет Работника с таким id")));
-//        vacancyRepository.save(vacancy);
-//
-//        return new ResumeAnswerDTO("success", "Успешно добавлено в избранное");
-//    }
-
     public ResumeGetStatusAnswerDTO getVacancyStatuses (){
         ResumeGetStatusAnswerDTO result = new ResumeGetStatusAnswerDTO();
         result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findByCode("Vacancy Status")));

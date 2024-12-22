@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes.controllers;
 
 
 import com.example.VacanciesAndResumes.DTOs.*;
+import com.example.VacanciesAndResumes.services.FavoriteVacancyService;
 import com.example.VacanciesAndResumes.services.VacancyService;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class VacancyController {
 
     private final VacancyService service;
+    private final FavoriteVacancyService favoriteVacancyService;
 
 
     @GetMapping
@@ -38,15 +40,15 @@ public class VacancyController {
         return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }
 
-//    @PostMapping(path = "/add-favs")
-//    ResponseEntity<VacancyFavsDTO> vacancyAddToFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
-//        return new ResponseEntity<VacancyFavsDTO>(service.vacancyAddToFavs(vacancyFavsDTO), HttpStatus.CREATED);
-//    }
-//
-//    @DeleteMapping(path = "/delete-favs")
-//    ResponseEntity<ResumeAnswerDTO> vacancyRemoveFromFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
-//        return new ResponseEntity<ResumeAnswerDTO>(service.vacancyRemoveFromFavs(vacancyFavsDTO), HttpStatus.OK);
-//    }
+    @PostMapping(path = "/add-favs")
+    ResponseEntity<VacancyFavsDTO> vacancyAddToFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
+        return new ResponseEntity<VacancyFavsDTO>(favoriteVacancyService.addFavoriteVacancy(vacancyFavsDTO), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/delete-favs")
+    ResponseEntity<ResumeAnswerDTO> vacancyRemoveFromFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
+        return new ResponseEntity<ResumeAnswerDTO>(favoriteVacancyService.deleteFavoriteVacancy(vacancyFavsDTO), HttpStatus.OK);
+    }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
     ResponseEntity<ResumeAnswerDTO> updateVacancyStatus(@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
