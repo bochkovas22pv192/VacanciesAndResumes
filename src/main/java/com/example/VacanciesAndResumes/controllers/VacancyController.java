@@ -37,23 +37,23 @@ public class VacancyController {
 
     @PostMapping
     ResponseEntity<ResumeAnswerDTO> createVacancy(@RequestBody VacancyDTO vacancyDTO) {
-        return new ResponseEntity<ResumeAnswerDTO>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.createVacancy(vacancyDTO), HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/add-favs")
     ResponseEntity<VacancyFavsDTO> vacancyAddToFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
-        return new ResponseEntity<VacancyFavsDTO>(favoriteVacancyService.addFavoriteVacancy(vacancyFavsDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(favoriteVacancyService.addFavoriteVacancy(vacancyFavsDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/delete-favs")
     ResponseEntity<ResumeAnswerDTO> vacancyRemoveFromFavs(@RequestBody VacancyFavsDTO vacancyFavsDTO){
-        return new ResponseEntity<ResumeAnswerDTO>(favoriteVacancyService.deleteFavoriteVacancy(vacancyFavsDTO), HttpStatus.OK);
+        return new ResponseEntity<>(favoriteVacancyService.deleteFavoriteVacancy(vacancyFavsDTO), HttpStatus.OK);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
     ResponseEntity<ResumeAnswerDTO> updateVacancyStatus(@PathVariable("id") String id, @RequestBody JsonPatch jsonPatch)
             throws JsonPatchException, IOException {
-        return new ResponseEntity<ResumeAnswerDTO>(service.updateVacancyPatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
+        return new ResponseEntity<>(service.updateVacancyPatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
     }
 
     @GetMapping(path = "/{vacancy_id}/comment")

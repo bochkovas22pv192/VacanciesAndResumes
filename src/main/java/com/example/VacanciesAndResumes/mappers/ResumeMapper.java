@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -90,7 +91,7 @@ public interface ResumeMapper {
 
     default List<KeySkill> stringToKeySkill(String string) {
         if (string != null){
-            List<KeySkill> result = new java.util.ArrayList<>(List.of());
+            List<KeySkill> result = new ArrayList<>();
             for (String stringTemp : string.split(", ")){
                 KeySkill keySkill = new KeySkill();
                 keySkill.setKeySkillName(stringTemp);
@@ -114,7 +115,7 @@ public interface ResumeMapper {
 
     default List<Employment> stringToEmployment(String string) {
         if (string != null){
-            List<Employment> result = new java.util.ArrayList<>(List.of());
+            List<Employment> result = new ArrayList<>();
             for (String stringTemp : string.split(", ")){
                 Employment employment = new Employment();
                 employment.setEmploymentName(stringTemp);

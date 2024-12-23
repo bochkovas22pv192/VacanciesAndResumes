@@ -1,26 +1,18 @@
 package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.DTOs.*;
-import com.example.VacanciesAndResumes.exceptions.resume.BadRequestException;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.services.VacancyService;
-import com.jayway.jsonpath.Criteria;
 import io.restassured.RestAssured;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
-import jakarta.transaction.Transactional;
+
 import org.hamcrest.MatcherAssert;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.engine.support.discovery.SelectorResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -43,9 +35,6 @@ public class VacancyControllerTest {
 
     @Autowired
     VacancyMapper vacancyMapper;
-
-    @Autowired
-    SessionFactory sessionFactory;
 
     @Autowired
     VacancyRepository vacancyRepository;
@@ -687,24 +676,18 @@ public class VacancyControllerTest {
         employeeRepository.save(employee1);
         vacancyRepository.save(vacancy1);
 
-        UUID employeeId = employeeRepository.findAll().getLast().getId();
-        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
-
-        String requestBody = "{\n" +
-                "    \"employee_id\": \""+ employeeId + "\",\n" +
-                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
-                "}";
+        VacancyFavsDTO vacancyFavsDTO = new VacancyFavsDTO(employee1.getId().toString(), vacancy1.getId().toString());
 
         given()
                 .contentType("application/json")
-                .body(requestBody)
+                .body(vacancyFavsDTO)
                 .when()
                 .post("/api/vacancy/add-favs")
                 .then().statusCode(201);
 
         FavoriteVacancy favoriteVacancy = favoriteVacancyRepository.findAll().getLast();
-        MatcherAssert.assertThat(favoriteVacancy.getVacancy().getId(), equalTo(vacancyId));
-        MatcherAssert.assertThat(favoriteVacancy.getEmployee().getId(), equalTo(employeeId));
+        MatcherAssert.assertThat(favoriteVacancy.getVacancy().getId().toString(), equalTo(vacancyFavsDTO.getVacancyId()));
+        MatcherAssert.assertThat(favoriteVacancy.getEmployee().getId().toString(), equalTo(vacancyFavsDTO.getEmployeeId()));
     }
 
     @Test
@@ -729,14 +712,11 @@ public class VacancyControllerTest {
         UUID employeeId = employeeRepository.findAll().getLast().getId();
         UUID vacancyId = vacancyRepository.findAll().getLast().getId();
 
-        String requestBody = "{\n" +
-                "    \"employee_id\": \""+ employeeId + "\",\n" +
-                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
-                "}";
+        VacancyFavsDTO vacancyFavsDTO = new VacancyFavsDTO(employee1.getId().toString(), vacancy1.getId().toString());
 
         given()
                 .contentType("application/json")
-                .body(requestBody)
+                .body(vacancyFavsDTO)
                 .when()
                 .delete("/api/vacancy/delete-favs")
                 .then().statusCode(200);

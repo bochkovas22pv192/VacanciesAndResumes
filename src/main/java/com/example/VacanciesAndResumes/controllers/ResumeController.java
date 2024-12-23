@@ -36,7 +36,7 @@ public class ResumeController {
 
     @PostMapping
     ResponseEntity<ResumeAnswerDTO> createResume(@RequestBody ResumeDTO resumeDTO) {
-        return new ResponseEntity<ResumeAnswerDTO>(service.createResume(resumeDTO), HttpStatus.CREATED) ;
+        return new ResponseEntity<>(service.createResume(resumeDTO), HttpStatus.CREATED) ;
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
@@ -54,6 +54,6 @@ public class ResumeController {
         if (newStatus.equals("Hired") && !candidate.getStatus().equals("Оффер")){
             throw new BadRequestException("Изменения статуса на \"Hired\" возможно только после предоставления оффера");
         }
-        return new ResponseEntity<ResumeAnswerDTO>(service.updateCandidatePatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
+        return new ResponseEntity<>(service.updateCandidatePatch(UUID.fromString(id), jsonPatch), HttpStatus.OK) ;
     }
 }

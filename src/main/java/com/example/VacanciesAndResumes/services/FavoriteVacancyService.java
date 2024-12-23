@@ -25,11 +25,12 @@ public class FavoriteVacancyService {
     private final FavoriteVacancyRepository favoriteVacancyRepository;
 
     public VacancyFavsDTO addFavoriteVacancy(VacancyFavsDTO vacancyFavsDTO){
-        FavoriteVacancy favoriteVacancy = new FavoriteVacancy();
-        favoriteVacancy.setVacancy(vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId()))
-                .orElseThrow(()-> new BadRequestException("Нет вакансии с таким id")));
-        favoriteVacancy.setEmployee(employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId()))
-                .orElseThrow(() -> new BadRequestException("Нет работника с таким id")));
+
+        Vacancy vacancy = vacancyRepository.findById(UUID.fromString(vacancyFavsDTO.getVacancyId()))
+                .orElseThrow(()-> new BadRequestException("Нет вакансии с таким id"));
+        Employee employee = employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId()))
+                .orElseThrow(() -> new BadRequestException("Нет работника с таким id"));
+        FavoriteVacancy favoriteVacancy = new FavoriteVacancy(vacancy, employee);
         favoriteVacancyRepository.save(favoriteVacancy);
         return vacancyFavsDTO;
     }
@@ -40,6 +41,9 @@ public class FavoriteVacancyService {
         Employee employee = employeeRepository.findById(UUID.fromString(vacancyFavsDTO.getEmployeeId()))
                 .orElseThrow(() -> new BadRequestException("Нет работника с таким id"));
         FavoriteVacancy favoriteVacancy = favoriteVacancyRepository.findByVacancyAndEmployee(vacancy, employee);
+        if (favoriteVacancy == null){
+            throw new BadRequestException("Нет такой вакансии в избранном");
+        }
         favoriteVacancyRepository.delete(favoriteVacancy);
         return new ResumeAnswerDTO("success", "Успешно удалено из избранного");
     }
