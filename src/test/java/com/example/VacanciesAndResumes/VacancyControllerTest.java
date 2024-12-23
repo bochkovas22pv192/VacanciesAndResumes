@@ -671,65 +671,78 @@ public class VacancyControllerTest {
         ));
     }
 
-//    @Test
-//    void shouldAddToFavs(){
-//        Customer customer = Customer.builder().name("ТН").build();
-//
-//        Employee employee1 = Employee.builder().firstName("Сидор")
-//                .lastName("Сидоров").email("ivan@gmail.com").favoriteVacancies(new LinkedHashSet<Vacancy>()).build();
-//
-//        Vacancy vacancy1 = new Vacancy(customer, employee1, "TEST", "Java разработчик",
-//                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
-//                "Москва", "Москва", false,
-//                LocalDateTime.now(), List.of(), new LinkedHashSet<Employee>(List.of()), new LinkedHashSet<Candidate>());
-//
-//        customerRepository.save(customer);
-//        employeeRepository.save(employee1);
-//        vacancyRepository.save(vacancy1);
-//
-//        UUID employeeId = employeeRepository.findAll().getLast().getId();
-//        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
-//
-//        String requestBody = "{\n" +
-//                "    \"employee_id\": \""+ employeeId + "\",\n" +
-//                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
-//                "}";
-//
-//        given()
-//                .contentType("application/json")
-//                .body(requestBody)
-//                .when()
-//                .post("/api/vacancy/add-favs")
-//                .then().statusCode(201);
-//
-////        Session session = sessionFactory.openSession();
-////        session.beginTransaction();
-////
-////        CriteriaBuilder builder = session.getCriteriaBuilder();
-////
-////        CriteriaQuery<Employee> criteriaQueryEmployee = builder.createQuery(Employee.class);
-////        Root<Employee> rootEmployee = criteriaQueryEmployee.from(Employee.class);
-////
-////        criteriaQueryEmployee.select(criteriaQueryEmployee.from(Employee.class)).where(builder.equal(rootEmployee.get("id"), employeeId));
-////
-////        Employee employee = session.createQuery(criteriaQueryEmployee).uniqueResult();
-////
-////        CriteriaQuery<Vacancy> criteriaQueryVacancy = builder.createQuery(Vacancy.class);
-////        Root<Vacancy> rootVacancy = criteriaQueryVacancy.from(Vacancy.class);
-////
-////        criteriaQueryVacancy.select(criteriaQueryVacancy.from(Vacancy.class)).where(builder.equal(rootVacancy.get("id"), vacancyId));
-////
-////        boolean result = session.createQuery(criteriaQueryVacancy).uniqueResult().getFavoriteEmployees().contains(employee);
-////
-////        session.close();
-////
-////        MatcherAssert.assertThat(result, equalTo(true));
-//
-//        Employee employee = employeeRepository.findAll().getLast();
-//        Hibernate.initialize(vacancy1.getFavoriteEmployees());
-//        Set<Employee> employeeList = vacancy1.getFavoriteEmployees();
-//        MatcherAssert.assertThat(employeeList.contains(employee), equalTo(true));
-//
-//    }
+    @Test
+    void shouldAddToFavs(){
+        Customer customer = Customer.builder().name("ТН").build();
+
+        Employee employee1 = Employee.builder().firstName("Сидор")
+                .lastName("Сидоров").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
+
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "TEST", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Москва", false,
+                LocalDateTime.now(), List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        customerRepository.save(customer);
+        employeeRepository.save(employee1);
+        vacancyRepository.save(vacancy1);
+
+        UUID employeeId = employeeRepository.findAll().getLast().getId();
+        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+
+        String requestBody = "{\n" +
+                "    \"employee_id\": \""+ employeeId + "\",\n" +
+                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
+                "}";
+
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post("/api/vacancy/add-favs")
+                .then().statusCode(201);
+
+        FavoriteVacancy favoriteVacancy = favoriteVacancyRepository.findAll().getLast();
+        MatcherAssert.assertThat(favoriteVacancy.getVacancy().getId(), equalTo(vacancyId));
+        MatcherAssert.assertThat(favoriteVacancy.getEmployee().getId(), equalTo(employeeId));
+    }
+
+    @Test
+    void shouldAddDeleteFromFavs(){
+        Customer customer = Customer.builder().name("ТН").build();
+
+        Employee employee1 = Employee.builder().firstName("Сидор")
+                .lastName("Сидоров").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
+
+        Vacancy vacancy1 = new Vacancy(customer, employee1, "TEST", "Java разработчик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Москва", false,
+                LocalDateTime.now(), List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        FavoriteVacancy favoriteVacancy1 = new FavoriteVacancy(vacancy1, employee1);
+
+        customerRepository.save(customer);
+        employeeRepository.save(employee1);
+        vacancyRepository.save(vacancy1);
+        favoriteVacancyRepository.save(favoriteVacancy1);
+
+        UUID employeeId = employeeRepository.findAll().getLast().getId();
+        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+
+        String requestBody = "{\n" +
+                "    \"employee_id\": \""+ employeeId + "\",\n" +
+                "    \"vacancy_id\": \""+ vacancyId +"\"\n" +
+                "}";
+
+        given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .delete("/api/vacancy/delete-favs")
+                .then().statusCode(200);
+
+        List<FavoriteVacancy> favoriteVacancies = favoriteVacancyRepository.findAll();
+        MatcherAssert.assertThat(favoriteVacancies.isEmpty(), equalTo(true));
+    }
 
 }
