@@ -10,6 +10,7 @@ import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
 import com.example.VacanciesAndResumes.specifications.SpecificationVacancy;
+import com.example.VacanciesAndResumes.specifications.SpecificationVacancySearch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -38,6 +39,7 @@ public class VacancyService {
     private final EmployeeRepository employeeRepository;
     private final VacancyMapper vacancyMapper;
     private final SpecificationVacancy specificationVacancy;
+    private final SpecificationVacancySearch specificationVacancySearch;
     private final FavoriteVacancyRepository favoriteVacancyRepository;
 
     private final HashSet<String> sortValues = new HashSet<String>(List.of("title", "roleName", "salary", "country", "region", "city", "createdAt"));
@@ -51,8 +53,6 @@ public class VacancyService {
 
     public VacancyGetAnswerDTO getVacancyAll(Map<String, String> queryParams){
         VacancyQueryParamDTO vacancyQueryParamDTO = vacancyMapper.queryMapToVacancyQueryParamDTO(queryParams);
-        List<Vacancy> vacancies1 = vacancyRepository.findAll();
-        List<Employee> employees1 = employeeRepository.findAll();
 
         Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
 
@@ -69,6 +69,18 @@ public class VacancyService {
         List<Vacancy> vacancies = vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10, sort)).getContent();
 
         return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(vacancyQueryParamDTO.getAuthor())));
+    }
+
+    public VacancyGetAnswerDTO searchVacancy(Map<String, String> queryParams){
+        if (queryParams.get("q") == null){
+            throw new BadRequestException("Нет параментра поиска");
+        }
+        if (queryParams.get("owner_id") == null){
+            throw new BadRequestException("Не указан id автора");
+        }
+        Specification<Vacancy> spec = specificationVacancySearch.buildSpecification(queryParams.get("q"));
+        List<Vacancy> vacancies = vacancyRepository.findAll(spec);
+        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(queryParams.get("owner_id"))));
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){

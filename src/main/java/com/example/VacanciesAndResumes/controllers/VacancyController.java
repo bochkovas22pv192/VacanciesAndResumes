@@ -29,6 +29,11 @@ public class VacancyController {
         return service.getVacancyAll(queryParams);
     }
 
+    @GetMapping("/search")
+    VacancyGetAnswerDTO getVacancySearch(@RequestParam(required=false) Map<String, String> queryParams){
+        return service.searchVacancy(queryParams);
+    }
+
     @GetMapping("/statuses")
     ResumeGetStatusAnswerDTO getVacancyStatuses(){
         return service.getVacancyStatuses();

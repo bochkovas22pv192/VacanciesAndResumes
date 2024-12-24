@@ -54,7 +54,8 @@ class LoadDatabase {
         KeySkill keySkill1 = KeySkill.builder().keySkillName("Python").build();
         KeySkill keySkill2 = KeySkill.builder().keySkillName("C++").build();
 
-        Customer customer = Customer.builder().name("ТН").build();
+        Customer customer1 = Customer.builder().name("ТН").build();
+        Customer customer2 = Customer.builder().name("Microsoft").build();
 
         Handbook handbook1 = Handbook.builder().code("Resume Status").keyName("Offer").valueName("Оффер").build();
         Handbook handbook2 = Handbook.builder().code("Resume Status").keyName("Screening").valueName("Скрининг").build();
@@ -68,22 +69,22 @@ class LoadDatabase {
         Employee employee2 = Employee.builder().firstName("Петр")
                 .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
 
-        Vacancy vacancy1 = new Vacancy(customer, employee1, "owner and fav", "Java разработчик",
+        Vacancy vacancy1 = new Vacancy(customer1, employee1, "owner and fav", "Аналитик",
                 "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
                 "Москва", "Москва", true,
                 LocalDateTime.now(), List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
-        Vacancy vacancy2 = new Vacancy(customer, employee1, "owner", "Java разработчик",
+        Vacancy vacancy2 = new Vacancy(customer1, employee1, "owner", "Java разработчик",
                 "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
                 "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
                 new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
-        Vacancy vacancy3 = new Vacancy(customer, employee2, "fav", "Java разработчик",
+        Vacancy vacancy3 = new Vacancy(customer2, employee2, "fav", "Java разработчик",
                 "Нужен хороший разраб", 2000, "RUB", "Senior", "Россия",
                 "Москва", "Москва", true, LocalDateTime.now(), List.of(),
                 new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
 
-        Vacancy vacancy4 = new Vacancy(customer, employee2, "non", "Java разработчик",
+        Vacancy vacancy4 = new Vacancy(customer2, employee2, "non", "Java разработчик",
                 "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
                 "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
                 new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
@@ -103,7 +104,8 @@ class LoadDatabase {
             log.info("Preloading " + keySkillRepository.save(keySkill1));
             log.info("Preloading " + keySkillRepository.save(keySkill2));
 
-            log.info("Preloading " + customerRepository.save(customer));
+            log.info("Preloading " + customerRepository.save(customer1));
+            log.info("Preloading " + customerRepository.save(customer2));
 
             log.info("Preloading " + handbookRepository.save(handbook1));
             log.info("Preloading " + handbookRepository.save(handbook2));
