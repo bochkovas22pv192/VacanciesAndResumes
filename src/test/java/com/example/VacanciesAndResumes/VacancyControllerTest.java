@@ -660,6 +660,111 @@ public class VacancyControllerTest {
         ));
     }
 
+    private void generateDataForVacancySearchTest(){
+        Customer customer1 = Customer.builder().name("ТН").build();
+        Customer customer2 = Customer.builder().name("Microsoft").build();
+
+        Employee employee1 = Employee.builder().firstName("Иван")
+                .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
+        Employee employee2 = Employee.builder().firstName("Петр")
+                .lastName("Петров").email("petr@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
+
+        Vacancy vacancy1 = new Vacancy(customer1, employee1, "owner and fav", "Аналитик",
+                "Нужен хороший разраб", 10000, "RUB", "Junior", "Белорусь",
+                "Москва", "Москва", true,
+                LocalDateTime.now(), List.of(), new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        Vacancy vacancy2 = new Vacancy(customer1, employee1, "owner", "Java разработчик",
+                "Нужен хороший разраб", 100, "RUB", "Middle", "Белорусь",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        Vacancy vacancy3 = new Vacancy(customer2, employee2, "fav", "Java разработчик",
+                "Нужен хороший разраб", 2000, "RUB", "Senior", "Россия",
+                "Москва", "Москва", true, LocalDateTime.now(), List.of(),
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        Vacancy vacancy4 = new Vacancy(customer2, employee2, "non", "Java разработчик",
+                "Нужен хороший разраб", 5000, "RUB", "Junior", "Россия",
+                "Москва", "Белгород", true, LocalDateTime.now(), List.of(),
+                new ArrayList<FavoriteVacancy>(), new ArrayList<Candidate>());
+
+        FavoriteVacancy favoriteVacancy1 = FavoriteVacancy.builder().vacancy(vacancy1).employee(employee1).build();
+        FavoriteVacancy favoriteVacancy2 = FavoriteVacancy.builder().vacancy(vacancy1).employee(employee2).build();
+        FavoriteVacancy favoriteVacancy3 = FavoriteVacancy.builder().vacancy(vacancy2).employee(employee2).build();
+        FavoriteVacancy favoriteVacancy4 = FavoriteVacancy.builder().vacancy(vacancy3).employee(employee1).build();
+
+        customerRepository.save(customer1);
+        customerRepository.save(customer2);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        List<Vacancy> vacancies = List.of(vacancy1, vacancy2, vacancy3, vacancy4);
+        vacancyRepository.saveAll(vacancies);
+        favoriteVacancyRepository.saveAll(List.of(favoriteVacancy1, favoriteVacancy2, favoriteVacancy3, favoriteVacancy4));
+    }
+
+    @Test
+    void shouldSearchVacancyByTitle(){
+        generateDataForVacancySearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("q", "fav")
+                .when()
+                .get("/api/vacancy/search")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner and fav", "Аналитик", "Junior", true,  "ТН", 0, true)
+        ));
+
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
+        ));
+    }
+
+    @Test
+    void shouldSearchVacancyByRole(){
+        generateDataForVacancySearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("q", "налит")
+                .when()
+                .get("/api/vacancy/search")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "owner and fav", "Аналитик", "Junior", true,  "ТН", 0, true)
+        ));
+    }
+
+    @Test
+    void shouldSearchVacancyByCustomer(){
+        generateDataForVacancySearchTest();
+        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        VacancyGetAnswerDTO result = given()
+                .contentType("application/json")
+                .queryParam("owner_id", employeeId.toString())
+                .queryParam("q", "soft")
+                .when()
+                .get("/api/vacancy/search")
+                .then().statusCode(200)
+                .extract().body().as(VacancyGetAnswerDTO.class);
+
+        MatcherAssert.assertThat(result.getResult().get(0), equalTo(
+                new VacancyGetDTO(result.getResult().get(0).getId(), "non", "Java разработчик", "Junior", true,  "Microsoft", 0, false)
+        ));
+
+        MatcherAssert.assertThat(result.getResult().get(1), equalTo(
+                new VacancyGetDTO(result.getResult().get(1).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
+        ));
+    }
+
     @Test
     void shouldAddToFavs(){
         Customer customer = Customer.builder().name("ТН").build();
@@ -708,9 +813,6 @@ public class VacancyControllerTest {
         employeeRepository.save(employee1);
         vacancyRepository.save(vacancy1);
         favoriteVacancyRepository.save(favoriteVacancy1);
-
-        UUID employeeId = employeeRepository.findAll().getLast().getId();
-        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
 
         VacancyFavsDTO vacancyFavsDTO = new VacancyFavsDTO(employee1.getId().toString(), vacancy1.getId().toString());
 
