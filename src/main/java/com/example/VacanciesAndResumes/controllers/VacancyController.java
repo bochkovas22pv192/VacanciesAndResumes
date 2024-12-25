@@ -30,8 +30,11 @@ public class VacancyController {
     }
 
     @GetMapping("/search")
-    VacancyGetAnswerDTO getVacancySearch(@RequestParam(required=false) Map<String, String> queryParams){
-        return service.searchVacancy(queryParams);
+    VacancyGetAnswerDTO getVacancySearch(@RequestParam(required=true, name = "q") String q,
+                                         @RequestParam(required=true, name = "owner_id") String ownerId,
+                                         @RequestParam(name = "page", defaultValue = "1") int page,
+                                         @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
+        return service.searchVacancy(q, UUID.fromString(ownerId), page, pageSize);
     }
 
     @GetMapping("/statuses")

@@ -717,13 +717,13 @@ public class VacancyControllerTest {
                 .extract().body().as(VacancyGetAnswerDTO.class);
 
         MatcherAssert.assertThat(result.getResult().get(0), equalTo(
-                new VacancyGetDTO(result.getResult().get(0).getId(), "owner and fav", "Аналитик", "Junior", true,  "ТН", 0, true)
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
         ));
-
 
         MatcherAssert.assertThat(result.getResult().get(1), equalTo(
-                new VacancyGetDTO(result.getResult().get(1).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
+                new VacancyGetDTO(result.getResult().get(1).getId(), "owner and fav", "Аналитик", "Junior", true,  "ТН", 0, true)
         ));
+
     }
 
     @Test
@@ -757,12 +757,13 @@ public class VacancyControllerTest {
                 .extract().body().as(VacancyGetAnswerDTO.class);
 
         MatcherAssert.assertThat(result.getResult().get(0), equalTo(
-                new VacancyGetDTO(result.getResult().get(0).getId(), "non", "Java разработчик", "Junior", true,  "Microsoft", 0, false)
+                new VacancyGetDTO(result.getResult().get(0).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
         ));
 
         MatcherAssert.assertThat(result.getResult().get(1), equalTo(
-                new VacancyGetDTO(result.getResult().get(1).getId(), "fav", "Java разработчик", "Senior", true,  "Microsoft", 0, true)
+                new VacancyGetDTO(result.getResult().get(1).getId(), "non", "Java разработчик", "Junior", true,  "Microsoft", 0, false)
         ));
+
     }
 
     @Test

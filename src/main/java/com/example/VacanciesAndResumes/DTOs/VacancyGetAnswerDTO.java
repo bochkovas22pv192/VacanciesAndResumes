@@ -12,4 +12,5 @@ import java.util.List;
 public class VacancyGetAnswerDTO {
     private String status;
     private List<VacancyGetDTO> result;
+    private int page;
 }

@@ -68,19 +68,13 @@ public class VacancyService {
 
         List<Vacancy> vacancies = vacancyRepository.findAll(spec, PageRequest.of(page - 1, 10, sort)).getContent();
 
-        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(vacancyQueryParamDTO.getAuthor())));
+        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(vacancyQueryParamDTO.getAuthor())), page);
     }
 
-    public VacancyGetAnswerDTO searchVacancy(Map<String, String> queryParams){
-        if (queryParams.get("q") == null){
-            throw new BadRequestException("Нет параментра поиска");
-        }
-        if (queryParams.get("owner_id") == null){
-            throw new BadRequestException("Не указан id автора");
-        }
-        Specification<Vacancy> spec = specificationVacancySearch.buildSpecification(queryParams.get("q"));
-        List<Vacancy> vacancies = vacancyRepository.findAll(spec);
-        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, UUID.fromString(queryParams.get("owner_id"))));
+    public VacancyGetAnswerDTO searchVacancy(String q, UUID ownerId, int page, int pageSize){
+        Specification<Vacancy> spec = specificationVacancySearch.buildSpecification(q);
+        List<Vacancy> vacancies = vacancyRepository.findAll(spec, PageRequest.of(page - 1, pageSize, Sort.by("title"))).getContent();
+        return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, ownerId), page);
     }
 
     public ResumeAnswerDTO createVacancy(VacancyDTO vacancyDTO){
