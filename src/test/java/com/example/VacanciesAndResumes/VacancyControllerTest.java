@@ -85,7 +85,9 @@ public class VacancyControllerTest {
 
         employeeRepository.save(employee1);
 
-        UUID employeeId = employeeRepository.findAll().getLast().getId();
+        List<Employee> temp = employeeRepository.findAll();
+
+        UUID employeeId = temp.get(temp.size() - 1).getId();
 
         Customer customer = Customer.builder().name("ТН").build();
         customerRepository.save(customer);
@@ -93,8 +95,11 @@ public class VacancyControllerTest {
         vacancyService.createVacancy(new VacancyDTO("Программист Java в проект",
                         "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
                         "Москва", employeeId.toString(), new CustomerDTO("ТН")));
-        Vacancy vacancy = vacancyRepository.findAll().getLast();
-        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()),
+
+        List<Vacancy> temp2 = vacancyRepository.findAll();
+        Vacancy vacancy = temp2.get(temp2.size() - 1);
+
+        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancy),
                 equalTo( new VacancyDTO("Программист Java в проект",
                 "Java разработчик", "Нужен хороший разраб", 10000, "RUB",
                         "Junior", "Россия", "Москва",
@@ -112,7 +117,9 @@ public class VacancyControllerTest {
                 .lastName("Иванов").email("ivan@gmail.com").favoriteVacancies(new ArrayList<FavoriteVacancy>()).build();
 
         employeeRepository.save(employee1);
-        UUID employeeId = employeeRepository.findAll().getLast().getId();
+        List<Employee> temp = employeeRepository.findAll();
+
+        UUID employeeId = temp.get(temp.size() - 1).getId();
 
         String requestBody = "{\n" +
                 "    \"title\":\"Программист Java в проект\",    \n" +
@@ -140,7 +147,10 @@ public class VacancyControllerTest {
 
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно сохранено")));
 
-        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancyRepository.findAll().getLast()), equalTo( new VacancyDTO("Программист Java в проект",
+        List<Vacancy> temp2 = vacancyRepository.findAll();
+        Vacancy vacancy = temp2.get(temp2.size() - 1);
+
+        MatcherAssert.assertThat(vacancyMapper.vacancyToVacancyDTO(vacancy), equalTo( new VacancyDTO("Программист Java в проект",
                 "Java разработчик", "Нужен хороший разраб", 10000, "RUB", "Junior", "Россия", "Москва",
                 "Москва", employeeId.toString(), new CustomerDTO("ТН")
 
@@ -183,7 +193,8 @@ public class VacancyControllerTest {
         vacancyRepository.save(vacancy1);
         commentVacancyRepository.save(commentVacancy1);
 
-        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+        List<Vacancy> temp = vacancyRepository.findAll();
+        UUID vacancyId = temp.get(temp.size() - 1).getId();
 
         String requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/is_active\",\"value\":false} \n" +
@@ -197,8 +208,11 @@ public class VacancyControllerTest {
                 .then().statusCode(200)
                 .extract().body().as(ResumeAnswerDTO.class);
 
+        List<Vacancy> temp2 = vacancyRepository.findAll();
+        Vacancy vacancy = temp2.get(temp2.size() - 1);
+
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно изменено")));
-        MatcherAssert.assertThat(vacancyRepository.findAll().getLast().isActive(), equalTo(false));
+        MatcherAssert.assertThat(vacancy.isActive(), equalTo(false));
     }
 
     @Test
@@ -279,7 +293,9 @@ public class VacancyControllerTest {
         vacancyRepository.save(vacancy1);
         commentVacancyRepository.save(commentVacancy1);
 
-        UUID vacancyId = vacancyRepository.findAll().getLast().getId();
+        List<Vacancy> temp1 = vacancyRepository.findAll();
+
+        UUID vacancyId = temp1.get(temp1.size() - 1).getId();
 
 
         CommentVacancyGetDTO result = given()
@@ -290,8 +306,8 @@ public class VacancyControllerTest {
                 .extract().body().as(CommentVacancyGetDTO.class);
 
         MatcherAssert.assertThat(result, equalTo(new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.",
-               List.of(new CommentVacancyDTO(result.getComments().getFirst().getId(), "Отличная вакансия!",
-                       "Иван Иванов", result.getComments().getFirst().getTimestamp()))
+               List.of(new CommentVacancyDTO(result.getComments().get(0).getId(), "Отличная вакансия!",
+                       "Иван Иванов", result.getComments().get(0).getTimestamp()))
         )));
     }
 
@@ -339,7 +355,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesAll(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -369,7 +385,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByCountry(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -392,7 +408,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByRegion(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -415,7 +431,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByCity(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -439,7 +455,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByRole(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -458,7 +474,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByStatus(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -477,7 +493,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByGrade(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -504,7 +520,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesBySalaryFrom(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -527,7 +543,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesBySalaryTo(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -554,7 +570,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByFavs(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -578,7 +594,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesByMine(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -602,7 +618,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesSortSalary(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -633,7 +649,7 @@ public class VacancyControllerTest {
     @Test
     void shouldGetVacanciesSortByDate(){
         generateDataForSearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -706,7 +722,7 @@ public class VacancyControllerTest {
     @Test
     void shouldSearchVacancyByTitle(){
         generateDataForVacancySearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -729,7 +745,7 @@ public class VacancyControllerTest {
     @Test
     void shouldSearchVacancyByRole(){
         generateDataForVacancySearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -746,7 +762,7 @@ public class VacancyControllerTest {
     @Test
     void shouldSearchVacancyByCustomer(){
         generateDataForVacancySearchTest();
-        UUID employeeId = employeeRepository.findAll().getFirst().getId();
+        UUID employeeId = employeeRepository.findAll().get(0).getId();
         VacancyGetAnswerDTO result = given()
                 .contentType("application/json")
                 .queryParam("owner_id", employeeId.toString())
@@ -791,7 +807,8 @@ public class VacancyControllerTest {
                 .post("/api/vacancy/add-favs")
                 .then().statusCode(201);
 
-        FavoriteVacancy favoriteVacancy = favoriteVacancyRepository.findAll().getLast();
+        List<FavoriteVacancy> temp = favoriteVacancyRepository.findAll();
+        FavoriteVacancy favoriteVacancy = temp.get(temp.size() - 1);
         MatcherAssert.assertThat(favoriteVacancy.getVacancy().getId().toString(), equalTo(vacancyFavsDTO.getVacancyId()));
         MatcherAssert.assertThat(favoriteVacancy.getEmployee().getId().toString(), equalTo(vacancyFavsDTO.getEmployeeId()));
     }

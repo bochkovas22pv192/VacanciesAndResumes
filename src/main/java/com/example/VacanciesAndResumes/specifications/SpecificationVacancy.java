@@ -86,7 +86,7 @@ public class SpecificationVacancy {
             if (grades == null){
                 return criteriaBuilder.conjunction();
             }
-            Predicate result = criteriaBuilder.equal(root.get("grade"), grades.getFirst());
+            Predicate result = criteriaBuilder.equal(root.get("grade"), grades.get(0));
             for (int i = 1; i < grades.size(); i++) {
                 result = criteriaBuilder.or(result, criteriaBuilder.equal(root.get("grade"), grades.get(i)));
             }

@@ -9,7 +9,9 @@ import com.example.VacanciesAndResumes.mappers.ResumeMapper;
 import com.example.VacanciesAndResumes.mappers.VacancyMapper;
 import com.example.VacanciesAndResumes.models.*;
 import com.example.VacanciesAndResumes.repositories.*;
-import com.example.VacanciesAndResumes.specifications.SpecificationVacancy;
+import com.example.VacanciesAndResumes.specifications.BaseFilterCommentVacancy;
+import com.example.VacanciesAndResumes.specifications.BaseFilterHandbook;
+import com.example.VacanciesAndResumes.specifications.BaseFilterVacancy;
 import com.example.VacanciesAndResumes.specifications.SpecificationVacancySearch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,9 +40,11 @@ public class VacancyService {
     private final CommentVacancyRepository commentVacancyRepository;
     private final EmployeeRepository employeeRepository;
     private final VacancyMapper vacancyMapper;
-    private final SpecificationVacancy specificationVacancy;
     private final SpecificationVacancySearch specificationVacancySearch;
     private final FavoriteVacancyRepository favoriteVacancyRepository;
+    private final BaseFilterVacancy baseFilterVacancy;
+    private final BaseFilterCommentVacancy baseFilterCommentVacancy;
+    private final BaseFilterHandbook baseFilterHandbook;
 
     private final HashSet<String> sortValues = new HashSet<String>(List.of("title", "roleName", "salary", "country", "region", "city", "createdAt"));
 
@@ -50,11 +54,10 @@ public class VacancyService {
     private final ResumeMapper resumeMapper;
     private final HandbookRepository handbookRepository;
 
-
     public VacancyGetAnswerDTO getVacancyAll(Map<String, String> queryParams){
         VacancyQueryParamDTO vacancyQueryParamDTO = vacancyMapper.queryMapToVacancyQueryParamDTO(queryParams);
 
-        Specification<Vacancy> spec = specificationVacancy.build(vacancyQueryParamDTO);
+        Specification<Vacancy> spec = baseFilterVacancy.build(vacancyQueryParamDTO);
 
         Sort sort = Sort.by("title");
         if (queryParams.containsKey("sort")){
@@ -72,7 +75,7 @@ public class VacancyService {
     }
 
     public VacancyGetAnswerDTO searchVacancy(String q, UUID ownerId, int page, int pageSize){
-        Specification<Vacancy> spec = specificationVacancySearch.buildSpecification(q);
+        Specification<Vacancy> spec = baseFilterVacancy.buildSpecificationSearch(q);
         List<Vacancy> vacancies = vacancyRepository.findAll(spec, PageRequest.of(page - 1, pageSize, Sort.by("title"))).getContent();
         return new VacancyGetAnswerDTO ("ok", vacancyMapper.vacancyToVacancyGetDTO(vacancies, ownerId), page);
     }
@@ -106,7 +109,7 @@ public class VacancyService {
 
     public ResumeGetStatusAnswerDTO getVacancyStatuses (){
         ResumeGetStatusAnswerDTO result = new ResumeGetStatusAnswerDTO();
-        result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findByCode("Vacancy Status")));
+        result.setResult(resumeMapper.HandbookToResumeStatusDTO(handbookRepository.findAll(baseFilterHandbook.byCode("Vacancy Status"))));
         result.setStatus("success");
         return result;
     }
@@ -131,9 +134,10 @@ public class VacancyService {
 
     public CommentVacancyGetDTO getCommentsForVacancy(UUID vacancyId){
 
-        List<CommentVacancy> temp = commentVacancyRepository
-                .findByVacancy(vacancyRepository.findById(vacancyId).orElseThrow(()->new BadRequestException("Нет вакансии с таким id")));
-
+        List<CommentVacancy> temp = commentVacancyRepository.findAll(baseFilterCommentVacancy.byVacancyId(vacancyId));
+        if (temp.isEmpty()){
+            throw new BadRequestException("Нет такой вакансии");
+        }
         List<CommentVacancyDTO> result = vacancyMapper.commentVacancyToCommentVacancyDTO(temp);
 
         return new CommentVacancyGetDTO("success", "Данные об истории взаимодействий получены.", result);
@@ -149,7 +153,7 @@ public class VacancyService {
         commentVacancy.setCreatedAt(LocalDateTime.now());
 
         commentVacancyRepository.save(commentVacancy);
-        return new CommentVacancyPostAnswerDTO("success", "OK", commentVacancyRepository.findAll().getLast().getId());
+        return new CommentVacancyPostAnswerDTO("success", "OK", commentVacancyRepository.save(commentVacancy).getId());
     }
 
     public CommentVacancyPostAnswerDTO updateCommentVacancy (UUID id, JsonPatch jsonPatch)

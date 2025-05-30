@@ -23,7 +23,6 @@ public class VacancyController {
     private final VacancyService service;
     private final FavoriteVacancyService favoriteVacancyService;
 
-
     @GetMapping
     VacancyGetAnswerDTO getVacancyAll(@RequestParam(required=false) Map<String, String> queryParams){
         return service.getVacancyAll(queryParams);

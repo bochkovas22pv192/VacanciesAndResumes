@@ -2,6 +2,7 @@ package com.example.VacanciesAndResumes;
 
 import com.example.VacanciesAndResumes.DTOs.*;
 
+import com.example.VacanciesAndResumes.models.Candidate;
 import com.example.VacanciesAndResumes.models.Handbook;
 import com.example.VacanciesAndResumes.repositories.CandidateRepository;
 import com.example.VacanciesAndResumes.repositories.HandbookRepository;
@@ -160,13 +161,16 @@ class ResumeControllerTest {
                 .then().statusCode(201)
                 .extract().body().as(ResumeAnswerDTO.class);
         MatcherAssert.assertThat(result, equalTo(new ResumeAnswerDTO("success", "Успешно сохранено")));
-        ResumeDTO resume = resumeService.getResumeAll().getLast();
+        List<ResumeDTO> temp = resumeService.getResumeAll();
+        ResumeDTO resume = temp.get(temp.size() - 1);
 
         MatcherAssert.assertThat(resume.getContact(),
                 equalTo(new ContactDTO("+79999999999", "ivanov@mail.ru", "@ivanov", "+79999999999", "vk.com/ivanov",
                         "habr.com/ivanov", "linkedin.com/in/ivanov", "github.com/ivanov")));
 
-        MatcherAssert.assertThat(resume.getWorkExperiences().getLast(),
+        List<WorkExperienceDTO> temp2 = resume.getWorkExperiences();
+
+        MatcherAssert.assertThat(temp2.get(0),
                 equalTo(new WorkExperienceDTO("Tech Corp", "IT", "techcorp.com",
                         "Москва", "Программист", "2015-07-15", false,
                         "2020-08-28", "Работа в крупной компании")));
@@ -178,11 +182,15 @@ class ResumeControllerTest {
         MatcherAssert.assertThat(resume.getDocuments(),
                 equalTo(List.of(new DocumentDTO("aaaaaaaa"), new DocumentDTO("bbbbbbb"))));
 
-        MatcherAssert.assertThat(resume.getEducations().getLast(),
+        List<EducationDTO> temp3 = resume.getEducations();
+
+        MatcherAssert.assertThat(temp3.get(temp3.size() - 1),
                 equalTo(new EducationDTO("Высшее", "МГУ", "Факультет ВМиК",
                         "Программная инженерия", 2019)));
 
-        MatcherAssert.assertThat(resume.getCertificatesQualifications().getLast(),
+        List<CertificatesQualificationDTO> temp4 = resume.getCertificatesQualifications();
+
+        MatcherAssert.assertThat(temp4.get(temp4.size() - 1),
                 equalTo(new CertificatesQualificationDTO("Skillbox", "ООО Skillbox",
                         "Python разработка", 2023)));
 
@@ -309,7 +317,11 @@ class ResumeControllerTest {
         requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Look\"} \n" +
                 "]";
-        UUID id = candidateRepository.findAll().getLast().getId();
+
+        List<Candidate> temp = candidateRepository.findAll();
+
+        UUID id = temp.get(temp.size() - 1).getId();
+
         ResumeAnswerDTO result = given()
                 .contentType("application/json-patch+json")
                 .body(requestBody)
@@ -320,7 +332,8 @@ class ResumeControllerTest {
         MatcherAssert.assertThat(result,
                 equalTo(new ResumeAnswerDTO("success", "Успешно изменено")));
 
-        MatcherAssert.assertThat(candidateRepository.findAll().getLast().getStatus(),
+        temp = candidateRepository.findAll();
+        MatcherAssert.assertThat(temp.get(temp.size() - 1).getStatus(),
                 equalTo("Look"));
 
     }
@@ -422,7 +435,9 @@ class ResumeControllerTest {
         requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Offer\"} \n" +
                 "]";
-        UUID id = candidateRepository.findAll().getLast().getId();
+        List<Candidate> temp = candidateRepository.findAll();
+
+        UUID id = temp.get(temp.size() - 1).getId();
         ResumeAnswerDTO result = given()
                 .contentType("application/json-patch+json")
                 .body(requestBody)
@@ -533,7 +548,9 @@ class ResumeControllerTest {
         requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Screening\"} \n" +
                 "]";
-        UUID id = candidateRepository.findAll().getLast().getId();
+        List<Candidate> temp = candidateRepository.findAll();
+
+        UUID id = temp.get(temp.size() - 1).getId();
         ResumeAnswerDTO result = given()
                 .contentType("application/json-patch+json")
                 .body(requestBody)
@@ -644,7 +661,9 @@ class ResumeControllerTest {
         requestBody = "[\n" +
                 "{\"op\":\"replace\",\"path\":\"/status\",\"value\":\"Hired\"} \n" +
                 "]";
-        UUID id = candidateRepository.findAll().getLast().getId();
+        List<Candidate> temp = candidateRepository.findAll();
+
+        UUID id = temp.get(temp.size() - 1).getId();
         ResumeAnswerDTO result = given()
                 .contentType("application/json-patch+json")
                 .body(requestBody)
